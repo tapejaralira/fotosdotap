@@ -3,10 +3,17 @@ body {
   background-color: var(--cor-secundaria);
   color: var(--cor-primaria);
   padding: var(--espacamento);
-  padding-top: 70px; /* Ajuste conforme a altura real do seu header */
+  padding-top: var(--header-height); /* Ajuste conforme a altura real do seu header */
 }
 
 .main {
   max-width: 90%;
   margin: 0 auto;
+}
+
+/* Para telas maiores, centraliza e limita a largura do conteúdo principal */
+@media (min-width: 1200px) {
+    .main {
+        max-width: 1200px; 
+    }
 }

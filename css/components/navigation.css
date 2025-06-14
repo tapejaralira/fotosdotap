@@ -1,0 +1,62 @@
+/* Estilos do Menu de Navegação (Mobile) */
+.header__nav {
+    display: none;
+    position: fixed; /* Mude de 'absolute' para 'fixed' */
+    top: var(--header-height); /* Usa a variável */
+    left: 0;
+    width: 100%;
+    background-color: var(--gray-900);
+    z-index: 999; /* Garante que fique abaixo do header */
+}
+
+.header__nav--active {
+    display: block;
+}
+
+.header__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.header__item {
+    text-align: center;
+}
+
+.header__link {
+    display: block;
+    padding: 1.5rem;
+    color: var(--white);
+    text-decoration: none;
+    border-bottom: 1px solid var(--gray-800);
+    transition: background-color 0.3s;
+}
+
+.header__link:hover {
+    background-color: var(--gray-800);
+}
+
+/* Adaptação para Desktop */
+@media (min-width: 768px) {
+    .header__nav {
+        display: block; /* Mostra a navegação */
+        position: static; /* Remove o posicionamento */
+        width: auto;
+        background-color: transparent;
+    }
+
+    .header__list {
+        display: flex; /* Coloca os itens lado a lado */
+        gap: 1.5rem; /* Espaçamento entre os links */
+    }
+    
+    .header__link {
+        padding: 0.5rem 1rem;
+        border: none; /* Remove a borda de baixo */
+        border-radius: 4px;
+    }
+
+    .header__link:hover {
+        background-color: var(--gray-800);
+    }
+}

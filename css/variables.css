@@ -5,4 +5,6 @@
 
   --fonte-principal: 'Arial', sans-serif;
   --espacamento: 1rem;
+
+  --header-height: 70px; /* Variável para a altura do header */
 }
