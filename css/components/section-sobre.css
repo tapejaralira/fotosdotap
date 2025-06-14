@@ -1,0 +1,12 @@
+.section-sobre {
+  margin: var(--espacamento) 0;
+}
+
+.section-sobre__title {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-sobre__text {
+  font-size: 1rem;
+}

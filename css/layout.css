@@ -1,0 +1,12 @@
+body {
+  font-family: var(--fonte-principal);
+  background-color: var(--cor-secundaria);
+  color: var(--cor-primaria);
+  padding: var(--espacamento);
+  padding-top: 70px; /* Ajuste conforme a altura real do seu header */
+}
+
+.main {
+  max-width: 90%;
+  margin: 0 auto;
+}
