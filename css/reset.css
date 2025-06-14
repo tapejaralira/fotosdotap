@@ -3,3 +3,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+* {
+  -webkit-tap-highlight-color: var(--cor-destaque); /* Evita o destaque ao tocar em dispositivos móveis */
+}

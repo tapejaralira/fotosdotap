@@ -1,31 +1,37 @@
-/* Container principal do header, que fica fixo no topo */
+/* ==========================================================================
+   Componente Header
+   ========================================================================== */
+
+/* 1. Layout Principal do Componente */
 .header {
-    background-color: var(--gray-900); /* Usando variável */
-    color: var(--white); /* Usando variável */
-    padding: 0 1rem; /* Padding horizontal, altura definida abaixo */
+    background-color: var(--cor-primaria);
+    color: var(--cor-secundaria);
+    padding: 0 1rem;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-    height: var(--header-height); /* Altura definida por variável */
+    height: var(--header-height);
 }
 
-/* Container interno para alinhar o conteúdo */
 .header__container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100%; /* Ocupa toda a altura do pai (.header) */
+    height: 100%;
     max-width: 1200px;
     margin: 0 auto;
 }
 
+/* 2. Elementos Filhos do Header (Logo, Navegação, Botão) */
+
+/* Logo */
 .header__logo {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: var(--white);
+    color: var(--cor-secundaria);
     gap: 0.5rem;
 }
 
@@ -34,20 +40,60 @@
     height: 2rem;
 }
 
-/* Botão Hamburger (substituído por um ícone feito em CSS) */
+.header__logo span {
+    font-family: "DM Serif Text", serif;
+    font-weight: 400;     /* Peso regular */
+    font-style: italic;   /* Estilo itálico */
+    font-size: 1.4rem;    /* Ajuste o tamanho como preferir */
+    letter-spacing: 0.5px; /* Um leve espaçamento entre as letras */
+}
+
+/* Navegação Mobile (escondida por padrão) */
+.header__nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: var(--header-height);
+    left: 0;
+    width: 100%;
+    background-color: var(--cor-primaria);
+    box-shadow: 0 4px 8px var(--cor-primaria);
+}
+
+.header__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.header__link {
+    color: var(--cor-secundaria);
+    text-decoration: none;
+    font-size: 1rem;
+    padding: 1.2rem 1rem;
+    display: block;
+    text-align: center;
+    border-bottom: 1px solid var(--cor-destaque); /* Linha de separação */
+}
+
+/* Botão Hamburger */
 .header__toggle {
     background: none;
     border: none;
+    color: var(--cor-secundaria);
     cursor: pointer;
     display: block;
-    padding: 0.5rem; /* Área de clique maior */
+    padding: 0.5rem;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .hamburger {
     display: block;
     width: 25px;
     height: 2px;
-    background-color: var(--white);
+    background-color: var(--cor-secundaria);
     position: relative;
 }
 
@@ -57,72 +103,64 @@
     position: absolute;
     width: 100%;
     height: 2px;
-    background-color: var(--white);
+    background-color: var(--cor-secundaria);
+    left: 0;
 }
 
 .hamburger::before {
-    top: -8px;
+    transform: translateY(-8px);
 }
 
 .hamburger::after {
-    bottom: -8px;
+    transform: translateY(8px);
 }
 
-
-/* MENU (agora posicionado de forma absoluta) */
-.header__nav {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: var(--header-height); /* Alinha logo abaixo do header */
-    left: 0;
-    width: 100%;
-    background-color: var(--gray-900);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+/* 3. Modificadores e Estados (:hover, :active, etc.) */
+.header__link:hover {
+    background-color: var(--cor-destaque);
 }
 
 .header__nav--active {
-    display: flex;
+    display: flex; /* Mostra o menu mobile */
 }
 
-.header__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0; /* O espaçamento será no link */
+/* 4. Animação do Hamburger para "X" */
+.hamburger, 
+.hamburger::before, 
+.hamburger::after {
+    transition: all 0.3s ease-in-out;
 }
 
-.header__link {
-    color: var(--white);
-    text-decoration: none;
-    font-size: 1rem;
-    padding: 1.2rem 1rem; /* Mais área de toque */
-    display: block;
-    text-align: center;
-    border-bottom: 1px solid var(--gray-800);
+.header__nav--active + .header__toggle .hamburger {
+    background-color: transparent; /* Traço do meio desaparece */
 }
 
-.header__link:hover {
-    background-color: var(--gray-800);
+.header__nav--active + .header__toggle .hamburger::before {
+    transform: rotate(45deg); /* Traço de cima rotaciona */
 }
 
-/* DESKTOP */
+.header__nav--active + .header__toggle .hamburger::after {
+    transform: rotate(-45deg); /* Traço de baixo rotaciona */
+}
+
+
+/* ==========================================================================
+   Responsividade do Header para Desktop
+   ========================================================================== */
+
 @media (min-width: 768px) {
     .header__toggle {
         display: none;
     }
 
-    /* No desktop, a navegação é sempre visível e estática */
     .header__nav {
         display: flex;
-        position: static; /* Volta ao fluxo normal do documento */
+        position: static;
         flex-direction: row;
         align-items: center;
         background: none;
         box-shadow: none;
-        width: auto; /* Largura automática */
+        width: auto;
     }
 
     .header__list {
@@ -131,7 +169,11 @@
     }
 
     .header__link {
-        border-bottom: none; /* Remove a borda no desktop */
+        border-bottom: none;
         padding: 0.5rem 1rem;
+    }
+
+    .header__link:hover {
+        background-color: var(--cor-destaque);
     }
 }

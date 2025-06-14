@@ -1,18 +1,20 @@
-/* Estilos do Menu de Navegação (Mobile) */
+/* ==========================================================================
+   Componente Navegação (Menu Principal)
+   ========================================================================== */
+
+/* 1. Layout do Menu Mobile (escondido por padrão) */
 .header__nav {
     display: none;
-    position: fixed; /* Mude de 'absolute' para 'fixed' */
-    top: var(--header-height); /* Usa a variável */
+    flex-direction: column; /* Adicionado para consistência */
+    position: fixed;
+    top: var(--header-height);
     left: 0;
     width: 100%;
-    background-color: var(--gray-900);
+    background-color: var(--cor-primaria);
     z-index: 999; /* Garante que fique abaixo do header */
 }
 
-.header__nav--active {
-    display: block;
-}
-
+/* 2. Elementos Internos do Menu (Lista, Itens, Links) */
 .header__list {
     list-style: none;
     padding: 0;
@@ -26,37 +28,51 @@
 .header__link {
     display: block;
     padding: 1.5rem;
-    color: var(--white);
+    color: var(--cor-secundaria);
     text-decoration: none;
-    border-bottom: 1px solid var(--gray-800);
+    border-bottom: 1px solid var(--destaque);
     transition: background-color 0.3s;
 }
 
-.header__link:hover {
-    background-color: var(--gray-800);
+/* 3. Estados e Modificadores (:hover, --active) */
+.header__nav--active {
+    display: flex; /* Alterado de 'block' para 'flex' para consistência */
 }
 
-/* Adaptação para Desktop */
+.header__link:hover {
+    background-color: var(--cor-destaque);
+}
+
+
+/* ==========================================================================
+   Responsividade da Navegação para Desktop
+   ========================================================================== */
+
 @media (min-width: 768px) {
+    /* Layout */
     .header__nav {
-        display: block; /* Mostra a navegação */
-        position: static; /* Remove o posicionamento */
+        display: flex; /* Alterado de 'block' para 'flex' */
+        position: static;
         width: auto;
         background-color: transparent;
+        align-items: center; /* Centraliza os itens verticalmente */
     }
 
+    /* Elementos */
     .header__list {
-        display: flex; /* Coloca os itens lado a lado */
-        gap: 1.5rem; /* Espaçamento entre os links */
+        display: flex;
+        flex-direction: row;
+        gap: 1.5rem;
     }
     
     .header__link {
         padding: 0.5rem 1rem;
-        border: none; /* Remove a borda de baixo */
+        border: none;
         border-radius: 4px;
     }
 
+    /* Estados */
     .header__link:hover {
-        background-color: var(--gray-800);
+        background-color: var(--cor-destaque);
     }
 }

@@ -1,10 +1,10 @@
 :root {
-  --cor-primaria: #222;
-  --cor-secundaria: #f5f5f5;
-  --cor-destaque: #ff6600;
+  --cor-primaria: #272727;
+  --cor-secundaria: #eeeeee;
+  --cor-destaque: #9e9ead;
 
-  --fonte-principal: 'Arial', sans-serif;
+  --fonte-principal: 'Open Sans', sans-serif;
   --espacamento: 1rem;
 
-  --header-height: 70px; /* Variável para a altura do header */
+  --header-height: 55px; /* Variável para a altura do header */
 }

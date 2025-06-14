@@ -2,6 +2,10 @@ body {
   font-family: var(--fonte-principal);
   background-color: var(--cor-secundaria);
   color: var(--cor-primaria);
+
+  font-size: 1.2rem; /* Tamanho da fonte base */
+  line-height: 1.3; /* Altura da linha para melhor legibilidade */
+
   padding: var(--espacamento);
   padding-top: var(--header-height); /* Ajuste conforme a altura real do seu header */
 }

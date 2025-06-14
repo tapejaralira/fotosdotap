@@ -3,32 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Site do Tap</title>
+  <title>Fotos do Tap.</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@1&display=swap" rel="stylesheet">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
   <header class="header">
     <div class="header__container">
-      <a href="#home" class="header__logo">
-        <img src="logo.svg" alt="Logo" class="header__logo-img" />
-        <span class="header__logo-text">Fotos do Tap</span>
-      </a>
+        <a href="#home" class="header__logo">
+            <img class="header__logo-img" src="assets/logo.svg" alt="Logo">
+            <span>Fotos do Tap.</span>
+        </a>
 
-      <button class="header__toggle" id="menu-toggle" aria-label="Abrir menu">
-        ☰
-      </button>
+        <nav id="menu" class="header__nav">
+            <ul class="header__list">
+                <li class="header__item"><a href="#sobre" class="header__link">Sobre</a></li>
+                <li class="header__item"><a href="#servicos" class="header__link">O que eu faço</a></li>
+                <li class="header__item"><a href="#portfolio" class="header__link">Portfólio</a></li>
+                <li class="header__item"><a href="#contato" class="header__link">Contato</a></li>
+            </ul>
+        </nav>
+
+        <button id="menu-toggle" class="header__toggle">
+             <span class="hamburger"></span>
+        </button>
     </div>
-    <nav class="header__nav" id="menu">
-      <ul class="header__list">
-        <li><a href="#sobre" class="header__link">Sobre</a></li>
-        <li><a href="#servicos" class="header__link">Serviços</a></li>
-        <li><a href="#portfolio" class="header__link">Portfólio</a></li>
-        <li><a href="#contato" class="header__link">Contato</a></li>
-      </ul>
-    </nav>
   </header>
-
   
   <main class="main" id="home">
     <section id="sobre" class="section-sobre">
