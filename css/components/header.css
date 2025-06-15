@@ -21,27 +21,23 @@
     transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-/* Animação de entrada ativa */
 .header.header--entrando {
     opacity: 0;
     transform: translateY(-30px);
 }
 
-/* Depois da animação de entrada (header mostrado) */
 .header.header--show {
     opacity: 1;
     transform: translateY(0);
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Esconde o header com scroll */
 .header.header--hide {
     opacity: 0;
     transform: translateY(-110%);
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-/* Fundo de vidro do header */
 .header::before {
     content: '';
     position: absolute;
@@ -64,8 +60,6 @@
     padding-left: 10px;
     padding-right: 15px;
 }
-
-/* ... resto do CSS do header continua igual ... */
 
 /* 2. Elementos Filhos (Logo, Nav, Botão) */
 
@@ -91,16 +85,15 @@
 
 /* Navegação Mobile */
 .header__nav {
-  flex-direction: column;
-  position: absolute;
-  right: 0;
-  top: 100%;
-  width: 70%;
-  z-index: 999;
-  transition: none; /* Deixa o JS controlar */
+    flex-direction: column;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    width: 70%;
+    z-index: 999;
+    transition: none;
 }
 
-/* Fundo de vidro da navegação */
 .header__list {
     list-style: none;
     padding: var(--espacamento);
@@ -122,8 +115,6 @@
     -webkit-backdrop-filter: var(--efeito-blur);
     box-shadow: var(--sombra);
     border-radius: var(--borda-arredondada);
-
-    /* ANIMAÇÃO: ESTADO INICIAL */
     opacity: 0;
     transform: translateY(-15px);
 }
@@ -132,7 +123,6 @@
     border-bottom: none;
 }
 
-/* Botão Hamburger e Animação */
 .header__toggle {
     background: none;
     border: none;
@@ -172,15 +162,14 @@
 }
 
 .header__nav--active {
-    opacity: 1; /* Fica visível */
-    visibility: visible; /* Fica visível e interativo */
-    pointer-events: auto; /* Volta a capturar cliques */
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
-/* ANIMAÇÃO: ESTADO FINAL (QUANDO O MENU ESTÁ ATIVO) */
 .header__nav--active .header__link {
-    opacity: 1; /* Fica visível */
-    transform: translateY(0); /* Volta para a posição original */
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .header__nav--active + .header__toggle .hamburger {
@@ -195,25 +184,23 @@
     transform: rotate(-45deg);
 }
 
+.header__link.ativo {
+    background-color: var(--cor-secundaria);
+    box-shadow: inset var(--sombra);
+    color: var(--cor-primaria);
+    pointer-events: none;
+    cursor: default;
+}
+
 /* ========================================================== 
    LÓGICA FINAL E COMPLETA DA ANIMAÇÃO EM CASCATA 
    ========================================================== */
 
-/* ESTADO FINAL (ATIVO): Define como os links ficam visíveis */
-.header__nav--active .header__link {
-    opacity: 1;
-    transform: translateY(0);
-}
-
-/* Define as transições de SAÍDA (estado base) com atraso inverso */
-/* O último item (4) some primeiro, pois seu atraso é menor (0s). */
 .header__list li:nth-child(1) .header__link { transition: all 0.3s ease-in-out 0.3s; }
 .header__list li:nth-child(2) .header__link { transition: all 0.3s ease-in-out 0.2s; }
 .header__list li:nth-child(3) .header__link { transition: all 0.3s ease-in-out 0.1s; }
 .header__list li:nth-child(4) .header__link { transition: all 0.3s ease-in-out 0s; }
 
-/* Define as transições de ENTRADA (estado ativo) com atraso progressivo */
-/* Esta regra é mais específica e tem prioridade na abertura do menu */
 .header__nav--active .header__list li:nth-child(1) .header__link { transition: all 0.3s ease-in-out 0.1s; }
 .header__nav--active .header__list li:nth-child(2) .header__link { transition: all 0.3s ease-in-out 0.2s; }
 .header__nav--active .header__list li:nth-child(3) .header__link { transition: all 0.3s ease-in-out 0.3s; }
@@ -222,7 +209,6 @@
 /* ========================================================================== 
    Responsividade 
    ========================================================================== */
-/* 4. Responsividade para Desktop */
 @media (min-width: 768px) {
     .header__toggle {
         display: none;
@@ -237,7 +223,6 @@
         box-shadow: none;
         width: auto;
     }
-   
 
     .header__list {
         align-items: center;
@@ -248,7 +233,7 @@
     }
 
     .header__link {
-        margin-top: 26px;
+        margin-top: 1.8rem;
         background: none;
         backdrop-filter: none;
         -webkit-backdrop-filter: none;
@@ -258,7 +243,7 @@
         justify-content: center;
         opacity: 1;
         border-bottom: none;
-        padding: 1.5rem rem;
+        padding: 0.5rem 1.5rem;
         color: var(--cor-secundaria);
         border-radius: var(--borda-arredondada);
     }

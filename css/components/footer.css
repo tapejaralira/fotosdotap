@@ -59,6 +59,7 @@
   opacity: 0.6;
 }
 
+
 @media (min-width: 768px) {
   .footer__list {
     flex-direction: row;     /* Muda pra horizontal */
@@ -73,4 +74,12 @@
     min-width: 150px;         /* Deixa os links menores se quiser */
     width: auto;             /* Deixa cada botão do tamanho do conteúdo */
   }
+}
+
+.footer__link.ativo {
+    background-color: var(--cor-secundaria);
+    color: var(--cor-primaria);   
+    pointer-events: none;
+    box-shadow: inset var(--sombra);
+    cursor: default;
 }
