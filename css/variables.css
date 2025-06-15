@@ -1,7 +1,7 @@
 :root {
-  --cor-primaria: #0a0a0ac7;
+  --cor-primaria: #11131baf;
   --cor-secundaria: #eeeeee;
-  --cor-destaque: #b5b5c5;
+  --cor-destaque: #b6b6bd;
 
   --fonte-principal: 'Open Sans', sans-serif;
   --espacamento: 0.4rem;
@@ -10,7 +10,7 @@
   --largura-maxima: 1200px; /* Largura máxima do layout */
 
   /* --- EFEITOS REUTILIZÁVEL --- */
-  --efeito-blur: blur(4px);                  /* Intensidade do desfoque */
+  --efeito-blur: blur(3px);                  /* Intensidade do desfoque */
   --sombra: 0 4px 8px #0a0a0a71;           /* Sombra padrão */
   --borda-arredondada: 30px;                    /* Raio da borda */
 }
