@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pacotes | Fotos do Tap.</title>
+  <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- Meta description e Open Graph -->
+  <meta name="description" content="Confira os pacotes de fotografia profissional oferecidos por Fotos do Tap. Qualidade e preço justo para eternizar seus momentos." />
+  <meta property="og:title" content="Pacotes | Fotos do Tap." />
+  <meta property="og:description" content="Confira os pacotes de fotografia profissional oferecidos por Fotos do Tap. Qualidade e preço justo para eternizar seus momentos." />
+  <meta property="og:image" content="https://seusite.com/assets/logo.svg" />
+  <meta property="og:url" content="https://seusite.com/pacotes.html" />
+  <meta property="og:type" content="website" />
+</head>
+<body>
+
+  <!-- Header igual ao da index -->
+  <header class="header">
+    <div class="header__container">
+      <a href="index.html" class="header__logo" aria-label="Voltar para página inicial">
+        <img class="header__logo-img" src="assets/logo.svg" alt="Logo Fotos do Tap" />
+        <span>Fotos do Tap.</span>
+      </a>
+
+      <nav id="menu" class="header__nav" aria-label="Menu principal">
+        <ul class="header__list">
+          <li class="header__item"><a href="index.html#sobre" class="header__link">Sobre</a></li>
+          <li class="header__item"><a href="pacotes.html" class="header__link header__link--active">Pacotes</a></li>
+          <li class="header__item"><a href="index.html#portfolio" class="header__link">Portfólio</a></li>
+          <li class="header__item"><a href="index.html#contato" class="header__link">Contato</a></li>          
+        </ul>
+      </nav>
+
+      <button id="menu-toggle" class="header__toggle" aria-controls="menu" aria-expanded="false" aria-label="Abrir/Fechar menu">
+        <span class="hamburger"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main com os cards -->
+  <main class="main" data-fade>
+    <section class="pacotes container" aria-label="Pacotes de fotografia">
+
+      <h2 class="section-title" data-fade>Pacotes de Fotografia</h2>
+
+      <div class="pacotes__grid" data-fade>
+        
+        <!-- Card pacote 1 -->
+        <article class="pacote-card" tabindex="0" aria-label="Pacote Básico">
+          <img src="img/pacote-basico.webp" alt="Imagem do Pacote Básico" class="pacote-card__imagem" />
+          <h3 class="pacote-card__titulo">Pacote Básico</h3>
+          <p class="pacote-card__descricao">Ensaio simples com 15 fotos editadas, ideal para retratos e momentos íntimos.</p>
+          <p class="pacote-card__preco">R$ 200,00</p>
+        </article>
+
+        <!-- Card pacote 2 -->
+        <article class="pacote-card" tabindex="0" aria-label="Pacote Completo">
+          <img src="img/pacote-completo.webp" alt="Imagem do Pacote Completo" class="pacote-card__imagem" />
+          <h3 class="pacote-card__titulo">Pacote Completo</h3>
+          <p class="pacote-card__descricao">Ensaio detalhado com 60 fotos editadas, perfeito para eventos e cobertura completa.</p>
+          <p class="pacote-card__preco">R$ 550,00</p>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer igual ao da index -->
+  <footer class="footer" data-fade>
+    <nav class="footer__nav" aria-label="Menu do rodapé">
+      <ul class="footer__list">
+        <li class="footer__item"><a href="index.html#sobre" class="footer__link">Sobre</a></li>
+        <li class="footer__item"><a href="pacotes.html" class="footer__link header__link--active">Pacotes</a></li>
+        <li class="footer__item"><a href="index.html#portfolio" class="footer__link">Portfólio</a></li>
+        <li class="footer__item"><a href="index.html#contato" class="footer__link">Contato</a></li>        
+      </ul>
+    </nav>
+    <p class="footer__text">&copy; 2025 • Feito com carinho e criatividade por Tapejara Lira. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- Scripts padrão -->
+  <script src="js/menu.js"></script>
+  <script src="js/carrossel.js"></script>
+  <script src="js/pageFade.js"></script>
+
+</body>
+</html>

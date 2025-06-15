@@ -1,74 +1,127 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <!-- Define charset e responsividade -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Título da página que aparece na aba do navegador -->
   <title>Fotos do Tap.</title>
+
+  <!-- Ícone da aba do navegador -->
   <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Otimização para carregar fontes do Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Fontes usadas no site -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
 
+  <!-- Link para o CSS principal -->
   <link rel="stylesheet" href="css/style.css" />
+  
+  <!-- META TAGS ESSENCIAIS PARA SEO E COMPARTILHAMENTO -->
+
+  <!-- Descrição curta para motores de busca -->
+  <meta name="description" content="Fotografia profissional em Manaus. Capturando emoções e eternizando momentos especiais." />
+
+  <!-- Palavras-chave relevantes (menos relevante hoje em dia, mas ajuda) -->
+  <meta name="keywords" content="fotografia, fotos, ensaio fotográfico, Manaus, fotógrafo profissional" />
+
+  <!-- Autor do site -->
+  <meta name="author" content="Tapejara Lira" />
+
+  <!-- Open Graph para redes sociais (Facebook, LinkedIn, etc.) -->
+  <meta property="og:title" content="Fotos do Tap." />
+  <meta property="og:description" content="Fotografia profissional em Manaus. Capturando emoções e eternizando momentos especiais." />
+  <meta property="og:image" content="https://seusite.com/assets/logo.svg" />
+  <meta property="og:url" content="https://seusite.com" />
+  <meta property="og:type" content="website" />
+
+  <!-- Twitter Cards para compartilhamento no Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Fotos do Tap." />
+  <meta name="twitter:description" content="Fotografia profissional em Manaus. Capturando emoções e eternizando momentos especiais." />
+  <meta name="twitter:image" content="https://seusite.com/assets/logo.svg" />
+
 </head>
 <body>
 
+  <!-- ===== HEADER / MENU PRINCIPAL ===== -->
   <header class="header">
     <div class="header__container">
-        <a href="#home" class="header__logo">
-            <img class="header__logo-img" src="assets/logo.svg" alt="Logo">
+
+        <!-- Logo clicável que leva para o topo da página -->
+        <a href="#home" class="header__logo" aria-label="Ir para o topo">
+            <img class="header__logo-img" src="assets/logo.svg" alt="Logo Fotos do Tap" />
             <span>Fotos do Tap.</span>
         </a>
 
-        <nav id="menu" class="header__nav">
+        <!-- Navegação principal -->
+        <nav id="menu" class="header__nav" aria-label="Menu principal">
             <ul class="header__list">
                 <li class="header__item"><a href="#sobre" class="header__link">Sobre</a></li>
-                <li class="header__item"><a href="#servicos" class="header__link">O que eu faço</a></li>
+                <li class="header__item"><a href="pacotes.html" class="header__link">Pacotes</a></li>
                 <li class="header__item"><a href="#portfolio" class="header__link">Portfólio</a></li>
                 <li class="header__item"><a href="#contato" class="header__link">Contato</a></li>
             </ul>
         </nav>
 
-        <button id="menu-toggle" class="header__toggle">
+        <!-- Botão do menu hamburger para mobile -->
+        <button id="menu-toggle" class="header__toggle" aria-controls="menu" aria-expanded="false" aria-label="Abrir/Fechar menu">
              <span class="hamburger"></span>
         </button>
     </div>
   </header>
-  
+
+  <!-- ===== CONTEÚDO PRINCIPAL ===== -->
   <main class="main" data-fade>
 
+    <!-- Seção Hero / Apresentação -->
     <section id="home" class="hero" data-fade>
       <div class="hero__container">
         <h1 class="hero__title" data-fade>Capturando Emoções, Eternizando Memórias!</h1>
         <p class="hero__subtitle" data-fade>Fotografia profissional para eternizar os momentos mais importantes da sua vida.</p>        
       </div>
     </section>
-    
+
+    <!-- Carrossel de fotos -->
     <div class="carrossel-fotos" data-fade>
-      <img src="img/foto1.webp" class="carrossel__imagem active" alt="Foto 1">
-      <img src="img/foto2.webp" class="carrossel__imagem" alt="Foto 2">
-      <img src="img/foto3.webp" class="carrossel__imagem" alt="Foto 3">
-      <img src="img/foto4.webp" class="carrossel__imagem" alt="Foto 4">
-      <img src="img/foto5.webp" class="carrossel__imagem" alt="Foto 5">
+      <img src="img/foto1.webp" class="carrossel__imagem active" alt="Foto 1" />
+      <img src="img/foto2.webp" class="carrossel__imagem" alt="Foto 2" />
+      <img src="img/foto3.webp" class="carrossel__imagem" alt="Foto 3" />
+      <img src="img/foto4.webp" class="carrossel__imagem" alt="Foto 4" />
+      <img src="img/foto5.webp" class="carrossel__imagem" alt="Foto 5" />
     </div>
         
   </main>
 
+  <!-- ===== RODAPÉ ===== -->
   <footer class="footer" data-fade>
-    <nav class="footer__nav">
+    <nav class="footer__nav" aria-label="Menu do rodapé">
         <ul class="footer__list">
             <li class="footer__item"><a href="#sobre" class="footer__link">Sobre</a></li>
-            <li class="footer__item"><a href="#servicos" class="footer__link">Serviços</a></li>
+            <li class="footer__item"><a href="pacotes.html" class="footer__link header__link--active">Pacotes</a></li>
             <li class="footer__item"><a href="#portfolio" class="footer__link">Portfólio</a></li>
             <li class="footer__item"><a href="#contato" class="footer__link">Contato</a></li>
         </ul>
     </nav>
     <p class="footer__text">&copy; 2025 • Feito com carinho e criatividade por Tapejara Lira. Todos os direitos reservados.</p>
-</footer>
+  </footer>
 
+  <!-- ===== SCRIPTS ===== -->
   <script src="js/menu.js"></script>
   <script src="js/carrossel.js"></script>
   <script src="js/pageFade.js"></script>
+
+  <!-- Script para bloquear clique direito nas imagens -->
+  <script>
+    document.addEventListener('contextmenu', e => {
+      if (e.target.tagName === 'IMG') {
+        e.preventDefault();
+      }
+    });
+  </script>
+
 </body>
 </html>
