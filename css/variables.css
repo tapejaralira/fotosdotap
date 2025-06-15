@@ -1,10 +1,15 @@
 :root {
-  --cor-primaria: #272727;
+  --cor-primaria: #0a0a0ae3;
   --cor-secundaria: #eeeeee;
   --cor-destaque: #9e9ead;
 
   --fonte-principal: 'Open Sans', sans-serif;
-  --espacamento: 1rem;
+  --espacamento: 0.6rem;
 
   --header-height: 55px; /* Variável para a altura do header */
+
+  /* --- EFEITOS REUTILIZÁVEL --- */
+  --efeito-blur: blur(px);                  /* Intensidade do desfoque */
+  --sombra: 0 4px 12px #0a0a0a81;           /* Sombra padrão */
+  --borda-arredondada: 30px;                    /* Raio da borda */
 }

@@ -1,18 +1,31 @@
 /* ==========================================================================
-   Componente Header
+   Componente Header (Versão Unificada e Final)
    ========================================================================== */
 
 /* 1. Layout Principal do Componente */
 .header {
-    background-color: var(--cor-primaria);
+    background-color: transparent;
     color: var(--cor-secundaria);
-    padding: 0 1rem;
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
     z-index: 1000;
     height: var(--header-height);
+    top: var(--espacamento);
+    left: var(--espacamento);
+    right: var(--espacamento);
+    width: auto;
+}
+
+/* Fundo de vidro do header */
+.header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: -1;
+    background-color: var(--cor-primaria);
+    backdrop-filter: var(--efeito-blur);
+    -webkit-backdrop-filter: var(--efeito-blur);
+    box-shadow: var(--sombra);
+    border-radius: var(--borda-arredondada);
 }
 
 .header__container {
@@ -22,11 +35,12 @@
     height: 100%;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 1.5rem;
 }
 
-/* 2. Elementos Filhos do Header (Logo, Navegação, Botão) */
 
-/* Logo */
+/* 2. Elementos Filhos (Logo, Nav, Botão) */
+
 .header__logo {
     display: flex;
     align-items: center;
@@ -36,74 +50,89 @@
 }
 
 .header__logo-img {
-    width: 2rem;
-    height: 2rem;
+    width: 2.2rem;
+    height: 2.2rem;
 }
 
 .header__logo span {
     font-family: "DM Serif Text", serif;
-    font-weight: 400;     /* Peso regular */
-    font-style: italic;   /* Estilo itálico */
-    font-size: 1.4rem;    /* Ajuste o tamanho como preferir */
-    letter-spacing: 0.5px; /* Um leve espaçamento entre as letras */
+    font-weight: 400;
+    font-style: italic;
+    font-size: 1.4rem;
 }
 
-/* Navegação Mobile (escondida por padrão) */
+/* Navegação Mobile */
 .header__nav {
     display: none;
     flex-direction: column;
     position: absolute;
-    top: var(--header-height);
+    top: calc(100% + 0.5rem); /* Posiciona abaixo do header + um respiro */
     left: 0;
     width: 100%;
+    
+    background-color: transparent;
+    box-shadow: none;
+    z-index: 999;
+}
+
+/* Fundo de vidro da navegação */
+.header__nav::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: -1;
     background-color: var(--cor-primaria);
-    box-shadow: 0 4px 8px var(--cor-primaria);
+    backdrop-filter: var(--efeito-blur);
+    -webkit-backdrop-filter: var(--efeito-blur);
+    box-shadow: var(--sombra);
+    border-radius: var(--borda-arredondada);
 }
 
 .header__list {
     list-style: none;
-    padding: 0;
+    padding: 0.5rem;
     margin: 0;
     display: flex;
     flex-direction: column;
+    background-color: transparent;
 }
 
 .header__link {
     color: var(--cor-secundaria);
     text-decoration: none;
     font-size: 1rem;
-    padding: 1.2rem 1rem;
+    padding: 1rem;
     display: block;
     text-align: center;
-    border-bottom: 1px solid var(--cor-destaque); /* Linha de separação */
+    border-bottom: 1px solid var(--cor-destaque);
 }
 
-/* Botão Hamburger */
+.header__list li:last-child .header__link {
+    border-bottom: none;
+}
+
+/* Botão Hamburger e Animação */
 .header__toggle {
     background: none;
     border: none;
-    color: var(--cor-secundaria);
     cursor: pointer;
     display: block;
     padding: 0.5rem;
     -webkit-tap-highlight-color: transparent;
 }
 
-.hamburger {
+.hamburger, .hamburger::before, .hamburger::after {
     display: block;
     width: 25px;
     height: 2px;
     background-color: var(--cor-secundaria);
     position: relative;
+    transition: all 0.3s ease-in-out;
 }
 
-.hamburger::before,
-.hamburger::after {
+.hamburger::before, .hamburger::after {
     content: '';
     position: absolute;
-    width: 100%;
-    height: 2px;
-    background-color: var(--cor-secundaria);
     left: 0;
 }
 
@@ -115,39 +144,30 @@
     transform: translateY(8px);
 }
 
-/* 3. Modificadores e Estados (:hover, :active, etc.) */
+/* 3. Estados e Animações */
 .header__link:hover {
     background-color: var(--cor-destaque);
+    color: var(--cor-primaria);
 }
 
 .header__nav--active {
-    display: flex; /* Mostra o menu mobile */
-}
-
-/* 4. Animação do Hamburger para "X" */
-.hamburger, 
-.hamburger::before, 
-.hamburger::after {
-    transition: all 0.3s ease-in-out;
+    display: flex;
 }
 
 .header__nav--active + .header__toggle .hamburger {
-    background-color: transparent; /* Traço do meio desaparece */
+    background-color: transparent;
 }
 
 .header__nav--active + .header__toggle .hamburger::before {
-    transform: rotate(45deg); /* Traço de cima rotaciona */
+    transform: rotate(45deg);
 }
 
 .header__nav--active + .header__toggle .hamburger::after {
-    transform: rotate(-45deg); /* Traço de baixo rotaciona */
+    transform: rotate(-45deg);
 }
 
 
-/* ==========================================================================
-   Responsividade do Header para Desktop
-   ========================================================================== */
-
+/* 4. Responsividade para Desktop */
 @media (min-width: 768px) {
     .header__toggle {
         display: none;
@@ -163,17 +183,19 @@
         width: auto;
     }
 
+    .header__nav::before {
+        display: none;
+    }
+
     .header__list {
         flex-direction: row;
         gap: 2rem;
+        padding: 0;
     }
 
     .header__link {
         border-bottom: none;
         padding: 0.5rem 1rem;
-    }
-
-    .header__link:hover {
-        background-color: var(--cor-destaque);
+        border-radius: var(--borda-arredondada);
     }
 }
