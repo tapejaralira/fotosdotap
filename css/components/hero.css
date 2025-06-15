@@ -1,0 +1,83 @@
+/* css/components/hero.css */
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: var(--espacamento);
+  padding: 2rem var(--espacamento);
+  background-color: var(--cor-destaque);
+}
+
+.hero__container {
+  max-width: 800px;
+  padding: var(--espacamento);
+}
+
+.hero__title {
+  font-family: "DM Serif Text", serif;
+  font-size: clamp(2rem, 5vw, 3.5rem); /* Fonte responsiva */
+  color: var(--cor-secundaria);
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.hero__subtitle {
+  font-size: clamp(1rem, 2.5vw, 1.25rem); /* Fonte responsiva */
+  color: var(--cor-primaria);
+  opacity: 0.9;
+  margin-bottom: 2rem;
+  max-width: 800px; /* Limita a largura do parágrafo */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Carrossel de Fotos */
+.carrossel-fotos {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 1.5rem auto;
+  overflow: hidden;
+  aspect-ratio: 2/3;  
+  box-shadow: var(--sombra);
+}
+
+.carrossel__container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.carrossel__imagem {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  z-index: 0;
+  transition: opacity 3s ease-in-out;
+}
+
+.carrossel__imagem.active {
+  opacity: 1;
+  z-index: 2;
+}
+
+.carrossel__imagem.fade-out {
+  opacity: 0;
+  z-index: 1;
+}
+
+@media (min-width: 768px) {
+    .carrossel-fotos {
+        margin-top: -2rem; /* Ajusta a margem superior para telas maiores */
+    }
+
+    .hero {
+        margin-top: 2rem;        
+    }
+}

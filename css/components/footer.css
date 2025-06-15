@@ -1,11 +1,76 @@
+/* ==========================================================================
+   Componente Footer (com Navegação Vertical)
+   ========================================================================== */
+
 .footer {
-  background-color: var(--cor-primaria);
-  color: white;
-  padding: var(--espacamento);
-  text-align: center;
-  margin-top: 2rem;
+  /* Usamos a cor de fundo com transparência para o efeito de vidro */
+  background-color: transparent;
+  color: var(--cor-primaria);
+  padding: 2rem var(--espacamento); /* Aumenta o espaçamento vertical */
+  text-align: center; 
 }
 
+/* Container da lista de navegação */
+.footer__list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 2rem auto; /* Centraliza a lista e adiciona margem abaixo */
+  
+  /* Layout flex para os botões */
+  display: flex;
+  flex-direction: column;   /* Empilha os itens verticalmente */
+  align-items: center;      /* Centraliza os botões horizontalmente */
+  gap: calc(var(--espacamento)*2);    /* Espaço entre os botões */
+
+  /* Define uma largura máxima para a lista de botões */
+  width: 90%; 
+  max-width: 400px;
+}
+
+/* Estilo de cada link como um "botão de vidro" */
+.footer__link {
+  color: var(--cor-secundaria);
+  text-decoration: none;
+  font-size: 1rem;
+  min-width: 200px;
+  display: block; /* Faz o link ocupar todo o espaço do botão */
+  width: 100%;    /* Ocupa 100% da largura da lista */
+  padding: 0.7rem;
+
+  /* --- APLICANDO O KIT DE EFEITOS DE VIDRO --- */
+  background-color: var(--cor-primaria);
+  backdrop-filter: var(--efeito-blur);
+  -webkit-backdrop-filter: var(--efeito-blur);
+  box-shadow: var(--sombra);
+  border-radius: var(--borda-arredondada);
+  
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.footer__link:hover {
+  transform: translateY(-3px); /* Efeito de "levantar" o botão */
+  background-color: var(--cor-destaque);
+  color: var(--cor-primaria);
+}
+
+/* Texto de copyright */
 .footer__text {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+@media (min-width: 768px) {
+  .footer__list {
+    flex-direction: row;     /* Muda pra horizontal */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;     /* Alinha os botões no centro vertical */
+    gap: 2rem;               /* Espaço entre os botões */
+    max-width: none;         /* Libera a largura */
+    width: auto;             /* Deixa o tamanho se ajustar */
+  }
+
+  .footer__link {
+    min-width: 150px;         /* Deixa os links menores se quiser */
+    width: auto;             /* Deixa cada botão do tamanho do conteúdo */
+  }
 }

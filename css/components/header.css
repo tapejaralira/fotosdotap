@@ -12,8 +12,10 @@
     top: var(--espacamento);
     left: var(--espacamento);
     right: var(--espacamento);
-    width: auto;
+    margin: 0 auto;    
+    max-width: var(--largura-maxima);
 }
+
 
 /* Fundo de vidro do header */
 .header::before {
@@ -32,10 +34,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 100%;
-    max-width: 1200px;
+    height: var(--header-height);
+    max-width: var(--largura-maxima);
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding-left: 10px;
+    padding-right: 15px;
+}
+
+.header--hide {
+  transform: translateY(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+.header--show {
+  transform: translateY(0);
+  transition: transform 0.3s ease-in-out;
 }
 
 
@@ -46,12 +58,12 @@
     align-items: center;
     text-decoration: none;
     color: var(--cor-secundaria);
-    gap: 0.5rem;
+    gap: 1rem;
 }
 
 .header__logo-img {
-    width: 2.2rem;
-    height: 2.2rem;
+    width: 2.3rem;
+    height: 2.3rem;
 }
 
 .header__logo span {
@@ -63,35 +75,20 @@
 
 /* Navegação Mobile */
 .header__nav {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: calc(100% + 0.5rem); /* Posiciona abaixo do header + um respiro */
-    left: 0;
-    width: 100%;
-    
-    background-color: transparent;
-    box-shadow: none;
-    z-index: 999;
+  flex-direction: column;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  width: 70%;
+  z-index: 999;
+  transition: none; /* Deixa o JS controlar */
 }
 
 /* Fundo de vidro da navegação */
-.header__nav::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    z-index: -1;
-    background-color: var(--cor-primaria);
-    backdrop-filter: var(--efeito-blur);
-    -webkit-backdrop-filter: var(--efeito-blur);
-    box-shadow: var(--sombra);
-    border-radius: var(--borda-arredondada);
-}
-
 .header__list {
     list-style: none;
-    padding: 0.5rem;
-    margin: 0;
+    padding: var(--espacamento);
+    gap: var(--espacamento);
     display: flex;
     flex-direction: column;
     background-color: transparent;
@@ -101,10 +98,18 @@
     color: var(--cor-secundaria);
     text-decoration: none;
     font-size: 1rem;
-    padding: 1rem;
+    padding: 0.8rem;
     display: block;
     text-align: center;
-    border-bottom: 1px solid var(--cor-destaque);
+    background-color: var(--cor-primaria);
+    backdrop-filter: var(--efeito-blur);
+    -webkit-backdrop-filter: var(--efeito-blur);
+    box-shadow: var(--sombra);
+    border-radius: var(--borda-arredondada);
+
+    /* ANIMAÇÃO: ESTADO INICIAL */
+    opacity: 0;
+    transform: translateY(-15px);
 }
 
 .header__list li:last-child .header__link {
@@ -151,7 +156,15 @@
 }
 
 .header__nav--active {
-    display: flex;
+    opacity: 1; /* Fica visível */
+    visibility: visible; /* Fica visível e interativo */
+    pointer-events: auto; /* Volta a capturar cliques */
+}
+
+/* ANIMAÇÃO: ESTADO FINAL (QUANDO O MENU ESTÁ ATIVO) */
+.header__nav--active .header__link {
+    opacity: 1; /* Fica visível */
+    transform: translateY(0); /* Volta para a posição original */
 }
 
 .header__nav--active + .header__toggle .hamburger {
@@ -166,7 +179,34 @@
     transform: rotate(-45deg);
 }
 
+/* ==========================================================
+   LÓGICA FINAL E COMPLETA DA ANIMAÇÃO EM CASCATA
+   ========================================================== */
 
+/* ESTADO FINAL (ATIVO): Define como os links ficam visíveis */
+.header__nav--active .header__link {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Define as transições de SAÍDA (estado base) com atraso inverso */
+/* O último item (4) some primeiro, pois seu atraso é menor (0s). */
+.header__list li:nth-child(1) .header__link { transition: all 0.3s ease-in-out 0.3s; }
+.header__list li:nth-child(2) .header__link { transition: all 0.3s ease-in-out 0.2s; }
+.header__list li:nth-child(3) .header__link { transition: all 0.3s ease-in-out 0.1s; }
+.header__list li:nth-child(4) .header__link { transition: all 0.3s ease-in-out 0s; }
+
+/* Define as transições de ENTRADA (estado ativo) com atraso progressivo */
+/* Esta regra é mais específica e tem prioridade na abertura do menu */
+.header__nav--active .header__list li:nth-child(1) .header__link { transition: all 0.3s ease-in-out 0.1s; }
+.header__nav--active .header__list li:nth-child(2) .header__link { transition: all 0.3s ease-in-out 0.2s; }
+.header__nav--active .header__list li:nth-child(3) .header__link { transition: all 0.3s ease-in-out 0.3s; }
+.header__nav--active .header__list li:nth-child(4) .header__link { transition: all 0.3s ease-in-out 0.4s; }
+
+
+/* ==========================================================================
+   Responsividade
+   ========================================================================== */
 /* 4. Responsividade para Desktop */
 @media (min-width: 768px) {
     .header__toggle {
@@ -182,20 +222,29 @@
         box-shadow: none;
         width: auto;
     }
-
-    .header__nav::before {
-        display: none;
-    }
+   
 
     .header__list {
+        align-items: center;
+        display: flex;
         flex-direction: row;
         gap: 2rem;
         padding: 0;
     }
 
     .header__link {
+        margin-top: 26px;
+        background: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        box-shadow: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 1;
         border-bottom: none;
-        padding: 0.5rem 1rem;
+        padding: 1.5rem rem;
+        color: var(--cor-secundaria);
         border-radius: var(--borda-arredondada);
     }
 }
