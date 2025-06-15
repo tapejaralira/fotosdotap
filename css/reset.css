@@ -5,5 +5,5 @@
 }
 
 * {
-  -webkit-tap-highlight-color: var(--cor-destaque); /* Evita o destaque ao tocar em dispositivos móveis */
+  -webkit-tap-highlight-color: transparent; /* Evita o destaque ao tocar em dispositivos móveis */
 }

@@ -16,3 +16,30 @@
 [data-fade].apareceu:not(header):not(.header) {
   transform: translateY(0);
 }
+
+/* Efeito toque global para links, botões e elementos com role="button" */
+a, button, [role="button"] {
+  position: relative;        /* para o ::after ficar no lugar certo */
+  overflow: hidden;          /* pra não vazar fora do canto arredondado */
+  border-radius: var(--borda-arredondada); /* herda seu arredondado padrão */
+}
+
+a::after,
+button::after,
+[role="button"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;                  /* top:0; right:0; bottom:0; left:0 */
+  background-color: rgba(255, 255, 255, 0.15); /* cor leve e transparente */
+  opacity: 0;                /* invisível por padrão */
+  pointer-events: none;      /* não atrapalha cliques */
+  border-radius: inherit;    /* arredondamento igual ao pai */
+  transition: opacity 0.3s ease;
+}
+
+a:active::after,
+button:active::after,
+[role="button"]:active::after {
+  opacity: 1;                /* aparece no toque/click */
+  transition: opacity 0.1s ease;
+}
