@@ -69,3 +69,12 @@ document.addEventListener("DOMContentLoaded", function () {
         lastScrollTop = currentScroll;
     });
 });
+
+// =======================================================
+// === BLOQUEIO DE CLIQUE DIREITO EM IMAGENS ===
+// =======================================================
+document.addEventListener('contextmenu', e => {
+  if (e.target.tagName === 'IMG') {
+    e.preventDefault();
+  }
+});
