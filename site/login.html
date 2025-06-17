@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login do Cliente | Fotos do Tap.</title>
+  <link rel="icon" href="/shared/assets/logo.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/shared/css/style.css" />
+
+  <!-- Meta tags -->
+  <meta name="description" content="Área de acesso para clientes Fotos do Tap. Use seu token exclusivo para visualizar suas fotos." />
+  <meta property="og:title" content="Login do Cliente | Fotos do Tap." />
+  <meta property="og:description" content="Área de acesso para clientes Fotos do Tap. Use seu token exclusivo para visualizar suas fotos." />
+  <meta property="og:image" content="https://seusite.com/shared/assets/logo.svg" />
+  <meta property="og:url" content="https://seusite.com/login.html" />
+  <meta property="og:type" content="website" />
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header__container">
+      <a href="/index.html" class="header__logo" aria-label="Voltar para página inicial">
+        <img class="header__logo-img" src="/shared/assets/logo.svg" alt="Logo Fotos do Tap" />
+        <span>Fotos do Tap.</span>
+      </a>
+      <nav id="menu" class="header__nav" aria-label="Menu principal">
+        <ul class="header__list">
+          <li class="header__item"><a href="/index.html#sobre" class="header__link">Sobre</a></li>
+          <li class="header__item"><a href="/pacotes.html" class="header__link">Pacotes</a></li>
+          <li class="header__item"><a href="/index.html#portfolio" class="header__link">Portfólio</a></li>
+          <li class="header__item"><a href="/index.html#contato" class="header__link">Contato</a></li>
+        </ul>
+      </nav>
+      <button id="menu-toggle" class="header__toggle" aria-controls="menu" aria-expanded="false" aria-label="Abrir/Fechar menu">
+        <span class="hamburger"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main com login -->
+  <main class="main" data-fade>
+    <section class="container" aria-label="Login do Cliente" style="text-align: center; padding: 2rem 1rem;">
+      <h2 class="hero hero__title" data-fade>Área do Cliente</h2>
+      <p style="margin-bottom: 2rem;">Digite seu token exclusivo para acessar suas fotos.</p>
+      <form id="form-login" style="max-width: 400px; margin: 0 auto;">
+        <input
+          type="text"
+          id="token"
+          name="token"
+          placeholder="Seu token de acesso"
+          required
+          style="width: 100%; padding: 0.75rem; font-size: 1rem; border: 1px solid #ccc; border-radius: 0.5rem;"
+        />
+        <button
+          type="submit"
+          style="margin-top: 1rem; padding: 0.75rem 1.5rem; font-size: 1rem; border: none; border-radius: 0.5rem; background-color: var(--cor-secundaria); color: white; cursor: pointer;"
+        >
+          Entrar
+        </button>
+        <p id="mensagem-erro" style="color: red; margin-top: 1rem; display: none;">Token inválido.</p>
+      </form>
+    </section>
+  </main>
+
+  <div style="height: var(--espacamento-div);"></div>
+
+  <!-- Footer -->
+  <footer class="footer" data-fade>
+    <nav class="footer__nav" aria-label="Menu do rodapé">
+      <ul class="footer__list">
+        <li class="footer__item"><a href="/index.html#sobre" class="footer__link">Sobre</a></li>
+        <li class="footer__item"><a href="/pacotes.html" class="footer__link">Pacotes</a></li>
+        <li class="footer__item"><a href="/index.html#portfolio" class="footer__link">Portfólio</a></li>
+        <li class="footer__item"><a href="/index.html#contato" class="footer__link">Contato</a></li>
+      </ul>
+    </nav>
+    <p class="footer__text">&copy; 2025 • Feito com carinho e criatividade por Tapejara Lira. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- Scripts padrão -->
+  <script src="/shared/js/menu.js"></script>
+  <script src="/shared/js/pageFade.js"></script>
+  <script>
+    document.getElementById("form-login").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const token = document.getElementById("token").value.trim();
+
+      // Aqui você pode substituir pela sua lógica de validação real
+      const tokensValidos = ["abc123", "xyz789"]; // tokens válidos de exemplo
+
+      if (tokensValidos.includes(token)) {
+        window.location.href = `/cliente/${token}/index.html`; // redireciona para a área do cliente
+      } else {
+        document.getElementById("mensagem-erro").style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>
