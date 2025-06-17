@@ -4,19 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pacotes | Fotos do Tap.</title>
-    <link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+    <link rel="icon" href="../shared/assets/logo.svg" type="image/svg+xml" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
 
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="../shared/css/style.css" />
 
     <!-- Meta description e Open Graph -->
     <meta name="description" content="Confira os pacotes de fotografia profissional oferecidos por Fotos do Tap. Qualidade e preço justo para eternizar seus momentos." />
     <meta property="og:title" content="Pacotes | Fotos do Tap." />
     <meta property="og:description" content="Confira os pacotes de fotografia profissional oferecidos por Fotos do Tap. Qualidade e preço justo para eternizar seus momentos." />
-    <meta property="og:image" content="https://seusite.com/assets/logo.svg" />
+    <meta property="og:image" content="https://seusite.com/shared/assets/logo.svg" />
     <meta property="og:url" content="https://seusite.com/pacotes.html" />
     <meta property="og:type" content="website" />
 </head>
@@ -25,7 +25,7 @@
     <header class="header">
         <div class="header__container">
             <a href="index.html" class="header__logo" aria-label="Voltar para página inicial">
-                <img class="header__logo-img" src="assets/logo.svg" alt="Logo Fotos do Tap" />
+                <img class="header__logo-img" src="../shared/assets/logo.svg" alt="Logo Fotos do Tap" />
                 <span>Fotos do Tap.</span>
             </a>
             <nav id="menu" class="header__nav" aria-label="Menu principal">
@@ -52,7 +52,7 @@
                     <h3 class="pacote-card__titulo">Pacote Completo</h3>
                     <img src="img/pacotes/pacote1.webp" alt="Imagem do Pacote Completo" class="pacote-card__imagem" />
                     <p class="pacote-card__descricao">
-                        A escolha ideal pra quem quer viver a experiência completa e ter um ensaio inesquecível do início ao fim.<br>
+                        A escolha ideal pra quem quer viver a experiência completa e ter um ensaio inesquecível do início ao fim.<br />
                         Perfeito para casais apaixonados, profissionais que querem se destacar ou quem sonha com um ensaio editorial com estilo e personalidade.
                     </p>
                     <div class="pacote-card__divider"></div>
@@ -72,15 +72,15 @@
                     <h3 class="pacote-card__titulo">Pacote Flexível</h3>
                     <img src="img/pacotes/pacote2.webp" alt="Imagem do Pacote Flexível" class="pacote-card__imagem" />
                     <p class="pacote-card__descricao">
-                        Aqui o controle é seu.<br>
-                        Você faz o ensaio, vê as fotos com calma e só escolhe o que realmente quiser levar.<br>
+                        Aqui o controle é seu.<br />
+                        Você faz o ensaio, vê as fotos com calma e só escolhe o que realmente quiser levar.<br />
                         Perfeito pra quem busca praticidade, um registro pontual ou quer começar com um investimento menor. Com liberdade total pra adicionar mais fotos depois, pagando só pelo que escolher.
                     </p>
                     <div class="pacote-card__divider"></div>
                     <ul class="pacote-card__lista">
                         <li>● Sessão de 1 hora de duração</li>
                         <li>● Você escolhe suas fotos</li>
-                        <li>● Pagua só pelas fotos que escolher</li>
+                        <li>● Paga só pelas fotos que escolher</li>
                         <li>● Edição profissional em alta qualidade</li>
                         <li>● Entrega digital em link exclusivo</li>
                     </ul>
@@ -92,7 +92,7 @@
                 <article class="pacote-card" tabindex="0" aria-label="Fotos Extras do Pacote Flexível">
                     <h3 class="pacote-card__titulo">Se quiser mais?</h3>
                     <p class="pacote-card__descricao">
-                        Escolha quantas fotos quiser!<br>
+                        Escolha quantas fotos quiser!<br />
                         Quanto mais fotos você escolher, mais barato cada uma fica.
                     </p>
                     <div class="pacote-card__divider"></div>
@@ -121,7 +121,7 @@
                             max="100"
                             value="0"
                             style="width: 100%; padding: 0.5rem; font-size: 1rem; margin-top: 0.5rem; border-radius: 0.5rem; border: 1px solid #ccc;"
-                        >
+                        />
                     </div>
                     <ul class="pacote-card__lista" id="detalhesPrecos"></ul>
                     <div class="pacote-card__divider"></div>
@@ -140,16 +140,16 @@
                 <li class="footer__item"><a href="index.html#sobre" class="footer__link">Sobre</a></li>
                 <li class="footer__item"><a href="pacotes.html" class="footer__link ativo">Pacotes</a></li>
                 <li class="footer__item"><a href="index.html#portfolio" class="footer__link">Portfólio</a></li>
-                <li class="footer__item"><a href="index.html#contato" class="footer__link">Contato</a></li>
+                <li class="footer__footer__item"><a href="index.html#contato" class="footer__link">Contato</a></li>
             </ul>
         </nav>
         <p class="footer__text">&copy; 2025 • Feito com carinho e criatividade por Tapejara Lira. Todos os direitos reservados.</p>
     </footer>
 
     <!-- Scripts padrão -->
-    <script src="js/menu.js"></script>
-    <script src="js/pageFade.js"></script>
-    <script src="js/calculadoraExtras.js"></script>
+    <script src="../shared/js/menu.js"></script>
+    <script src="../shared/js/pageFade.js"></script>
+    <script src="../shared/js/calculadoraExtras.js"></script>
     <script>
         iniciarCalculadoraFotosExtras("quantidadeFotos", "detalhesPrecos", "valorTotal");
     </script>
