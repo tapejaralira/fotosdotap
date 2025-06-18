@@ -4,18 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login do Cliente | Fotos do Tap.</title>
-  <link rel="icon" href="/shared/assets/logo.svg" type="image/svg+xml">
-
+  <link rel="icon" href="/static/assets/logo.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="/shared/css/style.css" />
-
-  <!-- Meta tags -->
-  <meta name="description" content="Área de acesso para clientes Fotos do Tap. Use seu token exclusivo para visualizar suas fotos." />
+  <link rel="stylesheet" href="/static/css/style.css" />
+  <meta name="description" content="Área de acesso para clientes Fotos do Tap. Use seu e-mail para acessar suas fotos." />
   <meta property="og:title" content="Login do Cliente | Fotos do Tap." />
-  <meta property="og:description" content="Área de acesso para clientes Fotos do Tap. Use seu token exclusivo para visualizar suas fotos." />
+  <meta property="og:description" content="Área de acesso para clientes Fotos do Tap. Use seu e-mail para acessar suas fotos." />
   <meta property="og:image" content="https://seusite.com/shared/assets/logo.svg" />
   <meta property="og:url" content="https://seusite.com/login.html" />
   <meta property="og:type" content="website" />
@@ -25,7 +21,7 @@
   <header class="header">
     <div class="header__container">
       <a href="/index.html" class="header__logo" aria-label="Voltar para página inicial">
-        <img class="header__logo-img" src="/shared/assets/logo.svg" alt="Logo Fotos do Tap" />
+        <img class="header__logo-img" src="/static/assets/logo.svg" alt="Logo Fotos do Tap" />
         <span>Fotos do Tap.</span>
       </a>
       <nav id="menu" class="header__nav" aria-label="Menu principal">
@@ -46,23 +42,41 @@
   <main class="main" data-fade>
     <section class="container" aria-label="Login do Cliente" style="text-align: center; padding: 2rem 1rem;">
       <h2 class="hero hero__title" data-fade>Área do Cliente</h2>
-      <p style="margin-bottom: 2rem;">Digite seu token exclusivo para acessar suas fotos.</p>
       <form id="form-login" style="max-width: 400px; margin: 0 auto;">
-        <input
-          type="text"
-          id="token"
-          name="token"
-          placeholder="Seu token de acesso"
-          required
-          style="width: 100%; padding: 0.75rem; font-size: 1rem; border: 1px solid #ccc; border-radius: 0.5rem;"
-        />
-        <button
-          type="submit"
-          style="margin-top: 1rem; padding: 0.75rem 1.5rem; font-size: 1rem; border: none; border-radius: 0.5rem; background-color: var(--cor-secundaria); color: white; cursor: pointer;"
-        >
-          Entrar
-        </button>
-        <p id="mensagem-erro" style="color: red; margin-top: 1rem; display: none;">Token inválido.</p>
+        <div id="etapa-email">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Seu e-mail"
+            required
+            style="width: 100%; padding: 0.75rem; font-size: 1rem; border: 1px solid #ccc; border-radius: 0.5rem;"
+          />
+          <button type="button" id="btn-verificar-email" style="margin-top: 1rem; padding: 0.75rem 1.5rem; font-size: 1rem; border: none; border-radius: 0.5rem; background-color: var(--cor-secundaria); color: white; cursor: pointer;">Avançar</button>
+        </div>
+        <div id="etapa-senha" style="display:none;">
+          <input
+            type="password"
+            id="senha"
+            name="senha"
+            placeholder="Digite sua senha"
+            required
+            style="width: 100%; padding: 0.75rem; font-size: 1rem; border: 1px solid #ccc; border-radius: 0.5rem;"
+          />
+          <button type="submit" style="margin-top: 1rem; padding: 0.75rem 1.5rem; font-size: 1rem; border: none; border-radius: 0.5rem; background-color: var(--cor-secundaria); color: white; cursor: pointer;">Entrar</button>
+        </div>
+        <div id="etapa-cadastrar-senha" style="display:none;">
+          <input
+            type="password"
+            id="nova-senha"
+            name="nova-senha"
+            placeholder="Cadastre uma senha"
+            required
+            style="width: 100%; padding: 0.75rem; font-size: 1rem; border: 1px solid #ccc; border-radius: 0.5rem;"
+          />
+          <button type="button" id="btn-cadastrar-senha" style="margin-top: 1rem; padding: 0.75rem 1.5rem; font-size: 1rem; border: none; border-radius: 0.5rem; background-color: var(--cor-secundaria); color: white; cursor: pointer;">Cadastrar senha</button>
+        </div>
+        <p id="mensagem-erro" style="color: red; margin-top: 1rem; display: none;"></p>
       </form>
     </section>
   </main>
@@ -83,22 +97,91 @@
   </footer>
 
   <!-- Scripts padrão -->
-  <script src="/shared/js/menu.js"></script>
-  <script src="/shared/js/pageFade.js"></script>
+  <script src="/static/js/menu.js"></script>
+  <script src="/static/js/pageFade.js"></script>
   <script>
-    document.getElementById("form-login").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const token = document.getElementById("token").value.trim();
+    const apiBase = '/api'; // ajuste se necessário
+    const form = document.getElementById('form-login');
+    const etapaEmail = document.getElementById('etapa-email');
+    const etapaSenha = document.getElementById('etapa-senha');
+    const etapaCadastrarSenha = document.getElementById('etapa-cadastrar-senha');
+    const mensagemErro = document.getElementById('mensagem-erro');
+    let emailAtual = '';
 
-      // Aqui você pode substituir pela sua lógica de validação real
-      const tokensValidos = ["abc123", "xyz789"]; // tokens válidos de exemplo
-
-      if (tokensValidos.includes(token)) {
-        window.location.href = `/cliente/${token}/index.html`; // redireciona para a área do cliente
-      } else {
-        document.getElementById("mensagem-erro").style.display = "block";
+    document.getElementById('btn-verificar-email').onclick = async function () {
+      mensagemErro.style.display = 'none';
+      const email = document.getElementById('email').value.trim();
+      if (!email) return;
+      // Verifica se o e-mail existe e se já tem senha
+      try {
+        const res = await fetch(`${apiBase}/login?email=${encodeURIComponent(email)}`);
+        const data = await res.json();
+        if (data.estado === 'nao_encontrado') {
+          mensagemErro.textContent = 'E-mail não encontrado.';
+          mensagemErro.style.display = 'block';
+        } else if (data.senhaCadastrada) {
+          emailAtual = email;
+          etapaEmail.style.display = 'none';
+          etapaSenha.style.display = 'block';
+        } else {
+          emailAtual = email;
+          etapaEmail.style.display = 'none';
+          etapaCadastrarSenha.style.display = 'block';
+        }
+      } catch (e) {
+        mensagemErro.textContent = 'Erro ao conectar com o servidor.';
+        mensagemErro.style.display = 'block';
       }
-    });
+    };
+
+    // Login com senha
+    form.onsubmit = async function (e) {
+      if (etapaSenha.style.display !== 'block') return;
+      e.preventDefault();
+      mensagemErro.style.display = 'none';
+      const senha = document.getElementById('senha').value;
+      try {
+        const res = await fetch(`${apiBase}/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: emailAtual, senha })
+        });
+        const data = await res.json();
+        if (data.sucesso) {
+          window.location.href = `/cliente/${encodeURIComponent(emailAtual)}/index.html`;
+        } else {
+          mensagemErro.textContent = data.erro || 'Senha incorreta.';
+          mensagemErro.style.display = 'block';
+        }
+      } catch (e) {
+        mensagemErro.textContent = 'Erro ao conectar com o servidor.';
+        mensagemErro.style.display = 'block';
+      }
+    };
+
+    // Cadastro de nova senha
+    document.getElementById('btn-cadastrar-senha').onclick = async function () {
+      mensagemErro.style.display = 'none';
+      const novaSenha = document.getElementById('nova-senha').value;
+      if (!novaSenha) return;
+      try {
+        const res = await fetch(`${apiBase}/cadastrarSenha`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: emailAtual, senha: novaSenha })
+        });
+        const data = await res.json();
+        if (data.sucesso) {
+          window.location.href = `/cliente/${encodeURIComponent(emailAtual)}/index.html`;
+        } else {
+          mensagemErro.textContent = data.erro || 'Erro ao cadastrar senha.';
+          mensagemErro.style.display = 'block';
+        }
+      } catch (e) {
+        mensagemErro.textContent = 'Erro ao conectar com o servidor.';
+        mensagemErro.style.display = 'block';
+      }
+    };
   </script>
 </body>
 </html>
