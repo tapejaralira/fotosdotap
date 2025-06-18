@@ -1,1 +1,46 @@
+# Cloudflare R2
 bucket/
+
+# Node.js
+node_modules/
+backend/node_modules/
+
+# Logs
+*.log
+logs/
+yarn-debug.log*
+yarn-error.log*
+npm-debug.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Build e cache
+dist/
+build/
+.cache/
+coverage/
+.nyc_output/
+backend/coverage/
+backend/.nyc_output/
+
+# Arquivos temporários
+.DS_Store
+Thumbs.db
+*.pid
+*.seed
+*.pid.lock
+
+# Ambiente
+.env
+.env.*
+
+# IDE/Editor
+.vscode/
+.idea/
+
+# Testes
+*.lcov
+
+# Outros
+backend/logs/
+backend/*.log
