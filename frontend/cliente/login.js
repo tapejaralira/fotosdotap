@@ -1,4 +1,4 @@
-const apiBase = '/api'; // ajuste se necessário
+const apiBase = 'https://api.fotosdotap.com.br'; // agora usando o subdomínio da API
 const form = document.getElementById('form-login');
 const etapaEmail = document.getElementById('etapa-email');
 const etapaSenha = document.getElementById('etapa-senha');
