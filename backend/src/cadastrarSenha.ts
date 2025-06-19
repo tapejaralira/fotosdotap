@@ -8,7 +8,15 @@ export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     // Permite apenas método POST
     if (request.method !== 'POST') {
-      return jsonResponse({ erro: 'Método não permitido' }, 405);
+      return new Response(JSON.stringify({ erro: 'Método não permitido' }), {
+        status: 405,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type'
+        }
+      });
     }
 
     // Tenta extrair email e senha do corpo da requisição
@@ -45,9 +53,24 @@ export default {
       const clienteData: ClienteData = JSON.parse(await clienteObj.text());
       clienteData.senha = senha;
       await env.FOTOSDOTAP_BUCKET.put(`clientes/${arquivoCliente}`, JSON.stringify(clienteData));
-      return jsonResponse({ sucesso: true });
+      return new Response(JSON.stringify({ sucesso: true }), {
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type'
+        }
+      });
     } catch {
-      return jsonResponse({ erro: 'Erro ao atualizar a senha do cliente.' }, 500);
+      return new Response(JSON.stringify({ erro: 'Erro ao atualizar a senha do cliente.' }), {
+        status: 500,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type'
+        }
+      });
     }
   },
 };

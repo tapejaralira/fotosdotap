@@ -22,6 +22,25 @@ export default {
       return cadastrarSenhaHandler.fetch(request, env, ctx);
     }
 
+    // Rota de teste de escrita/leitura no bucket
+    if (url.pathname === '/teste-bucket' && request.method === 'GET') {
+      try {
+        // Escreve um arquivo de teste
+        await env.FOTOSDOTAP_BUCKET.put('teste.txt', 'ok - escrita bem sucedida');
+        // Lê o arquivo de teste
+        const obj = await env.FOTOSDOTAP_BUCKET.get('teste.txt');
+        const conteudo = obj ? await obj.text() : 'não encontrado';
+        return new Response(JSON.stringify({ sucesso: true, conteudo }), {
+          headers: { 'Content-Type': 'application/json' }
+        });
+      } catch (e) {
+        return new Response(JSON.stringify({ sucesso: false, erro: String(e) }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
+    }
+
     // Responde requisições OPTIONS (preflight CORS)
     if (request.method === 'OPTIONS') {
       return new Response(null, {
