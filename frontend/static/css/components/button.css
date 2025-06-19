@@ -1,0 +1,31 @@
+/* Botão reutilizável com base no visual do footer */
+.btn-base {
+  color: var(--cor-secundaria);
+  background-color: var(--cor-primaria);
+  text-decoration: none;
+  font-size: 1rem;
+  min-width: 200px;
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: var(--borda-arredondada);
+  box-shadow: var(--sombra);
+  backdrop-filter: var(--efeito-blur);
+  -webkit-backdrop-filter: var(--efeito-blur);
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-base:hover,
+.btn-base:focus {
+  background-color: var(--cor-destaque);
+  color: var(--cor-primaria);
+  transform: translateY(-3px);
+  outline: none;
+}
+
+.btn-base:active {
+  box-shadow: inset var(--sombra);
+  background-color: var(--cor-secundaria);
+  color: var(--cor-primaria);
+}
