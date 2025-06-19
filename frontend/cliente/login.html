@@ -24,17 +24,7 @@
         <img class="header__logo-img" src="https://static.fotosdotap.com.br/assets/logo.svg" alt="Logo Fotos do Tap" />
         <span>Fotos do Tap.</span>
       </a>
-      <nav id="menu" class="header__nav" aria-label="Menu principal">
-        <ul class="header__list">
-          <li class="header__item"><a href="/login.html" class="header__link">Área do cliente</a></li>
-          <li class="header__item"><a href="https://fotosdotap.com.br/pacotes.html" class="header__link">Pacotes</a></li>
-          <li class="header__item"><a href="https://fotosdotap.com.br/#portfolio" class="header__link">Portfólio</a></li>
-          <li class="header__item"><a href="https://fotosdotap.com.br/#contato" class="header__link">Contato</a></li>
-        </ul>
-      </nav>
-      <button id="menu-toggle" class="header__toggle" aria-controls="menu" aria-expanded="false" aria-label="Abrir/Fechar menu">
-        <span class="hamburger"></span>
-      </button>
+      <!-- Menu removido para ambiente isolado do cliente -->
     </div>
   </header>
 
@@ -52,7 +42,7 @@
             required
             style="width: 100%; padding: 0.75rem; font-size: 1rem; border: 1px solid #ccc; border-radius: 0.5rem;"
           />
-          <button type="button" id="btn-verificar-email" style="margin-top: 1rem; padding: 0.75rem 1.5rem; font-size: 1rem; border: none; border-radius: 0.5rem; background-color: var(--cor-secundaria); color: white; cursor: pointer;">Avançar</button>
+          <button type="button" id="btn-verificar-email" class="footer__link" style="margin-top: 1rem; padding: 0.75rem 1.5rem; font-size: 1rem; border: none; border-radius: 0.5rem; background-color: var(--cor-secundaria); color: var(--cor-primaria); cursor: pointer; text-decoration: none; display: inline-block;">Avançar</button>
         </div>
         <div id="etapa-senha" style="display:none;">
           <input
@@ -85,12 +75,10 @@
 
   <!-- Footer -->
   <footer class="footer" data-fade>
+    <!-- Rodapé simplificado para ambiente do cliente -->
     <nav class="footer__nav" aria-label="Menu do rodapé">
       <ul class="footer__list">
-        <li class="footer__item"><a href="/login.html" class="footer__link">Área do cliente</a></li>
-        <li class="footer__item"><a href="https://fotosdotap.com.br/pacotes.html" class="footer__link">Pacotes</a></li>
-        <li class="footer__item"><a href="https://fotosdotap.com.br/#portfolio" class="footer__link">Portfólio</a></li>
-        <li class="footer__item"><a href="https://fotosdotap.com.br/#contato" class="footer__link">Contato</a></li>
+        <li class="footer__item"><a href="https://fotosdotap.com.br" class="footer__link">Voltar ao site principal</a></li>
       </ul>
     </nav>
     <p class="footer__text">&copy; 2025 • Feito com carinho e criatividade por Tapejara Lira. Todos os direitos reservados.</p>
@@ -111,13 +99,20 @@
     document.getElementById('btn-verificar-email').onclick = async function () {
       mensagemErro.style.display = 'none';
       const email = document.getElementById('email').value.trim();
+      // Validação de formato de e-mail
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        mensagemErro.textContent = 'Ops! Parece que esse e-mail não está certinho. Dá uma olhadinha 😉';
+        mensagemErro.style.display = 'block';
+        return;
+      }
       if (!email) return;
       // Verifica se o e-mail existe e se já tem senha
       try {
         const res = await fetch(`${apiBase}/login?email=${encodeURIComponent(email)}`);
         const data = await res.json();
         if (data.estado === 'nao_encontrado') {
-          mensagemErro.textContent = 'E-mail não encontrado.';
+          mensagemErro.textContent = 'Hmm... não encontramos esse e-mail por aqui. Que tal tentar outro?';
           mensagemErro.style.display = 'block';
         } else if (data.senhaCadastrada) {
           emailAtual = email;
@@ -129,7 +124,7 @@
           etapaCadastrarSenha.style.display = 'block';
         }
       } catch (e) {
-        mensagemErro.textContent = 'Erro ao conectar com o servidor.';
+        mensagemErro.textContent = 'Ih, parece que estamos com um probleminha na conexão. Tenta de novo em instantes!';
         mensagemErro.style.display = 'block';
       }
     };
@@ -150,11 +145,11 @@
         if (data.sucesso) {
           window.location.href = `/cliente/${encodeURIComponent(emailAtual)}/index.html`;
         } else {
-          mensagemErro.textContent = data.erro || 'Senha incorreta.';
+          mensagemErro.textContent = data.erro || 'Senha errada! Não desista, tente de novo 😉';
           mensagemErro.style.display = 'block';
         }
       } catch (e) {
-        mensagemErro.textContent = 'Erro ao conectar com o servidor.';
+        mensagemErro.textContent = 'Ih, parece que estamos com um probleminha na conexão. Tenta de novo em instantes!';
         mensagemErro.style.display = 'block';
       }
     };
@@ -174,11 +169,11 @@
         if (data.sucesso) {
           window.location.href = `/cliente/${encodeURIComponent(emailAtual)}/index.html`;
         } else {
-          mensagemErro.textContent = data.erro || 'Erro ao cadastrar senha.';
+          mensagemErro.textContent = data.erro || 'Não foi dessa vez... Mas não desanime! Tente cadastrar sua senha novamente.';
           mensagemErro.style.display = 'block';
         }
       } catch (e) {
-        mensagemErro.textContent = 'Erro ao conectar com o servidor.';
+        mensagemErro.textContent = 'Ih, parece que estamos com um probleminha na conexão. Tenta de novo em instantes!';
         mensagemErro.style.display = 'block';
       }
     };
