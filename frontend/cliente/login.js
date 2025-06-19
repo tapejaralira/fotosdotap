@@ -55,6 +55,9 @@ form.onsubmit = async function (e) {
     });
     const data = await res.json();
     if (data.sucesso) {
+      // Salva e-mail e senha no localStorage
+      localStorage.setItem('fotosdotap_email', emailAtual);
+      localStorage.setItem('fotosdotap_senha', senha);
       window.location.href = `/cliente/${encodeURIComponent(emailAtual)}/index.html`;
     } else {
       mensagemErro.textContent = data.erro || 'Senha errada! Não desista, tente de novo 😉';
@@ -120,6 +123,9 @@ if (btnCadastrarSenha) {
       });
       const data = await res.json();
       if (data.sucesso) {
+        // Salva e-mail e senha no localStorage
+        localStorage.setItem('fotosdotap_email', emailAtual);
+        localStorage.setItem('fotosdotap_senha', novaSenha);
         window.location.href = `/cliente/${encodeURIComponent(emailAtual)}/index.html`;
       } else {
         mensagemErro.textContent = data.erro || 'Não foi dessa vez... Mas não desanime! Tente cadastrar sua senha novamente.';
@@ -131,6 +137,20 @@ if (btnCadastrarSenha) {
     }
   };
 }
+
+// Preencher automaticamente e-mail e senha se houver dados salvos
+window.addEventListener('DOMContentLoaded', function () {
+  const emailSalvo = localStorage.getItem('fotosdotap_email');
+  const senhaSalva = localStorage.getItem('fotosdotap_senha');
+  if (emailSalvo) {
+    const emailInput = document.getElementById('email');
+    if (emailInput) emailInput.value = emailSalvo;
+  }
+  if (senhaSalva) {
+    const senhaInput = document.getElementById('senha');
+    if (senhaInput) senhaInput.value = senhaSalva;
+  }
+});
 
 // Ao voltar para etapa de e-mail, garantir que só o título principal apareça
 document.getElementById('btn-verificar_email').onclick = async function () {
