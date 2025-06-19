@@ -1,4 +1,4 @@
-/* Botão reutilizável com base no visual do footer */
+/* Botão reutilizável com foco visível e acessível */
 .btn-base {
   color: var(--cor-secundaria);
   background-color: var(--cor-primaria);
@@ -21,7 +21,8 @@
   background-color: var(--cor-destaque);
   color: var(--cor-primaria);
   transform: translateY(-3px);
-  outline: none;
+  outline: 2px solid var(--cor-destaque);
+  outline-offset: 2px;
 }
 
 .btn-base:active {

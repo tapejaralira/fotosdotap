@@ -55,9 +55,7 @@ form.onsubmit = async function (e) {
     });
     const data = await res.json();
     if (data.sucesso) {
-      // Salva e-mail e senha no localStorage
-      localStorage.setItem('fotosdotap_email', emailAtual);
-      localStorage.setItem('fotosdotap_senha', senha);
+      salvarCredenciais(emailAtual, senha);
       window.location.href = `/cliente/${encodeURIComponent(emailAtual)}/index.html`;
     } else {
       mensagemErro.textContent = data.erro || 'Senha errada! Não desista, tente de novo 😉';
@@ -69,7 +67,7 @@ form.onsubmit = async function (e) {
   }
 };
 
-// Função para alternar visibilidade da senha
+// Generaliza função de alternar visibilidade de senha para múltiplos campos
 function toggleSenha(inputId, iconId) {
   const input = document.getElementById(inputId);
   const icon = document.getElementById(iconId);
@@ -78,28 +76,48 @@ function toggleSenha(inputId, iconId) {
     icon.innerHTML = '<path stroke="#888" stroke-width="2" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/><circle cx="12" cy="12" r="3" stroke="#888" stroke-width="2"/><line x1="4" y1="4" x2="20" y2="20" stroke="#888" stroke-width="2"/>';
   } else {
     input.type = 'password';
-    icon.innerHTML = '<path stroke=\"#888\" stroke-width=\"2\" d=\"M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z\"/><circle cx=\"12\" cy=\"12\" r=\"3\" stroke=\"#888\" stroke-width=\"2\"/>';
+    icon.innerHTML = '<path stroke="#888" stroke-width="2" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/><circle cx="12" cy="12" r="3" stroke="#888" stroke-width="2"/>';
   }
 }
 
-// Adiciona listeners para os botões de mostrar/ocultar senha
-const btnToggleSenha = document.getElementById('toggle-senha');
-if (btnToggleSenha) {
-  btnToggleSenha.addEventListener('click', function () {
+// Aplica a função para todos os campos de senha
+if (document.getElementById('toggle-senha')) {
+  document.getElementById('toggle-senha').onclick = function () {
     toggleSenha('senha', 'icon-senha');
-  });
+  };
 }
-const btnToggleNovaSenha = document.getElementById('toggle-nova-senha');
-if (btnToggleNovaSenha) {
-  btnToggleNovaSenha.addEventListener('click', function () {
+if (document.getElementById('toggle-nova-senha')) {
+  document.getElementById('toggle-nova-senha').onclick = function () {
     toggleSenha('nova-senha', 'icon-nova-senha');
-  });
+  };
 }
-const btnToggleConfirmarSenha = document.getElementById('toggle-confirmar-senha');
-if (btnToggleConfirmarSenha) {
-  btnToggleConfirmarSenha.addEventListener('click', function () {
-    toggleSenha('confirmar-senha', 'icon-confirmar-senha');
-  });
+
+// Adiciona autocomplete e acessibilidade (sem redeclaração)
+(function() {
+  var emailInput = document.getElementById('email');
+  if (emailInput) {
+    emailInput.setAttribute('autocomplete', 'email');
+    emailInput.setAttribute('autofocus', 'true');
+  }
+  var senhaInput = document.getElementById('senha');
+  if (senhaInput) senhaInput.setAttribute('autocomplete', 'current-password');
+  var novaSenhaInput = document.getElementById('nova-senha');
+  if (novaSenhaInput) novaSenhaInput.setAttribute('autocomplete', 'new-password');
+})();
+
+// Alerta sobre segurança ao salvar senha
+function alertaSeguranca() {
+  if (!localStorage.getItem('fotosdotap_alerta')) {
+    alert('Atenção: Não salve sua senha em computadores públicos. Para maior segurança, use esta opção apenas em dispositivos pessoais.');
+    localStorage.setItem('fotosdotap_alerta', '1');
+  }
+}
+
+// Salvamento seguro de e-mail/senha
+function salvarCredenciais(email, senha) {
+  alertaSeguranca();
+  localStorage.setItem('fotosdotap_email', email);
+  localStorage.setItem('fotosdotap_senha', senha);
 }
 
 // Cadastro de nova senha
@@ -123,9 +141,7 @@ if (btnCadastrarSenha) {
       });
       const data = await res.json();
       if (data.sucesso) {
-        // Salva e-mail e senha no localStorage
-        localStorage.setItem('fotosdotap_email', emailAtual);
-        localStorage.setItem('fotosdotap_senha', novaSenha);
+        salvarCredenciais(emailAtual, novaSenha);
         window.location.href = `/cliente/${encodeURIComponent(emailAtual)}/index.html`;
       } else {
         mensagemErro.textContent = data.erro || 'Não foi dessa vez... Mas não desanime! Tente cadastrar sua senha novamente.';
@@ -156,15 +172,11 @@ scrollInputOnFocus('confirmar-senha');
 
 // Preencher automaticamente e-mail e senha se houver dados salvos
 window.addEventListener('DOMContentLoaded', function () {
-  const emailSalvo = localStorage.getItem('fotosdotap_email');
-  const senhaSalva = localStorage.getItem('fotosdotap_senha');
-  if (emailSalvo) {
-    const emailInput = document.getElementById('email');
-    if (emailInput) emailInput.value = emailSalvo;
+  if (localStorage.getItem('fotosdotap_email')) {
+    document.getElementById('email').value = localStorage.getItem('fotosdotap_email');
   }
-  if (senhaSalva) {
-    const senhaInput = document.getElementById('senha');
-    if (senhaInput) senhaInput.value = senhaSalva;
+  if (localStorage.getItem('fotosdotap_senha') && document.getElementById('senha')) {
+    document.getElementById('senha').value = localStorage.getItem('fotosdotap_senha');
   }
 });
 

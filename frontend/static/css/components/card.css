@@ -1,22 +1,4 @@
-/* Container do grid */
-.pacotes__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
-  justify-items: center;
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 0 1rem;
-}
-
-/* Em telas maiores (tablet pra cima), mostra em duas colunas */
-@media (min-width: 768px) {
-  .pacotes__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* Card do pacote */
+/* Card do pacote usado no login */
 .pacote-card {
   background-color: var(--cor-fundo-claro, #fff);
   border-radius: var(--borda-arredondada, 1rem);
@@ -36,74 +18,4 @@
   transform: translateY(-4px);
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
   outline: none;
-}
-
-/* Imagem do pacote */
-.pacote-card__imagem {
-  width: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;  
-}
-
-/* Título */
-.pacote-card__titulo {
-  font-family: "DM Serif Text", serif;
-  font-size: 2rem;
-  letter-spacing: 0.05em;
-  margin: 1rem 1rem 0.5rem;
-  color: var(--cor-primaria);
-  text-align: left;
-  margin-left: 1.2rem;
-}
-
-/* Descrição */
-.pacote-card__descricao {
-  font-size: 1rem;
-  line-height: 1.5;
-  margin-top: 1rem;
-  color: var(--cor-primaria);  
-  margin-left: 2rem;
-  margin-right: 2rem;
-}
-
-/* Listas */
-.pacote-card__lista {
-  list-style: none;
-  margin: 1rem 2rem -0.7rem;
-}
-
-.pacote-card__lista li {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
-  font-size: 1rem;
-  line-height: 1.6;
-  font-weight: bold;
-  color: var(--cor-primaria);
-}
-
-.pacote-card__lista .preco {
-  min-width: 70px;
-  text-align: right;
-  font-weight: normal;
-  color: var(--cor-primaria);
-}
-
-
-
-/* Linha divisória */
-.pacote-card__divider {
-  border-top: 0.2rem solid var(--cor-secundaria);
-  margin: 1rem 2rem 0;
-}
-
-/* Preço */
-.pacote-card__preco {
-  font-size: 1.6rem;
-  font-weight: bold;
-  color: var(--cor-primaria);
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-  text-align: right;
-  margin-right: 2rem;
 }
