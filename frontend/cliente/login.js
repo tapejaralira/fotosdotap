@@ -28,10 +28,12 @@ document.getElementById('btn-verificar-email').onclick = async function () {
       emailAtual = email;
       etapaEmail.style.display = 'none';
       etapaSenha.style.display = 'block';
+      document.getElementById('login-titulo').textContent = 'Digite seu e-mail para acessar';
     } else {
       emailAtual = email;
       etapaEmail.style.display = 'none';
       etapaCadastrarSenha.style.display = 'block';
+      document.getElementById('login-titulo').textContent = 'Cadastre uma nova senha';
     }
   } catch (e) {
     mensagemErro.textContent = 'Ih, parece que estamos com um probleminha na conexão. Tenta de novo em instantes!';
@@ -86,4 +88,31 @@ document.getElementById('btn-cadastrar-senha').onclick = async function () {
     mensagemErro.textContent = 'Ih, parece que estamos com um probleminha na conexão. Tenta de novo em instantes!';
     mensagemErro.style.display = 'block';
   }
-};
+}
+
+// Função para alternar visibilidade da senha
+function toggleSenha(inputId, iconId) {
+  const input = document.getElementById(inputId);
+  const icon = document.getElementById(iconId);
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.innerHTML = '<path stroke="#888" stroke-width="2" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/><circle cx="12" cy="12" r="3" stroke="#888" stroke-width="2"/><line x1="4" y1="4" x2="20" y2="20" stroke="#888" stroke-width="2"/>';
+  } else {
+    input.type = 'password';
+    icon.innerHTML = '<path stroke="#888" stroke-width="2" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/><circle cx="12" cy="12" r="3" stroke="#888" stroke-width="2"/>';
+  }
+}
+
+// Adiciona listeners para os botões de mostrar/ocultar senha
+const btnToggleSenha = document.getElementById('toggle-senha');
+if (btnToggleSenha) {
+  btnToggleSenha.addEventListener('click', function () {
+    toggleSenha('senha', 'icon-senha');
+  });
+}
+const btnToggleNovaSenha = document.getElementById('toggle-nova-senha');
+if (btnToggleNovaSenha) {
+  btnToggleNovaSenha.addEventListener('click', function () {
+    toggleSenha('nova-senha', 'icon-nova-senha');
+  });
+}
