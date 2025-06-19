@@ -203,3 +203,41 @@ document.getElementById('btn-verificar_email').onclick = async function () {
     mensagemErro.style.display = 'block';
   }
 };
+
+// Facilitar navegação com Enter
+const emailInput = document.getElementById('email');
+const senhaInput = document.getElementById('senha');
+const novaSenhaInput = document.getElementById('nova-senha');
+const confirmarSenhaInput = document.getElementById('confirmar-senha');
+
+if (emailInput) {
+  emailInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      document.getElementById('btn-verificar-email').click();
+    }
+  });
+}
+if (senhaInput) {
+  senhaInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      // O form já faz submit normalmente
+    }
+  });
+}
+if (novaSenhaInput) {
+  novaSenhaInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      if (confirmarSenhaInput) confirmarSenhaInput.focus();
+    }
+  });
+}
+if (confirmarSenhaInput) {
+  confirmarSenhaInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      document.getElementById('btn-cadastrar-senha').click();
+    }
+  });
+}
