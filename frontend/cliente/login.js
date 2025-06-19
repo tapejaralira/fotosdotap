@@ -131,3 +131,39 @@ if (btnCadastrarSenha) {
     }
   };
 }
+
+// Ao voltar para etapa de e-mail, garantir que só o título principal apareça
+document.getElementById('btn-verificar_email').onclick = async function () {
+  mensagemErro.style.display = 'none';
+  const email = document.getElementById('email').value.trim();
+  // Validação de formato de e-mail
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    mensagemErro.textContent = 'Ops! Parece que esse e-mail não está certinho. Dá uma olhadinha 😉';
+    mensagemErro.style.display = 'block';
+    return;
+  }
+  if (!email) return;
+  // Verifica se o e-mail existe e se já tem senha
+  try {
+    const res = await fetch(`${apiBase}/login?email=${encodeURIComponent(email)}`);
+    const data = await res.json();
+    if (data.estado === 'nao_encontrado') {
+      mensagemErro.textContent = 'Hmm... não encontramos esse e-mail por aqui. Que tal tentar outro?';
+      mensagemErro.style.display = 'block';
+    } else if (data.senhaCadastrada) {
+      emailAtual = email;
+      etapaEmail.style.display = 'none';
+      etapaSenha.style.display = 'block';
+      document.getElementById('login-titulo').textContent = 'Digite seu e-mail para acessar';
+    } else {
+      emailAtual = email;
+      etapaEmail.style.display = 'none';
+      etapaCadastrarSenha.style.display = 'block';
+      document.getElementById('login-titulo').textContent = 'Cadastre uma nova senha';
+    }
+  } catch (e) {
+    mensagemErro.textContent = 'Ih, parece que estamos com um probleminha na conexão. Tenta de novo em instantes!';
+    mensagemErro.style.display = 'block';
+  }
+};
