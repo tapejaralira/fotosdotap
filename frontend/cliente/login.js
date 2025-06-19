@@ -24,16 +24,19 @@ document.getElementById('btn-verificar-email').onclick = async function () {
     if (data.estado === 'nao_encontrado') {
       mensagemErro.textContent = 'Hmm... não encontramos esse e-mail por aqui. Que tal tentar outro?';
       mensagemErro.style.display = 'block';
-    } else if (data.senhaCadastrada) {
+    } else if (data.estado === 'precisa_informar_senha') {
       emailAtual = email;
       etapaEmail.style.display = 'none';
       etapaSenha.style.display = 'block';
-      document.getElementById('login-titulo').textContent = 'Digite seu e-mail para acessar';
-    } else {
+      document.getElementById('login-titulo').textContent = 'Digite sua senha para acessar';
+    } else if (data.estado === 'precisa_cadastrar_senha') {
       emailAtual = email;
       etapaEmail.style.display = 'none';
       etapaCadastrarSenha.style.display = 'block';
       document.getElementById('login-titulo').textContent = 'Cadastre uma nova senha';
+    } else {
+      mensagemErro.textContent = 'Erro inesperado. Tente novamente.';
+      mensagemErro.style.display = 'block';
     }
   } catch (e) {
     mensagemErro.textContent = 'Ih, parece que estamos com um probleminha na conexão. Tenta de novo em instantes!';
@@ -199,16 +202,19 @@ document.getElementById('btn-verificar_email').onclick = async function () {
     if (data.estado === 'nao_encontrado') {
       mensagemErro.textContent = 'Hmm... não encontramos esse e-mail por aqui. Que tal tentar outro?';
       mensagemErro.style.display = 'block';
-    } else if (data.senhaCadastrada) {
+    } else if (data.estado === 'precisa_informar_senha') {
       emailAtual = email;
       etapaEmail.style.display = 'none';
       etapaSenha.style.display = 'block';
-      document.getElementById('login-titulo').textContent = 'Digite seu e-mail para acessar';
-    } else {
+      document.getElementById('login-titulo').textContent = 'Digite sua senha para acessar';
+    } else if (data.estado === 'precisa_cadastrar_senha') {
       emailAtual = email;
       etapaEmail.style.display = 'none';
       etapaCadastrarSenha.style.display = 'block';
       document.getElementById('login-titulo').textContent = 'Cadastre uma nova senha';
+    } else {
+      mensagemErro.textContent = 'Erro inesperado. Tente novamente.';
+      mensagemErro.style.display = 'block';
     }
   } catch (e) {
     mensagemErro.textContent = 'Ih, parece que estamos com um probleminha na conexão. Tenta de novo em instantes!';
