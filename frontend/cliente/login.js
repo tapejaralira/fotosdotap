@@ -138,6 +138,22 @@ if (btnCadastrarSenha) {
   };
 }
 
+// Rolagem automática para inputs em dispositivos móveis
+function scrollInputOnFocus(inputId) {
+  const input = document.getElementById(inputId);
+  if (input) {
+    input.addEventListener('focus', function () {
+      setTimeout(() => {
+        input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 300); // tempo para o teclado abrir
+    });
+  }
+}
+scrollInputOnFocus('email');
+scrollInputOnFocus('senha');
+scrollInputOnFocus('nova-senha');
+scrollInputOnFocus('confirmar-senha');
+
 // Preencher automaticamente e-mail e senha se houver dados salvos
 window.addEventListener('DOMContentLoaded', function () {
   const emailSalvo = localStorage.getItem('fotosdotap_email');
