@@ -66,30 +66,6 @@ form.onsubmit = async function (e) {
   }
 };
 
-// Cadastro de nova senha
-document.getElementById('btn-cadastrar-senha').onclick = async function () {
-  mensagemErro.style.display = 'none';
-  const novaSenha = document.getElementById('nova-senha').value;
-  if (!novaSenha) return;
-  try {
-    const res = await fetch(`${apiBase}/cadastrarSenha`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: emailAtual, senha: novaSenha })
-    });
-    const data = await res.json();
-    if (data.sucesso) {
-      window.location.href = `/cliente/${encodeURIComponent(emailAtual)}/index.html`;
-    } else {
-      mensagemErro.textContent = data.erro || 'Não foi dessa vez... Mas não desanime! Tente cadastrar sua senha novamente.';
-      mensagemErro.style.display = 'block';
-    }
-  } catch (e) {
-    mensagemErro.textContent = 'Ih, parece que estamos com um probleminha na conexão. Tenta de novo em instantes!';
-    mensagemErro.style.display = 'block';
-  }
-}
-
 // Função para alternar visibilidade da senha
 function toggleSenha(inputId, iconId) {
   const input = document.getElementById(inputId);
@@ -99,7 +75,7 @@ function toggleSenha(inputId, iconId) {
     icon.innerHTML = '<path stroke="#888" stroke-width="2" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/><circle cx="12" cy="12" r="3" stroke="#888" stroke-width="2"/><line x1="4" y1="4" x2="20" y2="20" stroke="#888" stroke-width="2"/>';
   } else {
     input.type = 'password';
-    icon.innerHTML = '<path stroke="#888" stroke-width="2" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/><circle cx="12" cy="12" r="3" stroke="#888" stroke-width="2"/>';
+    icon.innerHTML = '<path stroke=\"#888\" stroke-width=\"2\" d=\"M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z\"/><circle cx=\"12\" cy=\"12\" r=\"3\" stroke=\"#888\" stroke-width=\"2\"/>';
   }
 }
 
@@ -115,4 +91,43 @@ if (btnToggleNovaSenha) {
   btnToggleNovaSenha.addEventListener('click', function () {
     toggleSenha('nova-senha', 'icon-nova-senha');
   });
+}
+const btnToggleConfirmarSenha = document.getElementById('toggle-confirmar-senha');
+if (btnToggleConfirmarSenha) {
+  btnToggleConfirmarSenha.addEventListener('click', function () {
+    toggleSenha('confirmar-senha', 'icon-confirmar-senha');
+  });
+}
+
+// Cadastro de nova senha
+const btnCadastrarSenha = document.getElementById('btn-cadastrar-senha');
+if (btnCadastrarSenha) {
+  btnCadastrarSenha.onclick = async function () {
+    mensagemErro.style.display = 'none';
+    const novaSenha = document.getElementById('nova-senha').value;
+    const confirmarSenha = document.getElementById('confirmar-senha').value;
+    if (!novaSenha || !confirmarSenha) return;
+    if (novaSenha !== confirmarSenha) {
+      mensagemErro.textContent = 'As senhas não coincidem. Confira e tente novamente.';
+      mensagemErro.style.display = 'block';
+      return;
+    }
+    try {
+      const res = await fetch(`${apiBase}/cadastrarSenha`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: emailAtual, senha: novaSenha })
+      });
+      const data = await res.json();
+      if (data.sucesso) {
+        window.location.href = `/cliente/${encodeURIComponent(emailAtual)}/index.html`;
+      } else {
+        mensagemErro.textContent = data.erro || 'Não foi dessa vez... Mas não desanime! Tente cadastrar sua senha novamente.';
+        mensagemErro.style.display = 'block';
+      }
+    } catch (e) {
+      mensagemErro.textContent = 'Ih, parece que estamos com um probleminha na conexão. Tenta de novo em instantes!';
+      mensagemErro.style.display = 'block';
+    }
+  };
 }
