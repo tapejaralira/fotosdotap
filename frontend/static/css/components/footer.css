@@ -6,7 +6,7 @@
   /* Usamos a cor de fundo com transparência para o efeito de vidro */
   background-color: transparent;
   color: var(--cor-primaria);
-  padding: 2rem var(--espacamento); /* Aumenta o espaçamento vertical */
+  padding: 0.4rem var(--espacamento); /* Espaçamento interno do footer */
   text-align: center; 
 }
 
