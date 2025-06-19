@@ -22,6 +22,17 @@ export default {
       return cadastrarSenhaHandler.fetch(request, env, ctx);
     }
 
+    // Responde requisições OPTIONS (preflight CORS)
+    if (request.method === 'OPTIONS') {
+      return new Response(null, {
+        headers: {
+          "Access-Control-Allow-Origin": "https://cliente.fotosdotap.com.br",
+          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type"
+        }
+      });
+    }
+
     // Retorno padrão para rota não encontrada
     return new Response(JSON.stringify({ erro: "Rota não encontrada" }), {
       status: 404,
