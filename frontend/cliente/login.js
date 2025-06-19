@@ -116,7 +116,7 @@ if (btnCadastrarSenha) {
       return;
     }
     try {
-      const res = await fetch(`${apiBase}/cadastrarSenha`, {
+      const res = await fetch(`${apiBase}/cadastrar-senha`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: emailAtual, senha: novaSenha })

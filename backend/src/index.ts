@@ -8,18 +8,27 @@ interface Env {
   FOTOSDOTAP_BUCKET: R2Bucket;
 }
 
+const CORS_HEADERS = {
+  "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": "https://cliente.fotosdotap.com.br",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type"
+};
+
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
     // Rota de login via método GET (verifica se o cliente existe e se já tem senha)
     if (url.pathname === '/login' && request.method === 'GET') {
-      return loginHandler.fetch(request, env, ctx);
+      const resp = await loginHandler.fetch(request, env, ctx);
+      return new Response(await resp.text(), { status: resp.status, headers: CORS_HEADERS });
     }
 
     // Rota de cadastro de senha via POST
     if (url.pathname === '/cadastrar-senha' && request.method === 'POST') {
-      return cadastrarSenhaHandler.fetch(request, env, ctx);
+      const resp = await cadastrarSenhaHandler.fetch(request, env, ctx);
+      return new Response(await resp.text(), { status: resp.status, headers: CORS_HEADERS });
     }
 
     // Rota de teste de escrita/leitura no bucket
@@ -31,12 +40,12 @@ export default {
         const obj = await env.FOTOSDOTAP_BUCKET.get('teste.txt');
         const conteudo = obj ? await obj.text() : 'não encontrado';
         return new Response(JSON.stringify({ sucesso: true, conteudo }), {
-          headers: { 'Content-Type': 'application/json' }
+          headers: CORS_HEADERS
         });
       } catch (e) {
         return new Response(JSON.stringify({ sucesso: false, erro: String(e) }), {
           status: 500,
-          headers: { 'Content-Type': 'application/json' }
+          headers: CORS_HEADERS
         });
       }
     }
@@ -44,18 +53,14 @@ export default {
     // Responde requisições OPTIONS (preflight CORS)
     if (request.method === 'OPTIONS') {
       return new Response(null, {
-        headers: {
-          "Access-Control-Allow-Origin": "https://cliente.fotosdotap.com.br",
-          "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-          "Access-Control-Allow-Headers": "Content-Type"
-        }
+        headers: CORS_HEADERS
       });
     }
 
     // Retorno padrão para rota não encontrada
     return new Response(JSON.stringify({ erro: "Rota não encontrada" }), {
       status: 404,
-      headers: { "Content-Type": "application/json" },
+      headers: CORS_HEADERS
     });
   }
 };
