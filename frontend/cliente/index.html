@@ -43,12 +43,12 @@
       window.location.href = 'login.html';
     }
     // Busca dados do cliente
-    fetch(`/api/cliente?email=${encodeURIComponent(email)}`)
+    fetch(`https://api.fotosdotap.com.br/cliente?email=${encodeURIComponent(email)}`)
       .then(res => res.json())
       .then(cliente => {
         document.getElementById('boas-vindas').textContent = `Olá, ${cliente.nome || email}! Aqui está seu painel de cliente.`;
         // Busca serviços do cliente
-        fetch(`/api/servicos?email=${encodeURIComponent(email)}`)
+        fetch(`https://api.fotosdotap.com.br/servicos?email=${encodeURIComponent(email)}`)
           .then(res => res.json())
           .then(servicos => {
             const lista = document.getElementById('servicos-lista');
