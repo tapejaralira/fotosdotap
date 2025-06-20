@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const data = await res.json();
       if (data.sucesso) {
         salvarCredenciais(emailAtual, senha);
-        window.location.href = `/cliente/${encodeURIComponent(emailAtual)}/index.html`;
+        window.location.href = "/cliente/index.html";
       } else {
         mensagemErro.textContent = data.erro || 'Senha errada! Não desista, tente de novo 😉';
         mensagemErro.style.display = 'block';
@@ -157,10 +157,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Alerta sobre segurança ao salvar senha
   function alertaSeguranca() {
-    if (!localStorage.getItem('fotosdotap_alerta')) {
-      alert('Atenção: Não salve sua senha em computadores públicos. Para maior segurança, use esta opção apenas em dispositivos pessoais.');
-      localStorage.setItem('fotosdotap_alerta', '1');
-    }
+    // Removido o alert para priorizar a experiência do usuário
+    localStorage.setItem('fotosdotap_alerta', '1');
   }
 
   // Salvamento seguro de e-mail/senha
