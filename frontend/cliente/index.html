@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/header.css" />
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/button.css" />
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/body-title.css" />
+  <script src="https://static.fotosdotap.com.br/js/card.js"></script>
 </head>
 <body>
   <header class="header">
@@ -64,17 +65,16 @@
             if (!Array.isArray(servicos) || servicos.length === 0) {
               lista.innerHTML = '<p>Nenhum serviço encontrado.</p>';
             } else {
-              // Cada serviço em um pacote-card separado
-              lista.innerHTML = servicos.map(s => `
-                <div class="pacote-card" style="margin: 2rem auto; max-width: 600px; padding: 2.5rem 1.5rem;">
-                  <h3 style="margin-bottom:0.5rem; color:var(--cor-primaria);">${s.nome_servico}</h3>
-                  <p><b>Data:</b> ${s.data_servico}</p>
-                  <p><b>Pacote:</b> ${s.pacote}</p>
-                  <p><b>Status da seleção:</b> ${s.selecao_liberada ? 'Liberada' : 'Aguardando'}</p>
-                  <p><b>Status da galeria:</b> ${s.galeria_liberada ? 'Liberada' : 'Aguardando'}</p>
-                  <a href="#" class="btn-base" style="margin-top:0.7rem;">Ver detalhes</a>
-                </div>
-              `).join('');
+              lista.innerHTML = servicos.map(s => renderCard({
+                titulo: s.nome_servico,
+                descricao: `
+                  <b>Data:</b> ${s.data_servico}<br>
+                  <b>Pacote:</b> ${s.pacote}<br>
+                  <b>Status da seleção:</b> ${s.selecao_liberada ? 'Liberada' : 'Aguardando'}<br>
+                  <b>Status da galeria:</b> ${s.galeria_liberada ? 'Liberada' : 'Aguardando'}
+                `,
+                botao: { href: "#", texto: "Ver detalhes" }
+              })).join('');
             }
           });
       });

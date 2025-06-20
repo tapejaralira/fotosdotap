@@ -1,21 +1,89 @@
-/* Card do pacote usado no login */
+/* Card base */
 .pacote-card {
-  background-color: var(--cor-fundo-claro, #fff);
-  border-radius: var(--borda-arredondada, 1rem);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 500px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 8px #0001;
+  padding: 2.5rem 1.5rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  text-align: left;
+  position: relative;
+  transition: box-shadow 0.2s;
+}
+.pacote-card:focus-within,
+.pacote-card:hover {
+  box-shadow: 0 4px 24px #0002;
+}
+
+/* Título */
+.pacote-card__titulo {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: var(--cor-primaria, #1e293b);
   text-align: center;
 }
 
-.pacote-card:hover,
-.pacote-card:focus-visible {
- 
-  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.1);
-  outline: none;
+/* Imagem */
+.pacote-card__imagem {
+  width: 100%;
+  border-radius: 0.7rem;
+  margin-bottom: 1rem;
+  display: block;
+  object-fit: cover;
+  max-height: 220px;
+}
+
+/* Descrição */
+.pacote-card__descricao {
+  margin-bottom: 1rem;
+  color: #444;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+
+/* Lista */
+.pacote-card__lista {
+  margin-bottom: 1rem;
+  padding-left: 1.2rem;
+  color: #333;
+  font-size: 1rem;
+}
+.pacote-card__lista li {
+  margin-bottom: 0.5rem;
+  list-style: disc inside;
+}
+
+/* Divisória */
+.pacote-card__divider {
+  border-top: 1px solid #eee;
+  margin: 1.5rem 0;
+}
+
+/* Preço */
+.pacote-card__preco {
+  font-weight: bold;
+  font-size: 1.2rem;
+  color: var(--cor-primaria, #1e293b);
+  margin-bottom: 1rem;
+  text-align: right;
+}
+
+/* Botão */
+.pacote-card .btn-base {
+  display: inline-block;
+  margin-top: 1rem;
+  min-width: 120px;
+  text-align: center;
+}
+
+/* Responsividade */
+@media (max-width: 700px) {
+  .pacote-card {
+    padding: 1.2rem 0.7rem;
+    max-width: 98vw;
+  }
+  .pacote-card__imagem {
+    max-height: 140px;
+  }
 }
