@@ -13,8 +13,8 @@ export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
 
-    // Rota de login via método GET (verifica se o cliente existe e se já tem senha)
-    if (url.pathname === '/login' && request.method === 'GET') {
+    // Rota de login via método GET ou POST (verifica se o cliente existe e se já tem senha ou faz login)
+    if (url.pathname === '/login' && (request.method === 'GET' || request.method === 'POST')) {
       const resp = await loginHandler.fetch(request, env, ctx);
       return resp;
     }
