@@ -38,21 +38,22 @@
   </footer>
   <script>
     // --- Painel dinâmico ---
-    const email = localStorage.getItem('fotosdotap_email');
-    if (!email) {
+    const id_cliente = localStorage.getItem('fotosdotap_id_cliente');
+    if (!id_cliente) {
       window.location.href = 'login.html';
     }
-    // Busca dados do cliente
-    fetch(`https://api.fotosdotap.com.br/cliente?email=${encodeURIComponent(email)}`)
+
+    // Busca dados do cliente por ID
+    fetch(`https://api.fotosdotap.com.br/api/cliente?id=${encodeURIComponent(id_cliente)}`)
       .then(res => res.json())
       .then(cliente => {
-        document.getElementById('boas-vindas').textContent = `Olá, ${cliente.nome || email}! Aqui está seu painel de cliente.`;
-        // Busca serviços do cliente
-        fetch(`https://api.fotosdotap.com.br/servicos?email=${encodeURIComponent(email)}`)
+        document.getElementById('boas-vindas').textContent = `Olá, ${cliente.nome || id_cliente}! Aqui está seu painel de cliente.`;
+        // Busca serviços do cliente por ID
+        fetch(`https://api.fotosdotap.com.br/api/servicos?id=${encodeURIComponent(id_cliente)}`)
           .then(res => res.json())
           .then(servicos => {
             const lista = document.getElementById('servicos-lista');
-            if (servicos.length === 0) {
+            if (!Array.isArray(servicos) || servicos.length === 0) {
               lista.innerHTML = '<p>Nenhum serviço encontrado.</p>';
             } else {
               lista.innerHTML = servicos.map(s => `

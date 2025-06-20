@@ -26,51 +26,54 @@ export default {
     }
 
     // --- NOVAS ROTAS API CLIENTE E SERVIÇOS ---
-    // /api/cliente?email=...
-    if (url.pathname === '/api/cliente' && request.method === 'GET') {
+    // Busca reversa: encontra o cliente pelo e-mail informado
+    if (url.pathname === '/api/cliente' && request.method === 'GET' && url.searchParams.has('email')) {
       const email = decodeURIComponent(url.searchParams.get('email') || '');
-      if (!email) return jsonResponse({ erro: 'E-mail não informado' }, 400);
-      try {
-        // Busca arquivo do cliente no bucket
-        const key = `clientes/${email.replace(/[^a-zA-Z0-9@._-]/g, '')}.json`;
-        const obj = await env.FOTOSDOTAP_BUCKET.get(key);
-        if (!obj) return jsonResponse({ erro: 'Cliente não encontrado' }, 404);
-        const cliente = await obj.json() as { nome?: string, email?: string, servicos?: any[] };
-        return jsonResponse({ nome: cliente.nome, email: cliente.email });
-      } catch (e) {
-        return jsonResponse({ erro: 'Erro ao buscar cliente' }, 500);
+      if (!email) return jsonResponse({ erro: "E-mail não informado." }, 400);
+
+      // Percorre todos os arquivos da pasta clientes/
+      const list = await env.BUCKET.list({ prefix: 'clientes/', limit: 1000 });
+      for (const obj of list.objects) {
+        const clienteRaw = await env.BUCKET.get(obj.key);
+        if (!clienteRaw) continue;
+        const cliente = JSON.parse(await clienteRaw.text());
+        if (cliente.email && cliente.email.toLowerCase() === email.toLowerCase()) {
+          // Retorna o ID (nome do arquivo sem .json) e os dados do cliente
+          const id = obj.key.replace('clientes/', '').replace('.json', '');
+          return jsonResponse({ id, ...cliente });
+        }
       }
+      return jsonResponse({ erro: "Cliente não encontrado." }, 404);
     }
 
-    // /api/servicos?email=...
-    if (url.pathname === '/api/servicos' && request.method === 'GET') {
-      const email = decodeURIComponent(url.searchParams.get('email') || '');
-      if (!email) return jsonResponse({ erro: 'E-mail não informado' }, 400);
-      try {
-        // Busca arquivo do cliente no bucket
-        const key = `clientes/${email.replace(/[^a-zA-Z0-9@._-]/g, '')}.json`;
-        const obj = await env.FOTOSDOTAP_BUCKET.get(key);
-        if (!obj) return jsonResponse([], 200);
-        const cliente = await obj.json() as { servicos?: string[] };
-        const servicosIds = cliente.servicos || [];
-        const servicos: any[] = [];
-        for (const id of servicosIds) {
-          const servicoObj = await env.FOTOSDOTAP_BUCKET.get(`servicos/${id}.json`);
-          if (servicoObj) {
-            const servico = await servicoObj.json();
-            servicos.push(servico);
-          }
+    // Busca cliente por ID
+    if (url.pathname === '/api/cliente' && request.method === 'GET' && url.searchParams.has('id')) {
+      const id = url.searchParams.get('id') || '';
+      if (!id) return jsonResponse({ erro: "ID não informado." }, 400);
+      const clienteRaw = await env.BUCKET.get(`clientes/${id}.json`);
+      if (!clienteRaw) return jsonResponse({ erro: "Cliente não encontrado." }, 404);
+      const cliente = JSON.parse(await clienteRaw.text());
+      return jsonResponse({ id, ...cliente });
+    }
+
+    // Busca serviços por ID de cliente
+    if (url.pathname === '/api/servicos' && request.method === 'GET' && url.searchParams.has('id')) {
+      const id = url.searchParams.get('id') || '';
+      if (!id) return jsonResponse([], 200);
+      const clienteRaw = await env.BUCKET.get(`clientes/${id}.json`);
+      if (!clienteRaw) return jsonResponse([], 200);
+      const cliente = JSON.parse(await clienteRaw.text());
+      const servicosIds = Array.isArray(cliente.servicos) ? cliente.servicos : [];
+      const servicos: any[] = [];
+      for (const servicoId of servicosIds) {
+        const servicoRaw = await env.BUCKET.get(`servicos/${servicoId}.json`);
+        if (servicoRaw) {
+          servicos.push(JSON.parse(await servicoRaw.text()));
         }
-
-        servicos.sort((a, b) => {
-          // Ordena do mais recente para o mais antigo
-          return new Date(b.data_servico).getTime() - new Date(a.data_servico).getTime();
-        });
-
-        return jsonResponse(servicos);
-      } catch (e) {
-        return jsonResponse([], 200);
       }
+      // Ordena do mais recente para o mais antigo
+      servicos.sort((a, b) => new Date(b.data_servico).getTime() - new Date(a.data_servico).getTime());
+      return jsonResponse(servicos);
     }
 
     // Responde requisições OPTIONS (preflight CORS)
