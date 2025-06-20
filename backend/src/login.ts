@@ -6,9 +6,8 @@ import { jsonResponse } from './utils';
 export default {
   // Handler principal da rota de login
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    console.log('Método:', request.method, 'URL:', request.url);
-
-    if (request.method === 'POST') {
+    console.log('Método recebido:', request.method);
+    if (request.method.toUpperCase() === 'POST') {
       console.log('POST recebido');
       try {
         const { email, senha } = await request.json() as { email: string; senha: string };
