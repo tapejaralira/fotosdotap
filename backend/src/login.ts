@@ -8,9 +8,59 @@ export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     console.log('Método recebido:', request.method);
     if (request.method.toUpperCase() === 'POST') {
-      return jsonResponse({ debug: 'Entrou no POST do Worker' });
+      try {
+        const { email, senha } = await request.json() as { email: string; senha: string };
+        console.log('Dados recebidos:', email, senha);
+        if (!email || !senha) {
+          console.log('Faltando email ou senha');
+          return jsonResponse({ sucesso: false, erro: "Email e senha obrigatórios." }, 400);
+        }
+        // Busca o índice de clientes
+        const indexObject = await env.FOTOSDOTAP_BUCKET.get("clientes_index.json");
+        if (!indexObject) {
+          console.log('Index de clientes não encontrado');
+          return jsonResponse({ sucesso: false, erro: "Index de clientes não encontrado." }, 500);
+        }
+        let arquivoCliente: string | undefined;
+        try {
+          const indexObj = JSON.parse(await indexObject.text());
+          arquivoCliente = indexObj[email];
+        } catch {
+          console.log('Index de clientes corrompido');
+          return jsonResponse({ sucesso: false, erro: "Index de clientes corrompido." }, 500);
+        }
+        if (!arquivoCliente) {
+          console.log('Cliente não encontrado');
+          return jsonResponse({ sucesso: false, erro: "Cliente não encontrado." }, 404);
+        }
+        // Busca o arquivo do cliente
+        const clienteObj = await env.FOTOSDOTAP_BUCKET.get(`clientes/${arquivoCliente}`);
+        if (!clienteObj) {
+          console.log('Arquivo do cliente não encontrado');
+          return jsonResponse({ sucesso: false, erro: "Arquivo do cliente não encontrado." }, 500);
+        }
+        let clienteData: ClienteData;
+        try {
+          clienteData = JSON.parse(await clienteObj.text());
+        } catch {
+          console.log('Arquivo do cliente corrompido');
+          return jsonResponse({ sucesso: false, erro: "Arquivo do cliente corrompido." }, 500);
+        }
+        // Validação simples de senha (plaintext)
+        if (clienteData.senha && clienteData.senha === senha) {
+          console.log('Login bem-sucedido');
+          return jsonResponse({ sucesso: true });
+        } else {
+          console.log('Senha incorreta');
+          return jsonResponse({ sucesso: false, erro: "Senha incorreta." }, 401);
+        }
+      } catch (err: any) {
+        console.log('Erro no POST:', err);
+        return jsonResponse({ sucesso: false, erro: "Erro interno", detalhes: err.message }, 500);
+      }
+      // Garante return para qualquer fluxo não tratado no POST
+      return jsonResponse({ sucesso: false, erro: "Fluxo inesperado no POST /login." }, 500);
     }
-
     // Obtém o parâmetro "email" da URL
     const { searchParams } = new URL(request.url);
     const email = searchParams.get("email");
