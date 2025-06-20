@@ -25,6 +25,39 @@ export default {
       return resp;
     }
 
+    // --- NOVAS ROTAS API CLIENTE E SERVIÇOS ---
+    // /api/cliente?email=...
+    if (url.pathname === '/api/cliente' && request.method === 'GET') {
+      const email = url.searchParams.get('email');
+      if (!email) return jsonResponse({ erro: 'E-mail não informado' }, 400);
+      try {
+        // Busca arquivo do cliente no bucket
+        const key = `clientes/${email.replace(/[^a-zA-Z0-9@._-]/g, '')}.json`;
+        const obj = await env.FOTOSDOTAP_BUCKET.get(key);
+        if (!obj) return jsonResponse({ erro: 'Cliente não encontrado' }, 404);
+        const cliente = await obj.json() as { nome?: string, email?: string, servicos?: any[] };
+        return jsonResponse({ nome: cliente.nome, email: cliente.email });
+      } catch (e) {
+        return jsonResponse({ erro: 'Erro ao buscar cliente' }, 500);
+      }
+    }
+
+    // /api/servicos?email=...
+    if (url.pathname === '/api/servicos' && request.method === 'GET') {
+      const email = url.searchParams.get('email');
+      if (!email) return jsonResponse({ erro: 'E-mail não informado' }, 400);
+      try {
+        // Busca arquivo do cliente no bucket
+        const key = `clientes/${email.replace(/[^a-zA-Z0-9@._-]/g, '')}.json`;
+        const obj = await env.FOTOSDOTAP_BUCKET.get(key);
+        if (!obj) return jsonResponse([], 200);
+        const cliente = await obj.json() as { servicos?: any[] };
+        return jsonResponse(cliente.servicos || []);
+      } catch (e) {
+        return jsonResponse([], 200);
+      }
+    }
+
     // Responde requisições OPTIONS (preflight CORS)
     if (request.method === 'OPTIONS') {
       return new Response(null, {
