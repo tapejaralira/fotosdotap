@@ -51,8 +51,17 @@ export default {
         const key = `clientes/${email.replace(/[^a-zA-Z0-9@._-]/g, '')}.json`;
         const obj = await env.FOTOSDOTAP_BUCKET.get(key);
         if (!obj) return jsonResponse([], 200);
-        const cliente = await obj.json() as { servicos?: any[] };
-        return jsonResponse(cliente.servicos || []);
+        const cliente = await obj.json() as { servicos?: string[] };
+        const servicosIds = cliente.servicos || [];
+        const servicos: any[] = [];
+        for (const id of servicosIds) {
+          const servicoObj = await env.FOTOSDOTAP_BUCKET.get(`servicos/${id}.json`);
+          if (servicoObj) {
+            const servico = await servicoObj.json();
+            servicos.push(servico);
+          }
+        }
+        return jsonResponse(servicos);
       } catch (e) {
         return jsonResponse([], 200);
       }
