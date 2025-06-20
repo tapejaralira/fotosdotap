@@ -20,6 +20,7 @@ body {
 }
 
 .main {
-  margin: none;
-  flex-grow: 1; /* Faz o conteúdo principal crescer e empurra o footer para o final da página */
+  flex: 1 0 auto;
+  min-height: 0;
+  margin: 0;
 }
