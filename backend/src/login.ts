@@ -60,8 +60,6 @@ export default {
         console.log('Erro no POST:', err);
         return jsonResponse({ sucesso: false, erro: "Erro interno", detalhes: err.message }, 500);
       }
-      // Garante return em qualquer fluxo
-      return jsonResponse({ sucesso: false, erro: "Fluxo inesperado no POST /login." }, 500);
     }
 
     // Obtém o parâmetro "email" da URL
@@ -107,5 +105,8 @@ export default {
       // Retorna erro interno em caso de exceção
       return jsonResponse({ erro: "Erro interno", detalhes: err.message }, 500);
     }
+
+    // Garante return para qualquer fluxo não tratado
+    return jsonResponse({ erro: "Rota não encontrada ou método não suportado." }, 404);
   },
 };
