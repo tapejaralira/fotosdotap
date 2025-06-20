@@ -6,6 +6,8 @@ import { jsonResponse } from './utils';
 export default {
   // Handler principal da rota de login
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    console.log('Método:', request.method, 'URL:', request.url);
+
     if (request.method === 'POST') {
       // --- LOGIN COM SENHA ---
       try {
