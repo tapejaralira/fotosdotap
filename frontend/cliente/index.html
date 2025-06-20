@@ -2,26 +2,78 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta http-equiv="refresh" content="0; url=login.html" />
-  <title>Área do Cliente | Fotos do Tap.</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Acesse sua área exclusiva de cliente Fotos do Tap. Faça login para ver e baixar suas fotos!" />
-  <meta property="og:title" content="Área do Cliente | Fotos do Tap." />
-  <meta property="og:description" content="Acesse sua área exclusiva de cliente Fotos do Tap. Faça login para ver e baixar suas fotos!" />
-  <meta property="og:image" content="https://static.fotosdotap.com.br/assets/og_image.jpg" />
-  <meta property="og:url" content="https://cliente.fotosdotap.com.br/" />
-  <meta property="og:type" content="website" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Área do Cliente | Fotos do Tap." />
-  <meta name="twitter:description" content="Acesse sua área exclusiva de cliente Fotos do Tap. Faça login para ver e baixar suas fotos!" />
-  <meta name="twitter:image" content="https://static.fotosdotap.com.br/assets/og_image.jpg" />
+  <title>Painel do Cliente | Fotos do Tap.</title>
   <link rel="icon" href="https://static.fotosdotap.com.br/assets/logo.svg" type="image/svg+xml">
-  <title>Redirecionando...</title>
-  <script>
-    window.location.href = 'login.html';
-  </script>
+  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/style.css" />
+  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/button.css" />
+  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/body-title.css" />
 </head>
 <body>
-  <p>Redirecionando para a página de login...</p>
+  <header class="header">
+    <div class="header__container">
+      <a href="https://fotosdotap.com.br" class="header__logo" aria-label="Voltar para página inicial">
+        <img class="header__logo-img" src="https://static.fotosdotap.com.br/assets/logo.svg" alt="Logo Fotos do Tap" />
+        <span>Fotos do Tap.</span>
+      </a>
+    </div>
+  </header>
+  <main class="main" data-fade>
+    <h1 class="body-title">Painel do Cliente</h1>
+    <section class="container" style="text-align: center; max-width: 100vw;">
+      <div class="pacote-card" style="margin: 0 auto; max-width: 600px; padding: 2.5rem 1.5rem;">
+        <p id="boas-vindas" style="font-size: 1.1rem; margin-bottom: 2rem;">Carregando seus dados...</p>
+        <div id="servicos-lista"></div>
+        <button id="btn-logout" class="btn-base" style="background: #c00; color: #fff; margin-top:2rem;">Sair</button>
+      </div>
+    </section>
+  </main>
+  <footer class="footer" data-fade>
+    <nav class="footer__nav" aria-label="Menu do rodapé">
+      <ul class="footer__list">
+        <li class="footer__item"><a href="https://fotosdotap.com.br/" class="footer__link">Voltar à página principal</a></li>
+      </ul>
+    </nav>
+    <p class="footer__text">&copy; 2025 • Fotos do Tap. Todos os direitos reservados</p>
+  </footer>
+  <script>
+    // --- Painel dinâmico ---
+    const email = localStorage.getItem('fotosdotap_email');
+    if (!email) {
+      window.location.href = 'login.html';
+    }
+    // Busca dados do cliente
+    fetch(`/api/cliente?email=${encodeURIComponent(email)}`)
+      .then(res => res.json())
+      .then(cliente => {
+        document.getElementById('boas-vindas').textContent = `Olá, ${cliente.nome || email}! Aqui está seu painel de cliente.`;
+        // Busca serviços do cliente
+        fetch(`/api/servicos?email=${encodeURIComponent(email)}`)
+          .then(res => res.json())
+          .then(servicos => {
+            const lista = document.getElementById('servicos-lista');
+            if (servicos.length === 0) {
+              lista.innerHTML = '<p>Nenhum serviço encontrado.</p>';
+            } else {
+              lista.innerHTML = servicos.map(s => `
+                <div class="servico-card" style="margin-bottom:1.5rem; padding:1rem; border-radius:1rem; background:#f8f8f8; box-shadow:0 2px 8px #0001;">
+                  <h3 style="margin-bottom:0.5rem; color:var(--cor-primaria);">${s.nome_servico}</h3>
+                  <p><b>Data:</b> ${s.data_servico}</p>
+                  <p><b>Pacote:</b> ${s.pacote}</p>
+                  <p><b>Status da seleção:</b> ${s.selecao_liberada ? 'Liberada' : 'Aguardando'}</p>
+                  <p><b>Status da galeria:</b> ${s.galeria_liberada ? 'Liberada' : 'Aguardando'}</p>
+                  <a href="#" class="btn-base" style="margin-top:0.7rem;">Ver detalhes</a>
+                </div>
+              `).join('');
+            }
+          });
+      });
+    // Logout limpa localStorage e volta para login
+    document.getElementById('btn-logout').onclick = function() {
+      localStorage.removeItem('fotosdotap_email');
+      localStorage.removeItem('fotosdotap_senha');
+      window.location.href = 'login.html';
+    };
+  </script>
 </body>
 </html>

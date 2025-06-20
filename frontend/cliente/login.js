@@ -33,21 +33,27 @@ document.addEventListener('DOMContentLoaded', function() {
         etapaEmail.style.display = 'none';
         etapaSenha.style.display = 'block';
         document.getElementById('login-titulo').textContent = 'Digite sua senha para acessar';
-        // Foca no campo de senha
+        // Ajusta required dos campos
+        const senhaInput = document.getElementById('senha');
+        const novaSenhaInput = document.getElementById('nova-senha');
+        if (senhaInput) senhaInput.required = true;
+        if (novaSenhaInput) novaSenhaInput.required = false;
         setTimeout(() => {
-          const senhaInput = document.getElementById('senha');
           if (senhaInput) senhaInput.focus();
-        }, 100);
+        }, 200);
       } else if (data.estado === 'precisa_cadastrar_senha') {
         emailAtual = email;
         etapaEmail.style.display = 'none';
         etapaCadastrarSenha.style.display = 'block';
         document.getElementById('login-titulo').textContent = 'Cadastre uma nova senha';
-        // Foca no campo de nova senha
+        // Ajusta required dos campos
+        const senhaInput = document.getElementById('senha');
+        const novaSenhaInput = document.getElementById('nova-senha');
+        if (senhaInput) senhaInput.required = false;
+        if (novaSenhaInput) novaSenhaInput.required = true;
         setTimeout(() => {
-          const novaSenhaInput = document.getElementById('nova-senha');
           if (novaSenhaInput) novaSenhaInput.focus();
-        }, 100);
+        }, 200);
       } else {
         mensagemErro.textContent = 'Erro inesperado. Tente novamente.';
         mensagemErro.style.display = 'block';
