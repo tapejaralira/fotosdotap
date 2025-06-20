@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
   console.log('login.js carregado');
 
   document.getElementById('btn-verificar-email').onclick = async function () {
+    console.log('Botão Avançar clicado'); // <-- Log para depuração
     mensagemErro.style.display = 'none';
     const email = document.getElementById('email').value.trim();
     // Validação de formato de e-mail

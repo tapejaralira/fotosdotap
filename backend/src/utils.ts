@@ -1,7 +1,8 @@
 // Cabeçalhos padrão para respostas JSON
 export const JSON_HEADERS = {
   "Content-Type": "application/json",
-  "Access-Control-Allow-Origin": "https://cliente.fotosdotap.com.br",
+  // "Access-Control-Allow-Origin": "https://cliente.fotosdotap.com.br", // original restrito
+  "Access-Control-Allow-Origin": "*", // liberado para dev local
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type"
 };
