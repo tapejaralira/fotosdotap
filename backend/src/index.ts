@@ -28,7 +28,7 @@ export default {
     // --- NOVAS ROTAS API CLIENTE E SERVIÇOS ---
     // /api/cliente?email=...
     if (url.pathname === '/api/cliente' && request.method === 'GET') {
-      const email = url.searchParams.get('email');
+      const email = decodeURIComponent(url.searchParams.get('email') || '');
       if (!email) return jsonResponse({ erro: 'E-mail não informado' }, 400);
       try {
         // Busca arquivo do cliente no bucket
@@ -44,7 +44,7 @@ export default {
 
     // /api/servicos?email=...
     if (url.pathname === '/api/servicos' && request.method === 'GET') {
-      const email = url.searchParams.get('email');
+      const email = decodeURIComponent(url.searchParams.get('email') || '');
       if (!email) return jsonResponse({ erro: 'E-mail não informado' }, 400);
       try {
         // Busca arquivo do cliente no bucket
@@ -61,6 +61,12 @@ export default {
             servicos.push(servico);
           }
         }
+
+        servicos.sort((a, b) => {
+          // Ordena do mais recente para o mais antigo
+          return new Date(b.data_servico).getTime() - new Date(a.data_servico).getTime();
+        });
+
         return jsonResponse(servicos);
       } catch (e) {
         return jsonResponse([], 200);
