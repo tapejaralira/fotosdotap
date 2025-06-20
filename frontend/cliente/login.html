@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/style.css" />
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/button.css" />
+  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/body-title.css" />
   <meta name="description" content="Área de acesso para clientes Fotos do Tap. Use seu e-mail para acessar suas fotos." />
   <meta property="og:title" content="Login do Cliente | Fotos do Tap." />
   <meta property="og:description" content="Área de acesso para clientes Fotos do Tap. Use seu e-mail para acessar suas fotos." />
@@ -19,6 +20,7 @@
   <meta name="twitter:image" content="https://static.fotosdotap.com.br/assets/og_image.jpg" />
 </head>
 <body>
+  <h1 class="body-title">Área de Login do Cliente</h1>
   <!-- Header -->
   <header class="header">
     <div class="header__container">
@@ -28,7 +30,6 @@
       </a>
     </div>
   </header>
-
   <!-- Main com login -->
   <main class="main" data-fade style="margin-bottom: var(--espacamento-div); display: flex; align-items: center; justify-content: center; min-height: 70vh;">
     <section class="container" aria-label="Login do Cliente" style="text-align: center; padding: 0; max-width: 100vw;">
@@ -87,6 +88,16 @@
       </div>
     </section>
   </main>
-  <script src="login.js" defer></script>
+  <footer class="footer" data-fade>
+    <nav class="footer__nav" aria-label="Menu do rodapé">
+      <ul class="footer__list">
+        <li class="footer__item"><a href="https://fotosdotap.com.br/" class="footer__link">Voltar à página principal</a></li>
+      </ul>
+    </nav>
+    <p class="footer__text">&copy; 2025 • Fotos do Tap. Todos os direitos reservados</p>
+  </footer>
+  <script src="/cliente/login.js" defer></script>
+  <script src="https://static.fotosdotap.com.br/js/menu.js"></script>
+  <script src="https://static.fotosdotap.com.br/js/pageFade.js"></script>
 </body>
 </html>
