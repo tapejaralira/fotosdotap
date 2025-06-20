@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const data = await res.json();
       if (data.sucesso) {
         salvarCredenciais(emailAtual, senha);
-        window.location.href = "/cliente/index.html";
+        window.location.href = "index.html";
       } else {
         mensagemErro.textContent = data.erro || 'Senha errada! Não desista, tente de novo 😉';
         mensagemErro.style.display = 'block';
