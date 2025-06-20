@@ -79,6 +79,14 @@ document.addEventListener('DOMContentLoaded', function() {
       const data = await res.json();
       if (data.sucesso) {
         salvarCredenciais(emailAtual, senha);
+
+        // NOVO: buscar o ID do cliente e salvar no localStorage
+        const resCliente = await fetch(`${apiBase}/api/cliente?email=${encodeURIComponent(emailAtual)}`);
+        const dataCliente = await resCliente.json();
+        if (dataCliente.id) {
+          localStorage.setItem('fotosdotap_id_cliente', dataCliente.id);
+        }
+
         window.location.href = "index.html";
       } else {
         mensagemErro.textContent = data.erro || 'Senha errada! Não desista, tente de novo 😉';

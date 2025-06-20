@@ -32,9 +32,9 @@ export default {
       if (!email) return jsonResponse({ erro: "E-mail não informado." }, 400);
 
       // Percorre todos os arquivos da pasta clientes/
-      const list = await env.BUCKET.list({ prefix: 'clientes/', limit: 1000 });
+      const list = await env.FOTOSDOTAP_BUCKET.list({ prefix: 'clientes/', limit: 1000 });
       for (const obj of list.objects) {
-        const clienteRaw = await env.BUCKET.get(obj.key);
+        const clienteRaw = await env.FOTOSDOTAP_BUCKET.get(obj.key);
         if (!clienteRaw) continue;
         const cliente = JSON.parse(await clienteRaw.text());
         if (cliente.email && cliente.email.toLowerCase() === email.toLowerCase()) {
@@ -50,7 +50,7 @@ export default {
     if (url.pathname === '/api/cliente' && request.method === 'GET' && url.searchParams.has('id')) {
       const id = url.searchParams.get('id') || '';
       if (!id) return jsonResponse({ erro: "ID não informado." }, 400);
-      const clienteRaw = await env.BUCKET.get(`clientes/${id}.json`);
+      const clienteRaw = await env.FOTOSDOTAP_BUCKET.get(`clientes/${id}.json`);
       if (!clienteRaw) return jsonResponse({ erro: "Cliente não encontrado." }, 404);
       const cliente = JSON.parse(await clienteRaw.text());
       return jsonResponse({ id, ...cliente });
@@ -60,13 +60,13 @@ export default {
     if (url.pathname === '/api/servicos' && request.method === 'GET' && url.searchParams.has('id')) {
       const id = url.searchParams.get('id') || '';
       if (!id) return jsonResponse([], 200);
-      const clienteRaw = await env.BUCKET.get(`clientes/${id}.json`);
+      const clienteRaw = await env.FOTOSDOTAP_BUCKET.get(`clientes/${id}.json`);
       if (!clienteRaw) return jsonResponse([], 200);
       const cliente = JSON.parse(await clienteRaw.text());
       const servicosIds = Array.isArray(cliente.servicos) ? cliente.servicos : [];
       const servicos: any[] = [];
       for (const servicoId of servicosIds) {
-        const servicoRaw = await env.BUCKET.get(`servicos/${servicoId}.json`);
+        const servicoRaw = await env.FOTOSDOTAP_BUCKET.get(`servicos/${servicoId}.json`);
         if (servicoRaw) {
           servicos.push(JSON.parse(await servicoRaw.text()));
         }
