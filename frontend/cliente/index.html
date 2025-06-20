@@ -6,6 +6,7 @@
   <title>Painel do Cliente | Fotos do Tap.</title>
   <link rel="icon" href="https://static.fotosdotap.com.br/assets/logo.svg" type="image/svg+xml">
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/style.css" />
+  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/header.css" />
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/button.css" />
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/body-title.css" />
 </head>
@@ -16,16 +17,23 @@
         <img class="header__logo-img" src="https://static.fotosdotap.com.br/assets/logo.svg" alt="Logo Fotos do Tap" />
         <span>Fotos do Tap.</span>
       </a>
+      <nav id="menu" class="header__nav" aria-label="Menu principal">
+        <ul class="header__list">
+          <li class="header__item">
+            <a href="#" id="btn-logout" class="header__link">Sair</a>
+          </li>
+        </ul>
+      </nav>
+      <button id="menu-toggle" class="header__toggle" aria-controls="menu" aria-expanded="false" aria-label="Abrir/Fechar menu">
+        <span class="hamburger"></span>
+      </button>
     </div>
   </header>
   <main class="main" data-fade>
     <h1 class="body-title">Painel do Cliente</h1>
+    <p id="boas-vindas" style="font-size: 1.1rem; margin-bottom: 2rem; margin-top: -1rem; text-align: center;">Carregando seus dados...</p>
     <section class="container" style="text-align: center; max-width: 100vw;">
-      <div class="pacote-card" style="margin: 0 auto; max-width: 600px; padding: 2.5rem 1.5rem;">
-        <p id="boas-vindas" style="font-size: 1.1rem; margin-bottom: 2rem;">Carregando seus dados...</p>
-        <div id="servicos-lista"></div>
-        <button id="btn-logout" class="btn-base" style="background: #c00; color: #fff; margin-top:2rem;">Sair</button>
-      </div>
+      <div id="servicos-lista"></div>
     </section>
   </main>
   <footer class="footer" data-fade>
@@ -56,8 +64,9 @@
             if (!Array.isArray(servicos) || servicos.length === 0) {
               lista.innerHTML = '<p>Nenhum serviço encontrado.</p>';
             } else {
+              // Cada serviço em um pacote-card separado
               lista.innerHTML = servicos.map(s => `
-                <div class="servico-card" style="margin-bottom:1.5rem; padding:1rem; border-radius:1rem; background:#f8f8f8; box-shadow:0 2px 8px #0001;">
+                <div class="pacote-card" style="margin: 2rem auto; max-width: 600px; padding: 2.5rem 1.5rem;">
                   <h3 style="margin-bottom:0.5rem; color:var(--cor-primaria);">${s.nome_servico}</h3>
                   <p><b>Data:</b> ${s.data_servico}</p>
                   <p><b>Pacote:</b> ${s.pacote}</p>
@@ -70,12 +79,15 @@
           });
       });
     // Logout limpa localStorage e volta para login
-    document.getElementById('btn-logout').onclick = function() {
+    document.getElementById('btn-logout').onclick = function(e) {
+      e.preventDefault();
       localStorage.removeItem('fotosdotap_email');
       localStorage.removeItem('fotosdotap_senha');
+      localStorage.removeItem('fotosdotap_id_cliente');
       window.location.href = 'login.html';
     };
   </script>
   <script src="https://static.fotosdotap.com.br/js/pageFade.js"></script>
+  <script src="https://static.fotosdotap.com.br/js/menu.js"></script>
 </body>
 </html>
