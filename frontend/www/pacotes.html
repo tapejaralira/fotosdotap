@@ -6,10 +6,12 @@
   <title>Preços e Pacotes | Fotos do Tap.</title>
   <link rel="icon" href="https://static.fotosdotap.com.br/assets/logo.svg" type="image/svg+xml">
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
 
+  <!-- Styles -->
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/style.css" />
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/card.css" />
 
@@ -21,7 +23,6 @@
   <meta property="og:url" content="https://fotosdotap.com.br/pacotes.html" />
   <meta property="og:type" content="website" />
   <meta name="twitter:image" content="https://static.fotosdotap.com.br/assets/og_image.jpg" />
-  <script src="https://static.fotosdotap.com.br/js/card.js"></script>
 </head>
 <body>
   <!-- Header -->
@@ -49,8 +50,14 @@
   <main class="main" data-fade>
     <section class="pacotes container" aria-label="Preços e Pacotes">
       <h2 class="hero hero__title" data-fade>Preços e Pacotes</h2>
+
+      <!-- Cards dos pacotes -->
       <div id="pacotes-lista"></div>
-      <div id="extras-lista"></div>
+
+      <!-- Card de informações sobre fotos extras -->
+      <div id="extras-info"></div>
+
+      <!-- Card da calculadora de fotos extras -->
       <div id="calculadora-card"></div>
     </section>
   </main>
@@ -70,17 +77,19 @@
     <p class="footer__text">&copy; 2025 • Fotos do Tap. Todos os direitos reservados</p>
   </footer>
 
-  <!-- Scripts padrão -->
+  <!-- Scripts externos -->
   <script src="https://static.fotosdotap.com.br/js/menu.js"></script>
   <script src="https://static.fotosdotap.com.br/js/pageFade.js"></script>
   <script src="https://static.fotosdotap.com.br/js/card.js"></script>
   <script src="https://static.fotosdotap.com.br/js/calculadoraExtras.js"></script>
+
+  <!-- Script de renderização dos cards -->
   <script>
     // Pacotes principais
     const pacotes = [
       {
         titulo: "Pacote Completo",
-        imagem: "https://static.fotosdotap.com.br/assets/pacote-completo.jpg",
+        imagem: "/img/pacotes/pacote1.webp",
         descricao: `A escolha ideal pra quem quer viver a experiência completa e ter um ensaio inesquecível do início ao fim.<br>
         Perfeito para casais apaixonados, profissionais que querem se destacar ou quem sonha com um ensaio editorial com estilo e personalidade.`,
         lista: [
@@ -94,7 +103,7 @@
       },
       {
         titulo: "Pacote Flexível",
-        imagem: "https://static.fotosdotap.com.br/assets/pacote-flexivel.jpg",
+        imagem: "/img/pacotes/pacote2.webp",
         descricao: `Aqui o controle é seu.<br>
         Você faz o ensaio, vê as fotos com calma e só escolhe o que realmente quiser levar.<br>
         Perfeito pra quem busca praticidade, um registro pontual ou quer começar com um investimento menor. Com liberdade total pra adicionar mais fotos depois, pagando só pelo que escolher.`,
@@ -123,7 +132,7 @@
         "Você monta seu pacote!"
       ]
     };
-    document.getElementById('extras-lista').innerHTML = renderCard(extrasInfo);
+    document.getElementById('extras-info').innerHTML = renderCard(extrasInfo);
 
     // Card da calculadora de fotos extras
     document.getElementById('calculadora-card').innerHTML = `
