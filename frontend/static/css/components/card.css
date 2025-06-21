@@ -2,13 +2,16 @@
 .pacote-card {
   background: var(--cor-fundo);
   border-radius: 1rem;
-  box-shadow:var(--sombra); 
-  margin: 1rem;
-  max-width: 600px;
+  box-shadow: var(--sombra);
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  margin: 1rem auto; /* Centraliza horizontalmente */
+  max-width: 37rem;  /* Mantém o card compacto em todas as telas */
   text-align: left;
   position: relative;
   transition: box-shadow 0.2s;
   display: block;
+  width: 95%;
 }
 .pacote-card:focus-within,
 .pacote-card:hover {
@@ -20,7 +23,7 @@
   font-size: 1.8rem;
   font-weight: bold;
   padding: 1rem;
-  margin: 0;
+  padding-top: 0;
   color: var(--cor-primaria);
   text-align: left;
 }
@@ -62,6 +65,7 @@
 .pacote-card__preco {
   font-weight: bold;
   padding: 1rem 2rem;
+  padding-bottom: 0;
   font-size: 1.8rem;
   color: var(--cor-primaria);
   text-align: right;
@@ -80,9 +84,10 @@
   background: #ffeaea;
   color: #c00;
   border: 1px solid #f5bcbc;
-  border-radius: 0.7rem;
-  padding: 0.8rem 1.2rem;
-  margin: 1rem 0;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  margin: 1rem;
+  margin-bottom: 0;
   font-size: 1.05rem;
   text-align: center;
   font-family: 'Open Sans', sans-serif;
@@ -90,7 +95,10 @@
 
 /* Campo de formulário padrão */
 .campo-formulario {
-  width: 100%;
+  display: block;
+  margin: auto;
+  margin-bottom: 1rem;
+  width: 90%;
   padding: 0.7rem 1rem;
   border: 1px solid var(--cor-destaque, #ccc);
   border-radius: 0.7rem;
@@ -103,18 +111,12 @@
 }
 
 .campo-formulario:focus {
-  border-color: var(--cor-primaria, #1e293b);
-  outline: none;
-  background: #fff;
+  border-color: var(--cor-primaria, #1e293b); /* Modifica a cor da borda ao focar, sobrescrevendo a cor padrão */
+  outline: none; /* Remove o contorno padrão do navegador ao focar */
+  background: #fff; /* Altera o fundo ao focar, sobrescrevendo o fundo padrão */
 }
 
-/* Responsividade */
-@media (max-width: 700px) {
-  .pacote-card {
-    padding: 1.2rem 0.7rem;
-    max-width: 98vw;
-  }
-}
+
 
 
 

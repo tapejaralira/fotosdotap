@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
         emailAtual = email;
         etapaEmail.style.display = 'none';
         etapaSenha.style.display = 'block';
-        document.getElementById('login-titulo').textContent = 'Digite sua senha para acessar';
+        document.getElementById('login-titulo').textContent = 'Digite sua senha';
         // Ajusta required dos campos
         const senhaInput = document.getElementById('senha');
         const novaSenhaInput = document.getElementById('nova-senha');
