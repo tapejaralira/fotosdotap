@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/header.css" />
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/button.css" />
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/body-title.css" />
-  <script src="https://static.fotosdotap.com.br/js/card.js"></script>
+  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/titulo.css" />
 </head>
 <body>
   <header class="header">
@@ -31,8 +31,10 @@
     </div>
   </header>
   <main class="main" data-fade>
-    <h1 class="body-title">Painel do Cliente</h1>
-    <p id="boas-vindas" style="font-size: 1.1rem; margin-bottom: 2rem; margin-top: -1rem; text-align: center;">Carregando seus dados...</p>
+    <div class="page-header page-header--hero">
+      <h1 class="page-title">Painel do Cliente</h1>
+      <p class="page-subtitle" id="boas-vindas">Carregando seus dados...</p>
+    </div>
     <section class="container" style="text-align: center; max-width: 100vw;">
       <div id="servicos-lista"></div>
     </section>
@@ -45,6 +47,10 @@
     </nav>
     <p class="footer__text">&copy; 2025 • Fotos do Tap. Todos os direitos reservados</p>
   </footer>
+  <!-- Scripts no final -->
+  <script src="https://static.fotosdotap.com.br/js/card.js"></script>
+  <script src="https://static.fotosdotap.com.br/js/pageFade.js"></script>
+  <script src="https://static.fotosdotap.com.br/js/menu.js"></script>
   <script>
     // --- Painel dinâmico ---
     const id_cliente = localStorage.getItem('fotosdotap_id_cliente');
@@ -87,7 +93,5 @@
       window.location.href = 'login.html';
     };
   </script>
-  <script src="https://static.fotosdotap.com.br/js/pageFade.js"></script>
-  <script src="https://static.fotosdotap.com.br/js/menu.js"></script>
 </body>
 </html>

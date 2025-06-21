@@ -4,11 +4,12 @@
   border-radius: 1rem;
   box-shadow: 0 2px 8px #0001;
   padding: 2.5rem 1.5rem;
-  margin: 2rem auto;
+  margin: 2rem 1rem;
   max-width: 600px;
   text-align: left;
   position: relative;
   transition: box-shadow 0.2s;
+  display: block;
 }
 .pacote-card:focus-within,
 .pacote-card:hover {
@@ -86,4 +87,12 @@
   .pacote-card__imagem {
     max-height: 140px;
   }
+}
+
+/* Centraliza o container dos cards */
+.pacotes.container,
+.pacotes .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

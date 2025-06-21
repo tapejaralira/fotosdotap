@@ -1,0 +1,33 @@
+/* Container do título da página */
+.page-header {
+  margin: 2.5rem auto 2rem auto;
+  text-align: center;
+  max-width: 700px;
+  padding: 0 1rem;
+}
+
+/* Título principal */
+.page-title {
+  font-family: 'DM Serif Text', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--cor-primaria, #1e293b);
+  margin-bottom: 0.5rem;
+  line-height: 1.1;
+}
+
+/* Subtítulo */
+.page-subtitle {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 0;
+  line-height: 1.4;
+}
+
+/* Modificadores opcionais */
+.page-header--hero .page-title { font-size: 2.7rem; }
+.page-header--hero .page-subtitle { font-size: 1.3rem; color: #444; }
+
+.page-header--body .page-title { font-size: 1.7rem; }
+.page-header--body .page-subtitle { font-size: 1.1rem; color: #666; }

@@ -14,6 +14,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/style.css" />
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/card.css" />
+  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/titulo.css" />
 
   <!-- Meta description e Open Graph -->
   <meta name="description" content="Confira os pacotes de fotografia profissional oferecidos por Fotos do Tap. Qualidade e preço justo para eternizar seus momentos." />
@@ -49,93 +50,65 @@
   <!-- Main -->
   <main class="main" data-fade>
     <section class="pacotes container" aria-label="Preços e Pacotes">
-      <h2 class="hero hero__title" data-fade>Preços e Pacotes</h2>
+      <div class="page-header page-header--hero">
+        <h1 class="page-title">Preços e Pacotes</h1>
+        <p class="page-subtitle">Escolha o pacote ideal para o seu momento especial!</p>
+      </div>
 
-      <!-- Cards dos pacotes -->
-      <div id="pacotes-lista"></div>
+      <!-- Pacote Completo -->
+      <article class="pacote-card">
+        <h3 class="pacote-card__titulo">Pacote Completo</h3>
+        <img src="https://static.fotosdotap.com.br/img/pacotes/pacote1.webp" alt="Pacote Completo" class="pacote-card__imagem" />
+        <p class="pacote-card__descricao">
+          A escolha ideal pra quem quer viver a experiência completa e ter um ensaio inesquecível do início ao fim.<br>
+          Perfeito para casais apaixonados, profissionais que querem se destacar ou quem sonha com um ensaio editorial com estilo e personalidade.
+        </p>
+        <ul class="pacote-card__lista">
+          <li>60 fotos escolhidas por você</li>
+          <li>Até 3 horas de sessão</li>
+          <li>Consultoria pré-ensaio</li>
+          <li>Edição profissional em alta qualidade</li>
+          <li>Entrega digital em link exclusivo</li>
+        </ul>
+        <p class="pacote-card__preco">R$ 500,00</p>
+      </article>
 
-      <!-- Card de informações sobre fotos extras -->
-      <div id="extras-info"></div>
+      <!-- Pacote Flexível -->
+      <article class="pacote-card">
+        <h3 class="pacote-card__titulo">Pacote Flexível</h3>
+        <img src="https://static.fotosdotap.com.br/img/pacotes/pacote2.webp" alt="Pacote Flexível" class="pacote-card__imagem" />
+        <p class="pacote-card__descricao">
+          Aqui o controle é seu.<br>
+          Você faz o ensaio, vê as fotos com calma e só escolhe o que realmente quiser levar.<br>
+          Perfeito pra quem busca praticidade, um registro pontual ou quer começar com um investimento menor. Com liberdade total pra adicionar mais fotos depois, pagando só pelo que escolher.
+        </p>
+        <ul class="pacote-card__lista">
+          <li>Sessão de 1 hora de duração</li>
+          <li>Você escolhe suas fotos</li>
+          <li>Paga só pelas fotos que escolher</li>
+          <li>Edição profissional em alta qualidade</li>
+          <li>Entrega digital em link exclusivo</li>
+        </ul>
+        <p class="pacote-card__preco">R$ 200,00</p>
+      </article>
 
-      <!-- Card da calculadora de fotos extras -->
-      <div id="calculadora-card"></div>
-    </section>
-  </main>
+      <!-- Informações sobre fotos extras -->
+      <article class="pacote-card">
+        <h3 class="pacote-card__titulo">Se quiser mais?</h3>
+        <p class="pacote-card__descricao">
+          Escolha quantas fotos quiser!<br>
+          Quanto mais fotos você escolher, mais barato cada uma fica.
+        </p>
+        <ul class="pacote-card__lista">
+          <li>Primeiras 5 fotos extras: R$ 12,00</li>
+          <li>Próximas 10 fotos extras: R$ 10,00</li>
+          <li>Próximas 15 fotos extras: R$ 8,00</li>
+          <li>Acima de 30 fotos extras: R$ 6,00</li>
+          <li>Você monta seu pacote!</li>
+        </ul>
+      </article>
 
-  <div style="height: var(--espacamento-div);"></div>
-
-  <!-- Footer -->
-  <footer class="footer" data-fade>
-    <nav class="footer__nav" aria-label="Menu do rodapé">
-      <ul class="footer__list">
-        <li class="footer__item"><a href="https://cliente.fotosdotap.com.br/login.html" class="footer__link">Área do cliente</a></li>
-        <li class="footer__item"><a href="pacotes.html" class="footer__link ativo">Pacotes</a></li>
-        <li class="footer__item"><a href="index.html#portfolio" class="footer__link">Portfólio</a></li>
-        <li class="footer__item"><a href="index.html#contato" class="footer__link">Contato</a></li>
-      </ul>
-    </nav>
-    <p class="footer__text">&copy; 2025 • Fotos do Tap. Todos os direitos reservados</p>
-  </footer>
-
-  <!-- Scripts externos -->
-  <script src="https://static.fotosdotap.com.br/js/menu.js"></script>
-  <script src="https://static.fotosdotap.com.br/js/pageFade.js"></script>
-  <script src="https://static.fotosdotap.com.br/js/card.js"></script>
-  <script src="https://static.fotosdotap.com.br/js/calculadoraExtras.js"></script>
-
-  <!-- Script de renderização dos cards -->
-  <script>
-    // Pacotes principais
-    const pacotes = [
-      {
-        titulo: "Pacote Completo",
-        imagem: "/img/pacotes/pacote1.webp",
-        descricao: `A escolha ideal pra quem quer viver a experiência completa e ter um ensaio inesquecível do início ao fim.<br>
-        Perfeito para casais apaixonados, profissionais que querem se destacar ou quem sonha com um ensaio editorial com estilo e personalidade.`,
-        lista: [
-          "60 fotos escolhidas por você",
-          "Até 3 horas de sessão",
-          "Consultoria pré-ensaio",
-          "Edição profissional em alta qualidade",
-          "Entrega digital em link exclusivo"
-        ],
-        preco: "R$ 500,00"
-      },
-      {
-        titulo: "Pacote Flexível",
-        imagem: "/img/pacotes/pacote2.webp",
-        descricao: `Aqui o controle é seu.<br>
-        Você faz o ensaio, vê as fotos com calma e só escolhe o que realmente quiser levar.<br>
-        Perfeito pra quem busca praticidade, um registro pontual ou quer começar com um investimento menor. Com liberdade total pra adicionar mais fotos depois, pagando só pelo que escolher.`,
-        lista: [
-          "Sessão de 1 hora de duração",
-          "Você escolhe suas fotos",
-          "Paga só pelas fotos que escolher",
-          "Edição profissional em alta qualidade",
-          "Entrega digital em link exclusivo"
-        ],
-        preco: "R$ 200,00"
-      }
-    ];
-    document.getElementById('pacotes-lista').innerHTML = pacotes.map(renderCard).join('');
-
-    // Card de informações sobre fotos extras
-    const extrasInfo = {
-      titulo: "Se quiser mais?",
-      descricao: `Escolha quantas fotos quiser!<br>
-      Quanto mais fotos você escolher, mais barato cada uma fica.`,
-      lista: [
-        "Primeiras 5 fotos extras: R$ 12,00",
-        "Próximas 10 fotos extras: R$ 10,00",
-        "Próximas 15 fotos extras: R$ 8,00",
-        "Acima de 30 fotos extras: R$ 6,00",
-        "Você monta seu pacote!"
-      ]
-    };
-    document.getElementById('extras-info').innerHTML = renderCard(extrasInfo);
-
-    // Card da calculadora de fotos extras
-    document.getElementById('calculadora-card').innerHTML = `
+      <!-- Calculadora de Fotos Extras -->
       <article class="pacote-card" aria-label="Calculadora de Fotos Extras">
         <h3 class="pacote-card__titulo">Calculadora de Fotos Extras</h3>
         <p class="pacote-card__descricao">
@@ -156,7 +129,29 @@
         <div class="pacote-card__divider"></div>
         <div class="pacote-card__preco" id="valorTotal">Total: R$ 0,00</div>
       </article>
-    `;
+    </section>
+  </main>
+
+  <div style="height: var(--espacamento-div);"></div>
+
+  <!-- Footer -->
+  <footer class="footer" data-fade>
+    <nav class="footer__nav" aria-label="Menu do rodapé">
+      <ul class="footer__list">
+        <li class="footer__item"><a href="https://cliente.fotosdotap.com.br/login.html" class="footer__link">Área do cliente</a></li>
+        <li class="footer__item"><a href="pacotes.html" class="footer__link ativo">Pacotes</a></li>
+        <li class="footer__item"><a href="index.html#portfolio" class="footer__link">Portfólio</a></li>
+        <li class="footer__item"><a href="index.html#contato" class="footer__link">Contato</a></li>
+      </ul>
+    </nav>
+    <p class="footer__text">&copy; 2025 • Fotos do Tap. Todos os direitos reservados</p>
+  </footer>
+
+  <!-- Scripts padrão -->
+  <script src="https://static.fotosdotap.com.br/js/menu.js"></script>
+  <script src="https://static.fotosdotap.com.br/js/pageFade.js"></script>
+  <script src="https://static.fotosdotap.com.br/js/calculadoraExtras.js"></script>
+  <script>
     iniciarCalculadoraFotosExtras("quantidadeFotos", "detalhesPrecos", "valorTotal");
   </script>
 </body>
