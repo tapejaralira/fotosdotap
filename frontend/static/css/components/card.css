@@ -1,6 +1,6 @@
 /* Card base */
 .pacote-card {
-  background: #fff;
+  background: var(--cor-fundo);
   border-radius: 1rem;
   box-shadow:var(--sombra); 
   margin: 1rem;
@@ -12,7 +12,7 @@
 }
 .pacote-card:focus-within,
 .pacote-card:hover {
-  box-shadow: 0 4px 24px #0002;
+  box-shadow: var(--sombra);
 }
 
 /* Título */
@@ -45,7 +45,7 @@
 .pacote-card__lista {
   color: var(--cor-primaria);
   padding: 1rem 2rem;
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   line-height: 2;
 }
 .pacote-card__lista li {
@@ -96,7 +96,6 @@
   border-radius: 0.7rem;
   font-size: 1.1rem;
   font-family: 'Open Sans', sans-serif;
-  margin-bottom: 1.2rem;
   background: #fafbfc;
   color: var(--cor-primaria, #222);
   transition: border-color 0.2s;
