@@ -2,9 +2,8 @@
 .pacote-card {
   background: #fff;
   border-radius: 1rem;
-  box-shadow: 0 2px 8px #0001;
-  padding: 2.5rem 1.5rem;
-  margin: 2rem 1rem;
+  box-shadow:var(--sombra); 
+  margin: 1rem;
   max-width: 600px;
   text-align: left;
   position: relative;
@@ -18,75 +17,54 @@
 
 /* Título */
 .pacote-card__titulo {
-  font-size: 1.3rem;
+  font-size: 1.8rem;
   font-weight: bold;
-  margin-bottom: 1rem;
-  color: var(--cor-primaria, #1e293b);
-  text-align: center;
+  padding: 1rem;
+  margin: 0;
+  color: var(--cor-primaria);
+  text-align: left;
 }
 
 /* Imagem */
 .pacote-card__imagem {
   width: 100%;
-  border-radius: 0.7rem;
-  margin-bottom: 1rem;
   display: block;
   object-fit: cover;
-  max-height: 220px;
 }
 
 /* Descrição */
 .pacote-card__descricao {
-  margin-bottom: 1rem;
-  color: #444;
-  font-size: 1.05rem;
+  color: var(--cor-primaria);
+  padding: 1rem;
+  font-size: 1.1rem;
+  text-align: center;
   line-height: 1.6;
 }
 
 /* Lista */
 .pacote-card__lista {
-  margin-bottom: 1rem;
-  padding-left: 1.2rem;
-  color: #333;
-  font-size: 1rem;
+  color: var(--cor-primaria);
+  padding: 1rem 2rem;
+  font-size: 1.3rem;
+  line-height: 2;
 }
 .pacote-card__lista li {
-  margin-bottom: 0.5rem;
   list-style: disc inside;
 }
 
 /* Divisória */
 .pacote-card__divider {
-  border-top: 1px solid #eee;
-  margin: 1.5rem 0;
+  border-top: 0.5px solid var(--cor-destaque);
+  margin: 0 2rem;
 }
 
 /* Preço */
 .pacote-card__preco {
   font-weight: bold;
-  font-size: 1.2rem;
-  color: var(--cor-primaria, #1e293b);
-  margin-bottom: 1rem;
+  padding: 1rem 2rem;
+  font-size: 1.8rem;
+  color: var(--cor-primaria);
   text-align: right;
-}
-
-/* Botão */
-.pacote-card .btn-base {
-  display: inline-block;
-  margin-top: 1rem;
-  min-width: 120px;
-  text-align: center;
-}
-
-/* Responsividade */
-@media (max-width: 700px) {
-  .pacote-card {
-    padding: 1.2rem 0.7rem;
-    max-width: 98vw;
-  }
-  .pacote-card__imagem {
-    max-height: 140px;
-  }
 }
 
 /* Centraliza o container dos cards */
@@ -96,3 +74,49 @@
   flex-direction: column;
   align-items: center;
 }
+
+/* Mensagem de erro padrão */
+.msg-erro {
+  background: #ffeaea;
+  color: #c00;
+  border: 1px solid #f5bcbc;
+  border-radius: 0.7rem;
+  padding: 0.8rem 1.2rem;
+  margin: 1rem 0;
+  font-size: 1.05rem;
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* Campo de formulário padrão */
+.campo-formulario {
+  width: 100%;
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--cor-destaque, #ccc);
+  border-radius: 0.7rem;
+  font-size: 1.1rem;
+  font-family: 'Open Sans', sans-serif;
+  margin-bottom: 1.2rem;
+  background: #fafbfc;
+  color: var(--cor-primaria, #222);
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.campo-formulario:focus {
+  border-color: var(--cor-primaria, #1e293b);
+  outline: none;
+  background: #fff;
+}
+
+/* Responsividade */
+@media (max-width: 700px) {
+  .pacote-card {
+    padding: 1.2rem 0.7rem;
+    max-width: 98vw;
+  }
+}
+
+
+
+
