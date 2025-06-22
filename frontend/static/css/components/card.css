@@ -1,123 +1,88 @@
-/* Card base */
-.pacote-card {
+/* --- Card base --- */
+.card {
   background: var(--cor-fundo);
   border-radius: 1rem;
   box-shadow: var(--sombra);
-  padding-bottom: 1rem;
-  padding-top: 1rem;
-  margin: 1rem auto; /* Centraliza horizontalmente */
-  max-width: 37rem;  /* Mantém o card compacto em todas as telas */
+  padding: 1.5rem 1rem 2rem 1rem;
+  margin: 2rem auto;
+  max-width: 37rem;
+  width: 95%;
   text-align: left;
   position: relative;
   transition: box-shadow 0.2s;
   display: block;
-  width: 95%;
 }
-.pacote-card:focus-within,
-.pacote-card:hover {
+.card:focus-within,
+.card:hover {
   box-shadow: var(--sombra);
 }
 
-/* Título */
-.pacote-card__titulo {
+/* --- Título do card --- */
+.card__titulo {
   font-size: 1.8rem;
   font-weight: bold;
-  padding: 1rem;
-  padding-top: 0;
+  padding: 0 0 1rem 0;
   color: var(--cor-primaria);
   text-align: left;
 }
 
-/* Imagem */
-.pacote-card__imagem {
+/* --- Campo de formulário e container flexível --- */
+.campo-formulario {
   width: 100%;
-  display: block;
-  object-fit: cover;
-}
-
-/* Descrição */
-.pacote-card__descricao {
-  color: var(--cor-primaria);
-  padding: 1rem;
-  font-size: 1.1rem;
-  text-align: center;
-  line-height: 1.6;
-}
-
-/* Lista */
-.pacote-card__lista {
-  color: var(--cor-primaria);
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
-  line-height: 2;
-}
-.pacote-card__lista li {
-  list-style: disc inside;
-}
-
-/* Divisória */
-.pacote-card__divider {
-  border-top: 0.5px solid var(--cor-destaque);
-  margin: 0 2rem;
-}
-
-/* Preço */
-.pacote-card__preco {
-  font-weight: bold;
-  padding: 1rem 2rem;
-  padding-bottom: 0;
-  font-size: 1.8rem;
-  color: var(--cor-primaria);
-  text-align: right;
-}
-
-/* Centraliza o container dos cards */
-.pacotes.container,
-.pacotes .container {
+  max-width: 400px;
+  margin: 0 auto 1.2rem auto;
+  padding: 0;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  box-sizing: border-box;
+}
+
+/* Input de formulário */
+input.campo-formulario {
+  padding: 0.7rem 1rem;
+  border: 1px solid var(--cor-destaque, #ccc);
+  border-radius: 0.7rem;
+  font-size: 1.1rem;
+  font-family: var(--fonte-principal);
+  background: #fafbfc;
+  color: var(--cor-primaria, #222);
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  flex: 1 1 auto;
+}
+
+/* --- Botão do olho e ícone --- */
+.icone-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
   align-items: center;
 }
+.icone {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--cor-primaria);
+}
 
-/* Mensagem de erro padrão */
+/* --- Mensagem de erro --- */
 .msg-erro {
   background: #ffeaea;
   color: #c00;
   border: 1px solid #f5bcbc;
   border-radius: 0.5rem;
   padding: 0.5rem;
-  margin: 1rem;
-  margin-bottom: 0;
+  margin: 1rem auto 0 auto;
   font-size: 1.05rem;
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
+  font-family: var(--fonte-principal);
+  max-width: 400px;
 }
 
-/* Campo de formulário padrão */
-.campo-formulario {
-  display: block;
-  margin: auto;
-  margin-bottom: 1rem;
-  width: 90%;
-  padding: 0.7rem 1rem;
-  border: 1px solid var(--cor-destaque, #ccc);
-  border-radius: 0.7rem;
-  font-size: 1.1rem;
-  font-family: 'Open Sans', sans-serif;
-  background: #fafbfc;
-  color: var(--cor-primaria, #222);
-  transition: border-color 0.2s;
-  box-sizing: border-box;
-}
-
-.campo-formulario:focus {
-  border-color: var(--cor-primaria, #1e293b); /* Modifica a cor da borda ao focar, sobrescrevendo a cor padrão */
-  outline: none; /* Remove o contorno padrão do navegador ao focar */
-  background: #fff; /* Altera o fundo ao focar, sobrescrevendo o fundo padrão */
-}
-
-
-
-
-
-
+/* --- Esconde/mostra etapas do formulário --- */
+.escondido { display: none !important; }
+.visivel { display: block !important; }

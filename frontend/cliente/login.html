@@ -37,42 +37,56 @@
       <p class="page-subtitle">Faça o login para acessar seus serviços.</p>
     </div>
     <section class="container" aria-label="Login do Cliente">
-      <div class="pacote-card">
+      <div class="card">
         <form id="form-login" autocomplete="on">
-          <h2 id="login-titulo" class="pacote-card__titulo">Digite seu e-mail</h2>
+          <h2 id="login-titulo" class="card__titulo">Digite seu e-mail</h2>
+          
+          <!-- Etapa e-mail -->
           <div id="etapa-email">
-            <input
-              type="email"
-              id="email"
-              name="email"
-              class="campo-formulario"
-              placeholder="Seu e-mail"
-              required
-              autocomplete="email"
-              autofocus
-            />
+            <div class="campo-formulario">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                class="campo-formulario"
+                placeholder="Seu e-mail"
+                required
+                autocomplete="email"
+                autofocus
+              />
+            </div>
             <button type="button" id="btn-verificar-email" class="btn">Avançar</button>
+            <div id="mensagem-erro-email" class="msg-erro escondido"></div>
           </div>
-          <div id="etapa-senha" style="display:none;">
-            <div style="display: flex; align-items: center; width: 90%; gap: 0.75rem;">
+
+          <!-- Etapa senha -->
+          <div id="etapa-senha" class="escondido">
+            <h2 class="card__titulo">Digite sua senha</h2>
+            <div class="campo-formulario">
               <input
                 type="password"
                 id="senha"
                 name="senha"
                 class="campo-formulario"
-                placeholder="senha"
+                placeholder="Senha"
                 required
                 autocomplete="current-password"
-                style="flex: 1;"
               />
-              <button type="button" id="toggle-senha" aria-label="Mostrar ou ocultar senha" style="background: none; border: none; cursor: pointer; padding: 0;">
-                <svg id="icon-senha" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="#888" stroke-width="2" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/><circle cx="12" cy="12" r="3" stroke="#888" stroke-width="2"/></svg>
+              <button type="button" id="toggle-senha" aria-label="Mostrar ou ocultar senha" class="icone-btn">
+                <svg id="icon-senha" class="icone" viewBox="0 0 24 24" fill="none" width="22" height="22">
+                  <path stroke="#888" stroke-width="2" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/>
+                  <circle cx="12" cy="12" r="3" stroke="#888" stroke-width="2"/>
+                </svg>
               </button>
             </div>
-            <button type="submit" class="btn">Entrar</button>
+            <button type="submit" id="btn-entrar" class="btn">Entrar</button>
+            <div id="mensagem-erro-senha" class="msg-erro escondido"></div>
           </div>
-          <div id="etapa-cadastrar-senha" style="display:none;">
-            <div style="display: flex; align-items: center; width: 100%; gap: 0.75rem; margin-bottom: 1rem;">
+
+          <!-- Etapa cadastrar senha -->
+          <div id="etapa-cadastrar-senha" class="escondido">
+            <h2 class="card__titulo">Cadastre uma nova senha</h2>
+            <div class="campo-formulario">
               <input
                 type="password"
                 id="nova-senha"
@@ -81,15 +95,17 @@
                 placeholder="Cadastre uma senha"
                 required
                 autocomplete="new-password"
-                style="flex: 1;"
               />
-              <button type="button" id="toggle-nova-senha" aria-label="Mostrar ou ocultar senha" style="background: none; border: none; cursor: pointer; padding: 0;">
-                <svg id="icon-nova-senha" xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="#888" stroke-width="2" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/><circle cx="12" cy="12" r="3" stroke="#888" stroke-width="2"/></svg>
+              <button type="button" id="toggle-nova-senha" aria-label="Mostrar ou ocultar senha" class="icone-btn">
+                <svg id="icon-nova-senha" class="icone" viewBox="0 0 24 24" fill="none" width="22" height="22">
+                  <path stroke="#888" stroke-width="2" d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12Z"/>
+                  <circle cx="12" cy="12" r="3" stroke="#888" stroke-width="2"/>
+                </svg>
               </button>
             </div>
-            <button type="submit" class="btn">Cadastrar senha</button>
+            <button type="submit" id="btn-cadastrar-senha" class="btn">Cadastrar senha</button>
+            <div id="mensagem-erro-cadastrar-senha" class="msg-erro escondido"></div>
           </div>
-          <div id="mensagem-erro" class="msg-erro" style="display:none;"></div>
         </form>
       </div>
     </section>
