@@ -1,9 +1,6 @@
 import type { Env } from "./types";
 
-// Funções para acessar clientes no bucket (ajuste para seu storage)
-
-const BUCKET_PREFIX = "bucket/clientes/";
-
+// Função para buscar o índice de clientes no bucket R2
 export async function getClientesIndex(env: Env): Promise<Record<string, string>> {
   try {
     const obj = await env.FOTOSDOTAP_BUCKET.get("clientes_index.json");
@@ -16,22 +13,33 @@ export async function getClientesIndex(env: Env): Promise<Record<string, string>
   }
 }
 
-export async function getClienteData(filename: string): Promise<any> {
-  const resp = await fetch(BUCKET_PREFIX + filename);
-  if (!resp.ok) return null;
-  return await resp.json();
+// Função para buscar dados de um cliente específico
+export async function getClienteData(filename: string, env: Env): Promise<any> {
+  try {
+    const obj = await env.FOTOSDOTAP_BUCKET.get(`clientes/${filename}`);
+    if (!obj) return null;
+    const text = await obj.text();
+    return JSON.parse(text);
+  } catch (e) {
+    throw new Error("Erro ao ler arquivo do cliente: " + (e instanceof Error ? e.message : String(e)));
+  }
 }
 
-export async function saveClienteData(filename: string, data: any, isIndex = false): Promise<void> {
-  // Implemente para salvar arquivo no storage (exemplo fictício)
-  await fetch(BUCKET_PREFIX + filename, {
-    method: "PUT",
-    body: JSON.stringify(data, null, 2),
-    headers: { "Content-Type": "application/json" }
-  });
+// Função para salvar dados de um cliente
+export async function saveClienteData(filename: string, data: any, env: Env): Promise<void> {
+  try {
+    const path = filename.startsWith("../") ? filename.replace("../", "") : `clientes/${filename}`;
+    await env.FOTOSDOTAP_BUCKET.put(path, JSON.stringify(data, null, 2));
+  } catch (e) {
+    throw new Error("Erro ao salvar arquivo do cliente: " + (e instanceof Error ? e.message : String(e)));
+  }
 }
 
-export async function deleteClienteData(filename: string): Promise<void> {
-  // Implemente para deletar arquivo do storage (exemplo fictício)
-  await fetch(BUCKET_PREFIX + filename, { method: "DELETE" });
+// Função para deletar dados de um cliente
+export async function deleteClienteData(filename: string, env: Env): Promise<void> {
+  try {
+    await env.FOTOSDOTAP_BUCKET.delete(`clientes/${filename}`);
+  } catch (e) {
+    throw new Error("Erro ao deletar arquivo do cliente: " + (e instanceof Error ? e.message : String(e)));
+  }
 }

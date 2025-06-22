@@ -34,28 +34,23 @@ export async function adminRouter(request: Request, env: Env): Promise<Response>
       const index = await getClientesIndex(env);
       const clientes = [];      for (const [email, filename] of Object.entries(index)) {
         try {
-          const data = await getClienteData(filename);
+          const data = await getClienteData(filename, env);
           if (data) {
             clientes.push({ email, nome: data.nome || "", telefone: data.telefone || "" });
-          } else {
-            clientes.push({ email, nome: "(Arquivo não encontrado)", telefone: "" });
           }
-        } catch {
-          // Se não conseguir ler um cliente específico, pula para o próximo
-          console.log(`Erro ao carregar cliente: ${filename}`);
+        } catch (e) {
+          console.log(`Erro ao carregar cliente: ${filename}`, e);
         }
       }
       return jsonResponse({ clientes }, 200, origin);
-    }
-
-      // --- BUSCAR CLIENTE ---
+    }      // --- BUSCAR CLIENTE ---
       if (url.pathname === "/admin/cliente" && method === "GET") {
         const email = url.searchParams.get("email");
         if (!email) return jsonResponse({ erro: "E-mail não informado" }, 200, origin);
-        const index = await getClientesIndex(env); // Corrija aqui: passe o env
+        const index = await getClientesIndex(env);
         const filename = index[email];
         if (!filename) return jsonResponse({ erro: "Cliente não encontrado" }, 200, origin);
-        const data = await getClienteData(filename);
+        const data = await getClienteData(filename, env);
         return jsonResponse({ sucesso: true, cliente: data }, 200, origin);
       }
 
@@ -65,11 +60,10 @@ export async function adminRouter(request: Request, env: Env): Promise<Response>
         if (!email) return jsonResponse({ erro: "E-mail obrigatório" }, 200, origin);
         const index = await getClientesIndex(env); // Corrija aqui: passe o env
         if (index[email]) return jsonResponse({ erro: "Cliente já existe" }, 200, origin);
-        const filename = `${Date.now()}_${(nome || email).toLowerCase().replace(/[^a-z0-9]+/g, "-")}.json`;
-        const cliente = { nome, email, telefone, senha: "", servicos: [] };
-        await saveClienteData(filename, cliente);
-        index[email] = filename;
-        await saveClienteData("../clientes_index.json", index, true);
+        const filename = `${Date.now()}_${(nome || email).toLowerCase().replace(/[^a-z0-9]+/g, "-")}.json`;      const cliente = { nome, email, telefone, senha: "", servicos: [] };
+      await saveClienteData(filename, cliente, env);
+      index[email] = filename;
+      await saveClienteData("clientes_index.json", index, env);
         return jsonResponse({ sucesso: true }, 200, origin);
       }
 
@@ -79,11 +73,10 @@ export async function adminRouter(request: Request, env: Env): Promise<Response>
         if (!email) return jsonResponse({ erro: "E-mail obrigatório" }, 200, origin);
         const index = await getClientesIndex(env); // Corrija aqui: passe o env
         const filename = index[email];
-        if (!filename) return jsonResponse({ erro: "Cliente não encontrado" }, 200, origin);
-        const data = await getClienteData(filename);
-        data.nome = nome;
-        data.telefone = telefone;
-        await saveClienteData(filename, data);
+        if (!filename) return jsonResponse({ erro: "Cliente não encontrado" }, 200, origin);      const data = await getClienteData(filename, env);
+      data.nome = nome;
+      data.telefone = telefone;
+      await saveClienteData(filename, data, env);
         return jsonResponse({ sucesso: true }, 200, origin);
       }
 
@@ -93,10 +86,9 @@ export async function adminRouter(request: Request, env: Env): Promise<Response>
         if (!email) return jsonResponse({ erro: "E-mail obrigatório" }, 200, origin);
         const index = await getClientesIndex(env); // Corrija aqui: passe o env
         const filename = index[email];
-        if (!filename) return jsonResponse({ erro: "Cliente não encontrado" }, 200, origin);
-        await deleteClienteData(filename);
-        delete index[email];
-        await saveClienteData("../clientes_index.json", index, true);
+        if (!filename) return jsonResponse({ erro: "Cliente não encontrado" }, 200, origin);      await deleteClienteData(filename, env);
+      delete index[email];
+      await saveClienteData("clientes_index.json", index, env);
         return jsonResponse({ sucesso: true }, 200, origin);
       }
     }
