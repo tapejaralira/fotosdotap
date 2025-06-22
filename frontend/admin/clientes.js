@@ -11,7 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
     msgErro.classList.add('escondido');
     lista.innerHTML = '<div style="text-align:center;padding:1rem;"><span class="spinner" aria-label="Carregando..."><svg width="22" height="22" viewBox="0 0 50 50"><circle cx="25" cy="25" r="20" fill="none" stroke="#888" stroke-width="5" stroke-linecap="round" stroke-dasharray="31.4 31.4" transform="rotate(-90 25 25)"><animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/></circle></svg></span></div>';
     try {
-      const res = await fetch('/admin/clientes', {
+      // Troque a URL para a API absoluta:
+      const res = await fetch('https://api.fotosdotap.com.br/admin/clientes', {
         headers: { 'Authorization': 'Bearer ' + token }
       });
       const data = await res.json();
@@ -35,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
           document.querySelectorAll('.btn-excluir').forEach(btn => {
             btn.onclick = async () => {
               if (confirm('Tem certeza que deseja excluir este cliente?')) {
-                const res = await fetch('/admin/cliente', {
+                const res = await fetch('https://api.fotosdotap.com.br/admin/cliente', {
                   method: 'DELETE',
                   headers: {
                     'Content-Type': 'application/json',

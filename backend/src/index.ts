@@ -2,12 +2,25 @@
 
 import loginHandler from './login'; // Ambos estão na mesma pasta
 import cadastrarSenhaHandler from './cadastrarSenha';
-import { JSON_HEADERS, jsonResponse } from './utils';
 import { adminRouter } from "./admin";
 import type { Env } from "./types";
+import { JSON_HEADERS, getCorsOrigin, jsonResponse } from "./utils";
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+    const origin = request.headers.get("Origin");
+
+    // Trate requisições OPTIONS para CORS dinâmico
+    if (request.method === "OPTIONS") {
+      return new Response(null, {
+        status: 204,
+        headers: {
+          ...JSON_HEADERS,
+          "Access-Control-Allow-Origin": getCorsOrigin(origin),
+        }
+      });
+    }
+
     const url = new URL(request.url);
     if (url.pathname.startsWith("/admin")) {
       return adminRouter(request, env);
@@ -74,13 +87,6 @@ export default {
       // Ordena do mais recente para o mais antigo
       servicos.sort((a, b) => new Date(b.data_servico).getTime() - new Date(a.data_servico).getTime());
       return jsonResponse(servicos);
-    }
-
-    // Responde requisições OPTIONS (preflight CORS)
-    if (request.method === 'OPTIONS') {
-      return new Response(null, {
-        headers: JSON_HEADERS
-      });
     }
 
     // Retorno padrão para rota não encontrada

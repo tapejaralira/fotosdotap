@@ -29,7 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
     (async () => {
       mostrarSpinner(true);
       try {
-        const res = await fetch(`/admin/cliente?email=${encodeURIComponent(emailParam)}`, {
+        // Troque a URL para a API absoluta:
+        const res = await fetch(`https://api.fotosdotap.com.br/admin/cliente?email=${encodeURIComponent(emailParam)}`, {
           headers: { 'Authorization': 'Bearer ' + token }
         });
         const data = await res.json();
@@ -57,10 +58,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const email = document.getElementById('cliente-email').value.trim();
     const telefone = document.getElementById('cliente-telefone').value.trim();
     try {
-      const res = await fetch('/admin/cliente', {
+      // Troque a URL para a API absoluta:
+      const res = await fetch('https://api.fotosdotap.com.br/admin/cliente', {
         method: emailParam ? 'PUT' : 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type':'application/json',
           'Authorization': 'Bearer ' + token
         },
         body: JSON.stringify({ nome, email, telefone })

@@ -22,7 +22,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const email = document.getElementById('admin-email').value.trim();
     const senha = document.getElementById('admin-senha').value;
     try {
-      const res = await fetch('/admin/login', {
+      // Troque a URL para a API absoluta:
+      const res = await fetch('https://api.fotosdotap.com.br/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, senha })

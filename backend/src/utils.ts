@@ -1,18 +1,32 @@
-// Cabeçalhos padrão para respostas JSON
-export const JSON_HEADERS = {
-  "Content-Type": "application/json",
-  // "Access-Control-Allow-Origin": "https://cliente.fotosdotap.com.br", // original restrito
-  "Access-Control-Allow-Origin": "*", // liberado para dev local
-  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type"
-};
+const ALLOWED_ORIGINS = [
+  "https://admin.fotosdotap.com.br",
+  "https://cliente.fotosdotap.com.br",
+  "http://localhost:5500",
+  "http://127.0.0.1:5500",
+  "http://192.168.1.7:5500"
+];
 
-// Função utilitária para criar respostas JSON
-export function jsonResponse(body: object, status = 200): Response {
-  return new Response(JSON.stringify(body), { status, headers: JSON_HEADERS });
+export function getCorsOrigin(origin: string | null): string {
+  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+    return origin;
+  }
+  return ALLOWED_ORIGINS[0]; // padrão
 }
 
-// Utilitários para Cloudflare Worker
+export const JSON_HEADERS = {
+  "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": ALLOWED_ORIGINS[0],
+  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type, Authorization"
+};
+
+export function jsonResponse(body: object, status = 200, origin?: string | null): Response {
+  const headers = {
+    ...JSON_HEADERS,
+    "Access-Control-Allow-Origin": getCorsOrigin(origin || null)
+  };
+  return new Response(JSON.stringify(body), { status, headers });
+}
 
 export async function parseRequestBody(request: Request): Promise<any> {
   const contentType = request.headers.get("content-type") || "";
