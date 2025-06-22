@@ -1,9 +1,12 @@
+// ATENÇÃO: Remova domínios de desenvolvimento e testes antes de ir para produção!
+// Mantenha apenas os domínios finais do projeto em produção.
 const ALLOWED_ORIGINS = [
-  "https://admin.fotosdotap.com.br",
-  "https://cliente.fotosdotap.com.br",
-  "http://localhost:5500",
-  "http://127.0.0.1:5500",
-  "http://192.168.1.7:5500"
+  "https://admin.fotosdotap.com.br",      // produção admin
+  "https://cliente.fotosdotap.com.br",    // produção cliente
+  "https://admin-evv.pages.dev",          // Pages de teste (REMOVER em produção)
+  "http://localhost:5500",                // dev local (REMOVER em produção)
+  "http://127.0.0.1:5500",                // dev local (REMOVER em produção)
+  "http://192.168.1.7:5500"               // dev local (REMOVER em produção)
 ];
 
 export function getCorsOrigin(origin: string | null): string {
