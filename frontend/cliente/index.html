@@ -90,15 +90,19 @@
             throw new Error('Cliente não encontrado');
           }
           return res.json();
-        })
-        .then(data => {
-          console.log('Dados do cliente:', data); // Debug
-          if (data && data.sucesso) {
+        })        .then(data => {
+          console.log('Dados do cliente recebidos:', JSON.stringify(data, null, 2)); // Debug detalhado
+          
+          if (data && data.sucesso && data.cliente) {
+            console.log('Cliente encontrado com sucesso'); // Debug
             document.getElementById('boas-vindas').textContent = `Olá, ${data.cliente.nome || email_cliente.split('@')[0]}! Aqui está seu painel de cliente.`;
           } else if (data && data.codigo === 'SESSAO_INVALIDA') {
-            // Apenas se o backend disser explicitamente que a sessão é inválida
+            console.log('Sessão inválida detectada'); // Debug
             limparSessaoInvalida();
             return;
+          } else {
+            console.log('Estrutura de dados inesperada:', data); // Debug
+            document.getElementById('boas-vindas').textContent = `Olá, ${email_cliente.split('@')[0]}! Dados do cliente carregados.`;
           }
           
           // Busca serviços do cliente por email
@@ -113,15 +117,16 @@
             return;
           }
           return res.json();
-        })
-        .then(data => {
+        })        .then(data => {
           if (!data) return; // Se já redirecionou para login
           
-          console.log('Dados dos serviços:', data); // Debug
-          if (data && data.sucesso) {
+          console.log('Dados dos serviços recebidos:', JSON.stringify(data, null, 2)); // Debug detalhado
+          
+          if (data && data.sucesso && Array.isArray(data.servicos)) {
+            console.log('Serviços carregados com sucesso:', data.servicos.length); // Debug
             const lista = document.getElementById('servicos-lista');
             const servicos = data.servicos;
-            if (!Array.isArray(servicos) || servicos.length === 0) {
+            if (servicos.length === 0) {
               lista.innerHTML = '<p>Nenhum serviço encontrado.</p>';
             } else {
               // Renderização simples sem depender de função externa
@@ -136,6 +141,9 @@
                 </div>
               `).join('');
             }
+          } else {
+            console.log('Estrutura de serviços inesperada:', data); // Debug
+            document.getElementById('servicos-lista').innerHTML = '<p>Nenhum serviço encontrado.</p>';
           }
         })
         .catch(e => {
