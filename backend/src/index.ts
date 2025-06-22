@@ -2,8 +2,9 @@
 
 import { adminRouter } from "./admin";
 import loginHandler from "./login";
+import cadastrarSenhaHandler from "./cadastrarSenha";
 import type { Env } from "./types";
-import { JSON_HEADERS, getCorsOrigin } from "./utils";
+import { JSON_HEADERS, getCorsOrigin, jsonResponse } from "./utils";
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -31,7 +32,44 @@ export default {
 
     // Rota para cadastrar senha do cliente
     if (url.pathname === "/cadastrar-senha" && request.method === "POST") {
-      return loginHandler.fetch(request, env, ctx);
+      return cadastrarSenhaHandler.fetch(request, env, ctx);
+    }
+
+    // ==========================================
+    // ROTAS DA API DO CLIENTE
+    // ==========================================
+    
+    // Buscar dados do cliente logado
+    if (url.pathname === "/api/cliente" && request.method === "GET") {
+      const email = url.searchParams.get("email");
+      if (!email) {
+        return jsonResponse({ erro: "E-mail não informado" }, 400, origin);
+      }
+
+      try {
+        const { getClientesIndex, getClienteData } = await import("./clientes");
+        const index = await getClientesIndex(env);
+        const filename = index[email];
+        
+        if (!filename) {
+          return jsonResponse({ erro: "Cliente não encontrado" }, 404, origin);
+        }
+
+        const clienteData = await getClienteData(filename, env);
+        if (!clienteData) {
+          return jsonResponse({ erro: "Dados do cliente não encontrados" }, 500, origin);
+        }
+
+        // Retorna dados do cliente (sem a senha)
+        const { senha, ...dadosCliente } = clienteData;
+        return jsonResponse({ 
+          sucesso: true, 
+          cliente: dadosCliente 
+        }, 200, origin);
+        
+      } catch (e) {
+        return jsonResponse({ erro: "Erro interno" }, 500, origin);
+      }
     }
 
     // ==========================================

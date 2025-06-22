@@ -11,41 +11,6 @@ export default {
     const url = new URL(request.url);
     
     // ==========================================
-    // POST - CADASTRAR SENHA DO CLIENTE
-    // ==========================================
-    if (url.pathname === "/cadastrar-senha" && request.method.toUpperCase() === 'POST') {
-      try {
-        const { email, senha } = await request.json() as { email: string; senha: string };
-        
-        if (!email || !senha) {
-          return jsonResponse({ sucesso: false, erro: "Email e senha obrigatórios." }, 400, origin);
-        }
-
-        // Busca cliente
-        const index = await getClientesIndex(env);
-        const filename = index[email];
-        
-        if (!filename) {
-          return jsonResponse({ sucesso: false, erro: "Cliente não encontrado." }, 404, origin);
-        }
-
-        const clienteData = await getClienteData(filename, env);
-        if (!clienteData) {
-          return jsonResponse({ sucesso: false, erro: "Dados do cliente não encontrados." }, 500, origin);
-        }
-
-        // Atualiza a senha
-        clienteData.senha = senha;
-        await saveClienteData(filename, clienteData, env);
-        
-        return jsonResponse({ sucesso: true, nome: clienteData.nome || email.split('@')[0] }, 200, origin);
-        
-      } catch (err: any) {
-        return jsonResponse({ sucesso: false, erro: "Erro interno", detalhes: err.message }, 500, origin);
-      }
-    }
-    
-    // ==========================================
     // POST - AUTENTICAÇÃO DO CLIENTE
     // ==========================================
     if (url.pathname === "/login" && request.method.toUpperCase() === 'POST') {
