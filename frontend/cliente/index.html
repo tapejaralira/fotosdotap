@@ -57,85 +57,93 @@
   <script src="https://static.fotosdotap.com.br/js/menu.js"></script>  <script>
     // --- Painel dinâmico ---
     const email_cliente = localStorage.getItem('fotosdotap_email_cliente');
+    console.log('Email do cliente:', email_cliente); // Debug
     
     // Validação apenas para casos claramente inválidos
     if (!email_cliente || email_cliente === 'null' || email_cliente === 'undefined' || email_cliente.trim() === '') {
+      console.log('Email inválido, redirecionando para login'); // Debug
       // Limpa dados inconsistentes
       localStorage.removeItem('fotosdotap_email_cliente');
       localStorage.removeItem('fotosdotap_id_cliente');
       window.location.href = 'login.html';
-      return; // Para de executar o resto
-    }
+    } else {
+      console.log('Email válido, carregando dados...'); // Debug
+      
+      // Função para limpar sessão inválida (chamada apenas quando necessário)
+      function limparSessaoInvalida() {
+        localStorage.removeItem('fotosdotap_email_cliente');
+        localStorage.removeItem('fotosdotap_id_cliente');
+        window.location.href = 'login.html';
+      }
 
-    // Função para limpar sessão inválida (chamada apenas quando necessário)
-    function limparSessaoInvalida() {
-      localStorage.removeItem('fotosdotap_email_cliente');
-      localStorage.removeItem('fotosdotap_id_cliente');
-      window.location.href = 'login.html';
-    }
-
-    // Busca dados do cliente por email
-    fetch(`https://api.fotosdotap.com.br/api/cliente?email=${encodeURIComponent(email_cliente)}`)
-      .then(res => {
-        if (res.status === 401) {
-          // Apenas se receber 401 (não autorizado)
-          limparSessaoInvalida();
-          return;
-        }
-        if (res.status === 404) {
-          // Cliente não encontrado - pode ser problema no backend, não limpa imediatamente
-          throw new Error('Cliente não encontrado');
-        }
-        return res.json();
-      })
-      .then(data => {
-        if (data && data.sucesso) {
-          document.getElementById('boas-vindas').textContent = `Olá, ${data.cliente.nome || email_cliente.split('@')[0]}! Aqui está seu painel de cliente.`;
-        } else if (data && data.codigo === 'SESSAO_INVALIDA') {
-          // Apenas se o backend disser explicitamente que a sessão é inválida
-          limparSessaoInvalida();
-          return;
-        }
-        
-        // Busca serviços do cliente por email
-        return fetch(`https://api.fotosdotap.com.br/api/servicos?email=${encodeURIComponent(email_cliente)}`);
-      })
-      .then(res => {
-        if (!res) return; // Se já redirecionou para login
-        
-        if (res.status === 401) {
-          limparSessaoInvalida();
-          return;
-        }
-        return res.json();
-      })
-      .then(data => {
-        if (!data) return; // Se já redirecionou para login
-        
-        if (data && data.sucesso) {
-          const lista = document.getElementById('servicos-lista');
-          const servicos = data.servicos;
-          if (!Array.isArray(servicos) || servicos.length === 0) {
-            lista.innerHTML = '<p>Nenhum serviço encontrado.</p>';
-          } else {
-            lista.innerHTML = servicos.map(s => renderCard({
-              titulo: s.nome_servico,
-              descricao: `
-                <b>Data:</b> ${s.data_servico}<br>
-                <b>Pacote:</b> ${s.pacote}<br>
-                <b>Status da seleção:</b> ${s.selecao_liberada ? 'Liberada' : 'Aguardando'}<br>
-                <b>Status da galeria:</b> ${s.galeria_liberada ? 'Liberada' : 'Aguardando'}
-              `,
-              botao: { href: "#", texto: "Ver detalhes" }
-            })).join('');
+      // Busca dados do cliente por email
+      fetch(`https://api.fotosdotap.com.br/api/cliente?email=${encodeURIComponent(email_cliente)}`)
+        .then(res => {
+          console.log('Resposta API cliente:', res.status); // Debug
+          if (res.status === 401) {
+            // Apenas se receber 401 (não autorizado)
+            limparSessaoInvalida();
+            return;
           }
-        }
-      })
-      .catch(e => {
-        console.error('Erro ao carregar dados:', e);
-        document.getElementById('boas-vindas').textContent = 'Erro ao carregar dados. Tente novamente em alguns instantes.';
-        // NÃO limpa dados em caso de erro de rede - pode ser temporário
-      });
+          if (res.status === 404) {
+            // Cliente não encontrado - pode ser problema no backend, não limpa imediatamente
+            throw new Error('Cliente não encontrado');
+          }
+          return res.json();
+        })
+        .then(data => {
+          console.log('Dados do cliente:', data); // Debug
+          if (data && data.sucesso) {
+            document.getElementById('boas-vindas').textContent = `Olá, ${data.cliente.nome || email_cliente.split('@')[0]}! Aqui está seu painel de cliente.`;
+          } else if (data && data.codigo === 'SESSAO_INVALIDA') {
+            // Apenas se o backend disser explicitamente que a sessão é inválida
+            limparSessaoInvalida();
+            return;
+          }
+          
+          // Busca serviços do cliente por email
+          return fetch(`https://api.fotosdotap.com.br/api/servicos?email=${encodeURIComponent(email_cliente)}`);
+        })
+        .then(res => {
+          if (!res) return; // Se já redirecionou para login
+          
+          console.log('Resposta API serviços:', res.status); // Debug
+          if (res.status === 401) {
+            limparSessaoInvalida();
+            return;
+          }
+          return res.json();
+        })
+        .then(data => {
+          if (!data) return; // Se já redirecionou para login
+          
+          console.log('Dados dos serviços:', data); // Debug
+          if (data && data.sucesso) {
+            const lista = document.getElementById('servicos-lista');
+            const servicos = data.servicos;
+            if (!Array.isArray(servicos) || servicos.length === 0) {
+              lista.innerHTML = '<p>Nenhum serviço encontrado.</p>';
+            } else {
+              // Renderização simples sem depender de função externa
+              lista.innerHTML = servicos.map(s => `
+                <div class="card" style="margin-bottom: 20px;">
+                  <h3>${s.nome_servico || 'Serviço'}</h3>
+                  <p><b>Data:</b> ${s.data_servico || 'N/A'}</p>
+                  <p><b>Pacote:</b> ${s.pacote || 'N/A'}</p>
+                  <p><b>Status da seleção:</b> ${s.selecao_liberada ? 'Liberada' : 'Aguardando'}</p>
+                  <p><b>Status da galeria:</b> ${s.galeria_liberada ? 'Liberada' : 'Aguardando'}</p>
+                  <button class="btn">Ver detalhes</button>
+                </div>
+              `).join('');
+            }
+          }
+        })
+        .catch(e => {
+          console.error('Erro ao carregar dados:', e);
+          document.getElementById('boas-vindas').textContent = 'Erro ao carregar dados. Tente novamente em alguns instantes.';
+          // NÃO limpa dados em caso de erro de rede - pode ser temporário
+        });
+    }
 
     // Logout limpa localStorage e volta para login
     document.getElementById('btn-logout').onclick = function(e) {
