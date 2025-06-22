@@ -10,6 +10,12 @@
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/button.css" />
 </head>
 <body>
+  <script>
+    // Redireciona para login se não houver token de admin
+    if (!localStorage.getItem('admin_token')) {
+      window.location.href = "login.html";
+    }
+  </script>
   <main class="main">
     <div class="card">
       <form id="form-cliente" autocomplete="off">
