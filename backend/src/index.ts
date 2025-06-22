@@ -107,10 +107,50 @@ export default {
           return jsonResponse({ erro: "Dados do cliente não encontrados" }, 500, origin);
         }
 
-        // Retorna serviços do cliente
+        // Busca dados completos de cada serviço
+        const servicosDetalhados = [];
+        if (clienteData.servicos && Array.isArray(clienteData.servicos)) {
+          for (const servicoId of clienteData.servicos) {
+            try {
+              // Busca arquivo do serviço na pasta servicos/
+              const servicoObj = await env.FOTOSDOTAP_BUCKET.get(`servicos/${servicoId}.json`);
+              if (servicoObj) {
+                const servicoData = JSON.parse(await servicoObj.text());
+                servicosDetalhados.push(servicoData);
+              } else {
+                // Se não encontrar o arquivo, cria dados básicos a partir do ID
+                const parts = servicoId.split('_');
+                const dataStr = parts[0];
+                const tipo = parts[1] || 'servico';
+                
+                let dataFormatada = 'N/A';
+                if (dataStr && dataStr.length === 8) {
+                  const ano = dataStr.substring(0, 4);
+                  const mes = dataStr.substring(4, 6);
+                  const dia = dataStr.substring(6, 8);
+                  dataFormatada = `${dia}/${mes}/${ano}`;
+                }
+                
+                servicosDetalhados.push({
+                  id: servicoId,
+                  nome_servico: tipo.charAt(0).toUpperCase() + tipo.slice(1),
+                  data_servico: dataFormatada,
+                  pacote: "Padrão",
+                  status: "ativo",
+                  selecao_liberada: false,
+                  galeria_liberada: false
+                });
+              }
+            } catch (e) {
+              console.log(`Erro ao carregar serviço ${servicoId}:`, e);
+            }
+          }
+        }
+
+        // Retorna serviços detalhados do cliente
         return jsonResponse({ 
           sucesso: true, 
-          servicos: clienteData.servicos || [] 
+          servicos: servicosDetalhados
         }, 200, origin);
         
       } catch (e) {

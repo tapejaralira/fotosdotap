@@ -54,7 +54,8 @@
   <!-- Scripts no final -->
   <script src="https://static.fotosdotap.com.br/js/card.js"></script>
   <script src="https://static.fotosdotap.com.br/js/pageFade.js"></script>
-  <script src="https://static.fotosdotap.com.br/js/menu.js"></script>  <script>
+  <script src="https://static.fotosdotap.com.br/js/menu.js"></script>
+  <script>
     // --- Painel dinâmico ---
     const email_cliente = localStorage.getItem('fotosdotap_email_cliente');
     console.log('Email do cliente:', email_cliente); // Debug
@@ -89,8 +90,8 @@
             // Cliente não encontrado - pode ser problema no backend, não limpa imediatamente
             throw new Error('Cliente não encontrado');
           }
-          return res.json();
-        })        .then(data => {
+          return res.json();        })
+        .then(data => {
           console.log('Dados do cliente recebidos:', JSON.stringify(data, null, 2)); // Debug detalhado
           
           if (data && data.sucesso && data.cliente) {
@@ -116,8 +117,8 @@
             limparSessaoInvalida();
             return;
           }
-          return res.json();
-        })        .then(data => {
+          return res.json();        })
+        .then(data => {
           if (!data) return; // Se já redirecionou para login
           
           console.log('Dados dos serviços recebidos:', JSON.stringify(data, null, 2)); // Debug detalhado
@@ -129,14 +130,15 @@
             if (servicos.length === 0) {
               lista.innerHTML = '<p>Nenhum serviço encontrado.</p>';
             } else {
-              // Renderização simples sem depender de função externa
-              lista.innerHTML = servicos.map(s => `
-                <div class="card" style="margin-bottom: 20px;">
-                  <h3>${s.nome_servico || 'Serviço'}</h3>
-                  <p><b>Data:</b> ${s.data_servico || 'N/A'}</p>
-                  <p><b>Pacote:</b> ${s.pacote || 'N/A'}</p>
-                  <p><b>Status da seleção:</b> ${s.selecao_liberada ? 'Liberada' : 'Aguardando'}</p>
-                  <p><b>Status da galeria:</b> ${s.galeria_liberada ? 'Liberada' : 'Aguardando'}</p>
+              // Renderização com dados detalhados dos serviços
+              lista.innerHTML = servicos.map(servico => `
+                <div class="card" style="margin-bottom: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+                  <h3>${servico.nome_servico || 'Serviço'}</h3>
+                  <p><b>Data:</b> ${servico.data_servico || 'N/A'}</p>
+                  <p><b>Pacote:</b> ${servico.pacote || 'N/A'}</p>
+                  <p><b>Status:</b> ${servico.status || 'N/A'}</p>
+                  <p><b>Seleção de fotos:</b> ${servico.selecao_liberada ? 'Liberada' : 'Aguardando'}</p>
+                  <p><b>Galeria:</b> ${servico.galeria_liberada ? 'Liberada' : 'Aguardando'}</p>
                   <button class="btn">Ver detalhes</button>
                 </div>
               `).join('');
