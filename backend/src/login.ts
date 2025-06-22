@@ -1,111 +1,122 @@
 /// <reference types="@cloudflare/workers-types" />
 
-import { Env, ClienteIndex, ClienteData } from './types';
+import { Env, ClienteData } from './types';
 import { jsonResponse } from './utils';
+import { getClientesIndex, getClienteData, saveClienteData } from './clientes';
 
 export default {
   // Handler principal da rota de login
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
-    console.log('Método recebido:', request.method);
-    if (request.method.toUpperCase() === 'POST') {
+    const origin = request.headers.get("Origin");
+    const url = new URL(request.url);
+    
+    // ==========================================
+    // POST - CADASTRAR SENHA DO CLIENTE
+    // ==========================================
+    if (url.pathname === "/cadastrar-senha" && request.method.toUpperCase() === 'POST') {
       try {
         const { email, senha } = await request.json() as { email: string; senha: string };
-        console.log('Dados recebidos:', email, senha);
+        
         if (!email || !senha) {
-          console.log('Faltando email ou senha');
-          return jsonResponse({ sucesso: false, erro: "Email e senha obrigatórios." }, 400);
+          return jsonResponse({ sucesso: false, erro: "Email e senha obrigatórios." }, 400, origin);
         }
-        // Busca o índice de clientes
-        const indexObject = await env.FOTOSDOTAP_BUCKET.get("clientes_index.json");
-        if (!indexObject) {
-          console.log('Index de clientes não encontrado');
-          return jsonResponse({ sucesso: false, erro: "Index de clientes não encontrado." }, 500);
+
+        // Busca cliente
+        const index = await getClientesIndex(env);
+        const filename = index[email];
+        
+        if (!filename) {
+          return jsonResponse({ sucesso: false, erro: "Cliente não encontrado." }, 404, origin);
         }
-        let arquivoCliente: string | undefined;
-        try {
-          const indexObj = JSON.parse(await indexObject.text());
-          arquivoCliente = indexObj[email];
-        } catch {
-          console.log('Index de clientes corrompido');
-          return jsonResponse({ sucesso: false, erro: "Index de clientes corrompido." }, 500);
+
+        const clienteData = await getClienteData(filename, env);
+        if (!clienteData) {
+          return jsonResponse({ sucesso: false, erro: "Dados do cliente não encontrados." }, 500, origin);
         }
-        if (!arquivoCliente) {
-          console.log('Cliente não encontrado');
-          return jsonResponse({ sucesso: false, erro: "Cliente não encontrado." }, 404);
-        }
-        // Busca o arquivo do cliente
-        const clienteObj = await env.FOTOSDOTAP_BUCKET.get(`clientes/${arquivoCliente}`);
-        if (!clienteObj) {
-          console.log('Arquivo do cliente não encontrado');
-          return jsonResponse({ sucesso: false, erro: "Arquivo do cliente não encontrado." }, 500);
-        }
-        let clienteData: ClienteData;
-        try {
-          clienteData = JSON.parse(await clienteObj.text());
-        } catch {
-          console.log('Arquivo do cliente corrompido');
-          return jsonResponse({ sucesso: false, erro: "Arquivo do cliente corrompido." }, 500);
-        }
-        // Validação simples de senha (plaintext)
-        if (clienteData.senha && clienteData.senha === senha) {
-          console.log('Login bem-sucedido');
-          return jsonResponse({ sucesso: true });
-        } else {
-          console.log('Senha incorreta');
-          return jsonResponse({ sucesso: false, erro: "Senha incorreta." }, 401);
-        }
+
+        // Atualiza a senha
+        clienteData.senha = senha;
+        await saveClienteData(filename, clienteData, env);
+        
+        return jsonResponse({ sucesso: true, nome: clienteData.nome || email.split('@')[0] }, 200, origin);
+        
       } catch (err: any) {
-        console.log('Erro no POST:', err);
-        return jsonResponse({ sucesso: false, erro: "Erro interno", detalhes: err.message }, 500);
+        return jsonResponse({ sucesso: false, erro: "Erro interno", detalhes: err.message }, 500, origin);
       }
-      // Garante return para qualquer fluxo não tratado no POST
-      return jsonResponse({ sucesso: false, erro: "Fluxo inesperado no POST /login." }, 500);
     }
-    // Obtém o parâmetro "email" da URL
-    const { searchParams } = new URL(request.url);
-    const email = searchParams.get("email");
-    if (!email) return jsonResponse({ erro: "Email não informado." }, 400);
-
-    try {
-      // Busca o índice de clientes no bucket
-      const indexObject = await env.FOTOSDOTAP_BUCKET.get("clientes_index.json");
-      if (!indexObject) return jsonResponse({ erro: "Index de clientes não encontrado." }, 500);
-
-      let arquivoCliente: string | undefined;
+    
+    // ==========================================
+    // POST - AUTENTICAÇÃO DO CLIENTE
+    // ==========================================
+    if (url.pathname === "/login" && request.method.toUpperCase() === 'POST') {
       try {
-        // Faz o parse do índice de clientes
-        const indexObj = JSON.parse(await indexObject.text());
-        if (typeof indexObj !== 'object' || indexObj === null) {
-          return jsonResponse({ erro: "Index de clientes inválido." }, 500);
+        const { email, senha } = await request.json() as { email: string; senha: string };
+        
+        if (!email || !senha) {
+          return jsonResponse({ sucesso: false, erro: "Email e senha obrigatórios." }, 400, origin);
         }
-        arquivoCliente = indexObj[email];
-      } catch {
-        return jsonResponse({ erro: "Index de clientes corrompido." }, 500);
+
+        // Busca cliente usando as funções utilitárias
+        const index = await getClientesIndex(env);
+        const filename = index[email];
+        
+        if (!filename) {
+          return jsonResponse({ sucesso: false, erro: "Cliente não encontrado." }, 404, origin);
+        }
+
+        const clienteData = await getClienteData(filename, env);
+        if (!clienteData) {
+          return jsonResponse({ sucesso: false, erro: "Dados do cliente não encontrados." }, 500, origin);
+        }
+
+        // Validação de senha
+        if (clienteData.senha && clienteData.senha === senha) {
+          return jsonResponse({ sucesso: true, nome: clienteData.nome || email.split('@')[0] }, 200, origin);
+        } else {
+          return jsonResponse({ sucesso: false, erro: "Senha incorreta." }, 401, origin);
+        }
+        
+      } catch (err: any) {
+        return jsonResponse({ sucesso: false, erro: "Erro interno", detalhes: err.message }, 500, origin);
       }
-
-      if (!arquivoCliente) return jsonResponse({ estado: "nao_encontrado" });
-
-      // Busca o arquivo do cliente no bucket
-      const clienteObj = await env.FOTOSDOTAP_BUCKET.get(`clientes/${arquivoCliente}`);
-      if (!clienteObj) return jsonResponse({ erro: "Arquivo do cliente não encontrado." }, 500);
-
-      let clienteData: ClienteData;
-      try {
-        // Faz o parse dos dados do cliente
-        clienteData = JSON.parse(await clienteObj.text());
-      } catch {
-        return jsonResponse({ erro: "Arquivo do cliente corrompido." }, 500);
-      }
-
-      // Define o estado de acordo com a existência da senha
-      const estado = clienteData.senha ? "precisa_informar_senha" : "precisa_cadastrar_senha";
-      return jsonResponse({ estado });
-    } catch (err: any) {
-      // Retorna erro interno em caso de exceção
-      return jsonResponse({ erro: "Erro interno", detalhes: err.message }, 500);
     }
 
-    // Garante return para qualquer fluxo não tratado
-    return jsonResponse({ erro: "Rota não encontrada ou método não suportado." }, 404);
+    // ==========================================
+    // GET - VERIFICAR STATUS DO CLIENTE
+    // ==========================================
+    if (request.method.toUpperCase() === 'GET') {
+      const { searchParams } = new URL(request.url);
+      const email = searchParams.get("email");
+      
+      if (!email) {
+        return jsonResponse({ erro: "Email não informado." }, 400, origin);
+      }
+
+      try {
+        const index = await getClientesIndex(env);
+        const filename = index[email];
+        
+        if (!filename) {
+          return jsonResponse({ estado: "nao_encontrado" }, 200, origin);
+        }
+
+        const clienteData = await getClienteData(filename, env);
+        if (!clienteData) {
+          return jsonResponse({ estado: "nao_encontrado" }, 200, origin);
+        }
+
+        // Define o estado de acordo com a existência da senha
+        const estado = clienteData.senha ? "precisa_informar_senha" : "precisa_cadastrar_senha";
+        return jsonResponse({ estado, nome: clienteData.nome || email.split('@')[0] }, 200, origin);
+        
+      } catch (err: any) {
+        return jsonResponse({ erro: "Erro interno", detalhes: err.message }, 500, origin);
+      }
+    }
+
+    // ==========================================
+    // MÉTODO NÃO SUPORTADO
+    // ==========================================
+    return jsonResponse({ erro: "Método não suportado." }, 405, origin);
   },
 };

@@ -29,6 +29,11 @@ export default {
       return loginHandler.fetch(request, env, ctx);
     }
 
+    // Rota para cadastrar senha do cliente
+    if (url.pathname === "/cadastrar-senha" && request.method === "POST") {
+      return loginHandler.fetch(request, env, ctx);
+    }
+
     // ==========================================
     // ROTAS ADMINISTRATIVAS
     // ==========================================
