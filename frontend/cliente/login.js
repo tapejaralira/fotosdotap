@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const etapaEmail = document.getElementById('etapa-email');
   const etapaSenha = document.getElementById('etapa-senha');
   const etapaCadastrarSenha = document.getElementById('etapa-cadastrar-senha');
-  // Atualização: mensagens de erro separadas por etapa
+  // Mensagens de erro separadas por etapa
   const mensagemErroEmail = document.getElementById('mensagem-erro-email');
   const mensagemErroSenha = document.getElementById('mensagem-erro-senha');
   const mensagemErroCadastrarSenha = document.getElementById('mensagem-erro-cadastrar-senha');
@@ -56,14 +56,12 @@ document.addEventListener('DOMContentLoaded', function() {
       } else if (data.estado === 'precisa_informar_senha') {
         emailAtual = email;
         mostrarEtapa('senha');
-        document.getElementById('login-titulo').textContent = 'Digite sua senha';
         document.getElementById('senha').required = true;
         document.getElementById('nova-senha').required = false;
         setTimeout(() => document.getElementById('senha').focus(), 200);
       } else if (data.estado === 'precisa_cadastrar_senha') {
         emailAtual = email;
         mostrarEtapa('cadastrar-senha');
-        document.getElementById('login-titulo').textContent = 'Cadastre uma nova senha';
         document.getElementById('senha').required = false;
         document.getElementById('nova-senha').required = true;
         setTimeout(() => document.getElementById('nova-senha').focus(), 200);

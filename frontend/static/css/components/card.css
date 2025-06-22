@@ -3,8 +3,8 @@
   background: var(--cor-fundo);
   border-radius: 1rem;
   box-shadow: var(--sombra);
-  padding: 1.5rem 1rem 2rem 1rem;
-  margin: 2rem auto;
+  padding: 1rem;
+  margin: 1rem;
   max-width: 37rem;
   width: 95%;
   text-align: left;
