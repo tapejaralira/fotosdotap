@@ -30,15 +30,22 @@ export async function adminRouter(request: Request, env: Env): Promise<Response>
         return jsonResponse({ erro: "Não autorizado" }, 401, origin);
       }
 
-      // --- LISTAR CLIENTES ---
+      // --- LISTAR CLIENTES --- (Debug temporário)
       if (url.pathname === "/admin/clientes" && method === "GET") {
-        const index = await getClientesIndex(env); // Passe o env corretamente
-        const clientes = [];
-        for (const [email, filename] of Object.entries(index)) {
-          const data = await getClienteData(filename);
-          clientes.push({ email, nome: data?.nome || "", telefone: data?.telefone || "" });
+        try {
+          const index = await getClientesIndex(env);
+          return jsonResponse({ 
+            clientes: [], 
+            debug: "Index carregado com sucesso", 
+            indexKeys: Object.keys(index),
+            totalClientes: Object.keys(index).length
+          }, 200, origin);
+        } catch (indexError) {
+          return jsonResponse({ 
+            erro: "Erro ao carregar index", 
+            detalhe: indexError instanceof Error ? indexError.message : String(indexError) 
+          }, 500, origin);
         }
-        return jsonResponse({ clientes }, 200, origin);
       }
 
       // --- BUSCAR CLIENTE ---
