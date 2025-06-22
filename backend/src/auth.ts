@@ -1,14 +1,14 @@
-// JWT simplificado para admin em Worker
+// Geração e validação simples de token para admin
 
 export function getAdminToken(email: string): string {
-  // Para produção, use JWT real. Aqui, um token simples para exemplo:
+  // Gera um token base64 com email e timestamp (exemplo simples)
   return btoa(`${email}|${Date.now()}`);
 }
 
 export function verifyAdminToken(token: string): boolean {
-  // Para produção, valide JWT. Aqui, só verifica se é base64 e contém o e-mail:
   try {
     const decoded = atob(token);
+    // Verifica se o token começa com o email do admin
     return decoded.startsWith("tapejaralira@gmail.com|");
   } catch {
     return false;

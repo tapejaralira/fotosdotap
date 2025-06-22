@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const email = document.getElementById('admin-email').value.trim();
     const senha = document.getElementById('admin-senha').value;
     try {
-      // Troque a URL para a API absoluta:
       const res = await fetch('https://api.fotosdotap.com.br/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -30,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
       const data = await res.json();
       if (data.sucesso && data.token) {
+        // Salva o token no localStorage
         localStorage.setItem('admin_token', data.token);
         window.location.href = "clientes.html";
       } else {
