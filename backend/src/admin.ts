@@ -32,14 +32,17 @@ export async function adminRouter(request: Request, env: Env): Promise<Response>
     // --- LISTAR CLIENTES ---
     if (url.pathname === "/admin/clientes" && method === "GET") {
       const index = await getClientesIndex(env);
-      const clientes = [];
-      for (const [email, filename] of Object.entries(index)) {
+      const clientes = [];      for (const [email, filename] of Object.entries(index)) {
         try {
           const data = await getClienteData(filename);
-          clientes.push({ email, nome: data?.nome || "", telefone: data?.telefone || "" });
+          if (data) {
+            clientes.push({ email, nome: data.nome || "", telefone: data.telefone || "" });
+          } else {
+            clientes.push({ email, nome: "(Arquivo não encontrado)", telefone: "" });
+          }
         } catch {
           // Se não conseguir ler um cliente específico, pula para o próximo
-          clientes.push({ email, nome: "(Erro ao carregar)", telefone: "" });
+          console.log(`Erro ao carregar cliente: ${filename}`);
         }
       }
       return jsonResponse({ clientes }, 200, origin);

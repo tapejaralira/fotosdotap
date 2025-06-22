@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', function() {
   const lista = document.getElementById('clientes-lista');
   const msgErro = document.getElementById('clientes-msg-erro');
-  const btnNovo = document.getElementById('btn-novo-cliente');
-  const token = localStorage.getItem('admin_token');
+  const btnNovo = document.getElementById('btn-novo-cliente');  const token = localStorage.getItem('admin_token');
   if (!token) window.location.href = "login.html";
+
+  btnNovo.onclick = () => window.location.href = "cliente.html";
 
   async function carregarClientes() {
     msgErro.classList.add('escondido');
