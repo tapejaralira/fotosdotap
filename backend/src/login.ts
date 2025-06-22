@@ -32,11 +32,13 @@ export default {
         const clienteData = await getClienteData(filename, env);
         if (!clienteData) {
           return jsonResponse({ sucesso: false, erro: "Dados do cliente não encontrados." }, 500, origin);
-        }
-
-        // Validação de senha
+        }        // Validação de senha
         if (clienteData.senha && clienteData.senha === senha) {
-          return jsonResponse({ sucesso: true, nome: clienteData.nome || email.split('@')[0] }, 200, origin);
+          return jsonResponse({ 
+            sucesso: true, 
+            email: email,
+            nome: clienteData.nome || email.split('@')[0] 
+          }, 200, origin);
         } else {
           return jsonResponse({ sucesso: false, erro: "Senha incorreta." }, 401, origin);
         }

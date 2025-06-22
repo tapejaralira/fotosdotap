@@ -42,8 +42,15 @@ export default {
     // Buscar dados do cliente logado
     if (url.pathname === "/api/cliente" && request.method === "GET") {
       const email = url.searchParams.get("email");
-      if (!email) {
-        return jsonResponse({ erro: "E-mail não informado" }, 400, origin);
+      const id = url.searchParams.get("id");
+      
+      // Se vier "id=null" ou não vier email, retorna erro específico
+      if (id === "null" || !email) {
+        return jsonResponse({ 
+          erro: "Sessão inválida", 
+          codigo: "SESSAO_INVALIDA",
+          mensagem: "Faça login novamente" 
+        }, 401, origin);
       }
 
       try {
@@ -65,6 +72,45 @@ export default {
         return jsonResponse({ 
           sucesso: true, 
           cliente: dadosCliente 
+        }, 200, origin);
+        
+      } catch (e) {
+        return jsonResponse({ erro: "Erro interno" }, 500, origin);
+      }
+    }
+
+    // Buscar serviços do cliente logado
+    if (url.pathname === "/api/servicos" && request.method === "GET") {
+      const email = url.searchParams.get("email");
+      const id = url.searchParams.get("id");
+      
+      // Se vier "id=null" ou não vier email, retorna erro específico
+      if (id === "null" || !email) {
+        return jsonResponse({ 
+          erro: "Sessão inválida", 
+          codigo: "SESSAO_INVALIDA",
+          mensagem: "Faça login novamente" 
+        }, 401, origin);
+      }
+
+      try {
+        const { getClientesIndex, getClienteData } = await import("./clientes");
+        const index = await getClientesIndex(env);
+        const filename = index[email];
+        
+        if (!filename) {
+          return jsonResponse({ erro: "Cliente não encontrado" }, 404, origin);
+        }
+
+        const clienteData = await getClienteData(filename, env);
+        if (!clienteData) {
+          return jsonResponse({ erro: "Dados do cliente não encontrados" }, 500, origin);
+        }
+
+        // Retorna serviços do cliente
+        return jsonResponse({ 
+          sucesso: true, 
+          servicos: clienteData.servicos || [] 
         }, 200, origin);
         
       } catch (e) {

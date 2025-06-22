@@ -40,14 +40,14 @@ export default {
 
     // Busca os dados do cliente
     const clienteObj = await env.FOTOSDOTAP_BUCKET.get(`clientes/${arquivoCliente}`);
-    if (!clienteObj) return jsonResponse({ erro: 'Arquivo do cliente não encontrado.' }, 500, origin);
-
-    // Atualiza a senha e salva
+    if (!clienteObj) return jsonResponse({ erro: 'Arquivo do cliente não encontrado.' }, 500, origin);    // Atualiza a senha e salva
     try {
       const clienteData: ClienteData = JSON.parse(await clienteObj.text());
       clienteData.senha = senha;
-      await env.FOTOSDOTAP_BUCKET.put(`clientes/${arquivoCliente}`, JSON.stringify(clienteData));
-      return jsonResponse({ sucesso: true }, 200, origin);
+      await env.FOTOSDOTAP_BUCKET.put(`clientes/${arquivoCliente}`, JSON.stringify(clienteData));      return jsonResponse({ 
+        sucesso: true, 
+        email: email
+      }, 200, origin);
     } catch {
       return jsonResponse({ erro: 'Erro ao atualizar a senha do cliente.' }, 500, origin);
     }
