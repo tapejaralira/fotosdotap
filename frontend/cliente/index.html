@@ -54,46 +54,70 @@
   <!-- Scripts no final -->
   <script src="https://static.fotosdotap.com.br/js/card.js"></script>
   <script src="https://static.fotosdotap.com.br/js/pageFade.js"></script>
-  <script src="https://static.fotosdotap.com.br/js/menu.js"></script>
-  <script>
+  <script src="https://static.fotosdotap.com.br/js/menu.js"></script>  <script>
     // --- Painel dinâmico ---
-    const id_cliente = localStorage.getItem('fotosdotap_id_cliente');
-    if (!id_cliente) {
+    const email_cliente = localStorage.getItem('fotosdotap_email_cliente');
+    if (!email_cliente) {
       window.location.href = 'login.html';
     }
 
-    // Busca dados do cliente por ID
-    fetch(`https://api.fotosdotap.com.br/api/cliente?id=${encodeURIComponent(id_cliente)}`)
-      .then(res => res.json())
-      .then(cliente => {
-        document.getElementById('boas-vindas').textContent = `Olá, ${cliente.nome || id_cliente}! Aqui está seu painel de cliente.`;
-        // Busca serviços do cliente por ID
-        fetch(`https://api.fotosdotap.com.br/api/servicos?id=${encodeURIComponent(id_cliente)}`)
-          .then(res => res.json())
-          .then(servicos => {
-            const lista = document.getElementById('servicos-lista');
-            if (!Array.isArray(servicos) || servicos.length === 0) {
-              lista.innerHTML = '<p>Nenhum serviço encontrado.</p>';
-            } else {
-              lista.innerHTML = servicos.map(s => renderCard({
-                titulo: s.nome_servico,
-                descricao: `
-                  <b>Data:</b> ${s.data_servico}<br>
-                  <b>Pacote:</b> ${s.pacote}<br>
-                  <b>Status da seleção:</b> ${s.selecao_liberada ? 'Liberada' : 'Aguardando'}<br>
-                  <b>Status da galeria:</b> ${s.galeria_liberada ? 'Liberada' : 'Aguardando'}
-                `,
-                botao: { href: "#", texto: "Ver detalhes" }
-              })).join('');
-            }
-          });
+    // Busca dados do cliente por email
+    fetch(`https://api.fotosdotap.com.br/api/cliente?email=${encodeURIComponent(email_cliente)}`)
+      .then(res => {
+        if (res.status === 401) {
+          localStorage.removeItem('fotosdotap_email_cliente');
+          window.location.href = 'login.html';
+          return;
+        }
+        return res.json();
+      })
+      .then(data => {
+        if (data && data.sucesso) {
+          document.getElementById('boas-vindas').textContent = `Olá, ${data.cliente.nome || email_cliente.split('@')[0]}! Aqui está seu painel de cliente.`;
+        }
+        
+        // Busca serviços do cliente por email
+        return fetch(`https://api.fotosdotap.com.br/api/servicos?email=${encodeURIComponent(email_cliente)}`);
+      })
+      .then(res => {
+        if (res.status === 401) {
+          localStorage.removeItem('fotosdotap_email_cliente');
+          window.location.href = 'login.html';
+          return;
+        }
+        return res.json();
+      })
+      .then(data => {
+        if (data && data.sucesso) {
+          const lista = document.getElementById('servicos-lista');
+          const servicos = data.servicos;
+          if (!Array.isArray(servicos) || servicos.length === 0) {
+            lista.innerHTML = '<p>Nenhum serviço encontrado.</p>';
+          } else {
+            lista.innerHTML = servicos.map(s => renderCard({
+              titulo: s.nome_servico,
+              descricao: `
+                <b>Data:</b> ${s.data_servico}<br>
+                <b>Pacote:</b> ${s.pacote}<br>
+                <b>Status da seleção:</b> ${s.selecao_liberada ? 'Liberada' : 'Aguardando'}<br>
+                <b>Status da galeria:</b> ${s.galeria_liberada ? 'Liberada' : 'Aguardando'}
+              `,
+              botao: { href: "#", texto: "Ver detalhes" }
+            })).join('');
+          }
+        }
+      })
+      .catch(e => {
+        console.error('Erro ao carregar dados:', e);
+        document.getElementById('boas-vindas').textContent = 'Erro ao carregar dados. Tente novamente.';
       });
+
     // Logout limpa localStorage e volta para login
     document.getElementById('btn-logout').onclick = function(e) {
       e.preventDefault();
       localStorage.removeItem('fotosdotap_email');
       localStorage.removeItem('fotosdotap_senha');
-      localStorage.removeItem('fotosdotap_id_cliente');
+      localStorage.removeItem('fotosdotap_email_cliente');
       window.location.href = 'login.html';
     };
   </script>

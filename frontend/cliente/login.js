@@ -111,15 +111,10 @@ document.addEventListener('DOMContentLoaded', function() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: emailAtual, senha })
         });
-        const data = await res.json();
-        if (data.sucesso) {
+        const data = await res.json();        if (data.sucesso) {
           salvarCredenciais(emailAtual, senha);
-          // Buscar o ID do cliente e salvar no localStorage
-          const resCliente = await fetch(`${apiBase}/api/cliente?email=${encodeURIComponent(emailAtual)}`);
-          const dataCliente = await resCliente.json();
-          if (dataCliente.id) {
-            localStorage.setItem('fotosdotap_id_cliente', dataCliente.id);
-          }
+          // Salvar email do cliente logado
+          localStorage.setItem('fotosdotap_email_cliente', emailAtual);
           window.location.href = "index.html";
         } else {
           mostrarErro(data.erro || 'Senha errada! Não desista, tente de novo 😉', 'senha');
@@ -141,15 +136,10 @@ document.addEventListener('DOMContentLoaded', function() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ email: emailAtual, senha: novaSenha })
         });
-        const data = await res.json();
-        if (data.sucesso) {
+        const data = await res.json();        if (data.sucesso) {
           salvarCredenciais(emailAtual, novaSenha);
-          // Buscar o ID do cliente e salvar no localStorage
-          const resCliente = await fetch(`${apiBase}/api/cliente?email=${encodeURIComponent(emailAtual)}`);
-          const dataCliente = await resCliente.json();
-          if (dataCliente.id) {
-            localStorage.setItem('fotosdotap_id_cliente', dataCliente.id);
-          }
+          // Salvar email do cliente logado
+          localStorage.setItem('fotosdotap_email_cliente', emailAtual);
           window.location.href = "index.html";
         } else {
           mostrarErro(data.erro || 'Erro ao cadastrar senha. Tente novamente.', 'cadastrar-senha');
