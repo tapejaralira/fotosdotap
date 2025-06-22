@@ -3,17 +3,17 @@
 import { getAdminToken, verifyAdminToken } from "./auth";
 import { getClientesIndex, getClienteData, saveClienteData, deleteClienteData } from "./clientes";
 import { jsonResponse, parseRequestBody } from "./utils";
+import type { Env } from "./types";
 
-export async function adminRouter(request: Request): Promise<Response> {
+export async function adminRouter(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url);
   const method = request.method.toUpperCase();
 
   // --- LOGIN ADMIN ---
   if (url.pathname === "/admin/login" && method === "POST") {
     const { email, senha } = await parseRequestBody(request);
-    // Defina seu e-mail e senha de admin aqui ou em variável de ambiente
     const ADMIN_EMAIL = "tapejaralira@gmail.com";
-    const ADMIN_SENHA = (globalThis as any).ADMIN_SENHA || "SUA_SENHA_FORTE_AQUI";
+    const ADMIN_SENHA = env.ADMIN_SENHA;
     if (email === ADMIN_EMAIL && senha === ADMIN_SENHA) {
       const token = getAdminToken(email);
       return jsonResponse({ sucesso: true, token });
@@ -23,7 +23,6 @@ export async function adminRouter(request: Request): Promise<Response> {
 
   // --- ROTAS PROTEGIDAS ---
   if (url.pathname.startsWith("/admin/")) {
-    // Verifica token JWT no header Authorization
     const auth = request.headers.get("Authorization");
     if (!auth || !auth.startsWith("Bearer ") || !verifyAdminToken(auth.replace("Bearer ", ""))) {
       return jsonResponse({ erro: "Não autorizado" }, 401);

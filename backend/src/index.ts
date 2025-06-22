@@ -4,17 +4,13 @@ import loginHandler from './login'; // Ambos estão na mesma pasta
 import cadastrarSenhaHandler from './cadastrarSenha';
 import { JSON_HEADERS, jsonResponse } from './utils';
 import { adminRouter } from "./admin";
-
-// Interface compartilhada de variáveis de ambiente
-interface Env {
-  FOTOSDOTAP_BUCKET: R2Bucket;
-}
+import type { Env } from "./types";
 
 export default {
   async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
     const url = new URL(request.url);
     if (url.pathname.startsWith("/admin")) {
-      return adminRouter(request);
+      return adminRouter(request, env);
     }
 
     // Rota de login via método GET ou POST (verifica se o cliente existe e se já tem senha ou faz login)
