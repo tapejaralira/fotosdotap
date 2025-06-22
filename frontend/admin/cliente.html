@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cliente | Admin Fotos do Tap.</title>
+  <link rel="icon" href="https://static.fotosdotap.com.br/assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/style.css" />
+  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/card.css" />
+  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/button.css" />
+</head>
+<body>
+  <main class="main">
+    <div class="card">
+      <form id="form-cliente" autocomplete="off">
+        <h2 class="card__titulo" id="cliente-titulo">Novo Cliente</h2>
+        <div class="campo-formulario">
+          <input type="text" id="cliente-nome" class="campo-formulario" placeholder="Nome" required />
+        </div>
+        <div class="campo-formulario">
+          <input type="email" id="cliente-email" class="campo-formulario" placeholder="E-mail" required />
+        </div>
+        <div class="campo-formulario">
+          <input type="text" id="cliente-telefone" class="campo-formulario" placeholder="Telefone" />
+        </div>
+        <button type="submit" id="btn-salvar-cliente" class="btn">
+          <span class="btn-text">Salvar</span>
+          <span class="spinner escondido" aria-label="Carregando...">
+            <svg width="22" height="22" viewBox="0 0 50 50">
+              <circle cx="25" cy="25" r="20" fill="none" stroke="#888" stroke-width="5" stroke-linecap="round" stroke-dasharray="31.4 31.4" transform="rotate(-90 25 25)">
+                <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+          </span>
+        </button>
+        <button type="button" id="btn-cancelar" class="btn" style="background:#eee;color:#222;margin-top:1rem;">Cancelar</button>
+        <div id="cliente-msg-erro" class="msg-erro escondido"></div>
+      </form>
+    </div>
+  </main>
+  <script src="./cliente.js"></script>
+</body>
+</html>

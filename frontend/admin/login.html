@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Admin | Fotos do Tap.</title>
+  <link rel="icon" href="https://static.fotosdotap.com.br/assets/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/style.css" />
+  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/card.css" />
+  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/button.css" />
+</head>
+<body>
+  <main class="main">
+    <div class="card">
+      <form id="form-admin-login" autocomplete="on">
+        <h2 class="card__titulo">Área Administrativa</h2>
+        <div class="campo-formulario">
+          <input
+            type="email"
+            id="admin-email"
+            name="email"
+            class="campo-formulario"
+            placeholder="Seu e-mail"
+            required
+            autocomplete="email"
+            autofocus
+          />
+        </div>
+        <div class="campo-formulario">
+          <input
+            type="password"
+            id="admin-senha"
+            name="senha"
+            class="campo-formulario"
+            placeholder="Senha"
+            required
+            autocomplete="current-password"
+          />
+        </div>
+        <button type="submit" id="btn-admin-login" class="btn">
+          <span class="btn-text">Entrar</span>
+          <span class="spinner escondido" aria-label="Carregando...">
+            <svg width="22" height="22" viewBox="0 0 50 50">
+              <circle cx="25" cy="25" r="20" fill="none" stroke="#888" stroke-width="5" stroke-linecap="round" stroke-dasharray="31.4 31.4" transform="rotate(-90 25 25)">
+                <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+          </span>
+        </button>
+        <div id="admin-msg-erro" class="msg-erro escondido"></div>
+      </form>
+    </div>
+  </main>
+  <script src="./admin-login.js"></script>
+</body>
+</html>

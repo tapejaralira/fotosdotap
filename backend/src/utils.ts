@@ -11,3 +11,13 @@ export const JSON_HEADERS = {
 export function jsonResponse(body: object, status = 200): Response {
   return new Response(JSON.stringify(body), { status, headers: JSON_HEADERS });
 }
+
+// Utilitários para Cloudflare Worker
+
+export async function parseRequestBody(request: Request): Promise<any> {
+  const contentType = request.headers.get("content-type") || "";
+  if (contentType.includes("application/json")) {
+    return await request.json();
+  }
+  return {};
+}
