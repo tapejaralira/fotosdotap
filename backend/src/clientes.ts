@@ -2,10 +2,16 @@
 
 const BUCKET_PREFIX = "bucket/clientes/";
 
-export async function getClientesIndex(): Promise<Record<string, string>> {
-  // Implemente para buscar o arquivo clientes_index.json do storage
-  const resp = await fetch(BUCKET_PREFIX + "../clientes_index.json");
-  return await resp.json();
+export async function getClientesIndex(env: Env): Promise<Record<string, string>> {
+  try {
+    const obj = await env.FOTOSDOTAP_BUCKET.get("clientes_index.json");
+    if (!obj) return {};
+    const text = await obj.text();
+    return JSON.parse(text);
+  } catch (e) {
+    // Para debug, lance erro detalhado
+    throw new Error("Erro ao ler clientes_index.json: " + (e instanceof Error ? e.message : String(e)));
+  }
 }
 
 export async function getClienteData(filename: string): Promise<any> {

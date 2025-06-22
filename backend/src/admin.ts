@@ -32,7 +32,7 @@ export async function adminRouter(request: Request, env: Env): Promise<Response>
 
       // --- LISTAR CLIENTES ---
       if (url.pathname === "/admin/clientes" && method === "GET") {
-        const index = await getClientesIndex();
+        const index = await getClientesIndex(env); // Passe o env corretamente
         const clientes = [];
         for (const [email, filename] of Object.entries(index)) {
           const data = await getClienteData(filename);
@@ -45,7 +45,7 @@ export async function adminRouter(request: Request, env: Env): Promise<Response>
       if (url.pathname === "/admin/cliente" && method === "GET") {
         const email = url.searchParams.get("email");
         if (!email) return jsonResponse({ erro: "E-mail não informado" }, 200, origin);
-        const index = await getClientesIndex();
+        const index = await getClientesIndex(env); // Corrija aqui: passe o env
         const filename = index[email];
         if (!filename) return jsonResponse({ erro: "Cliente não encontrado" }, 200, origin);
         const data = await getClienteData(filename);
@@ -56,7 +56,7 @@ export async function adminRouter(request: Request, env: Env): Promise<Response>
       if (url.pathname === "/admin/cliente" && method === "POST") {
         const { nome, email, telefone } = await request.json() as { nome: string, email: string, telefone: string };
         if (!email) return jsonResponse({ erro: "E-mail obrigatório" }, 200, origin);
-        const index = await getClientesIndex();
+        const index = await getClientesIndex(env); // Corrija aqui: passe o env
         if (index[email]) return jsonResponse({ erro: "Cliente já existe" }, 200, origin);
         const filename = `${Date.now()}_${(nome || email).toLowerCase().replace(/[^a-z0-9]+/g, "-")}.json`;
         const cliente = { nome, email, telefone, senha: "", servicos: [] };
@@ -70,7 +70,7 @@ export async function adminRouter(request: Request, env: Env): Promise<Response>
       if (url.pathname === "/admin/cliente" && method === "PUT") {
         const { nome, email, telefone } = await request.json() as { nome: string, email: string, telefone: string };
         if (!email) return jsonResponse({ erro: "E-mail obrigatório" }, 200, origin);
-        const index = await getClientesIndex();
+        const index = await getClientesIndex(env); // Corrija aqui: passe o env
         const filename = index[email];
         if (!filename) return jsonResponse({ erro: "Cliente não encontrado" }, 200, origin);
         const data = await getClienteData(filename);
@@ -84,7 +84,7 @@ export async function adminRouter(request: Request, env: Env): Promise<Response>
       if (url.pathname === "/admin/cliente" && method === "DELETE") {
         const { email } = await request.json() as { email: string };
         if (!email) return jsonResponse({ erro: "E-mail obrigatório" }, 200, origin);
-        const index = await getClientesIndex();
+        const index = await getClientesIndex(env); // Corrija aqui: passe o env
         const filename = index[email];
         if (!filename) return jsonResponse({ erro: "Cliente não encontrado" }, 200, origin);
         await deleteClienteData(filename);
@@ -96,7 +96,10 @@ export async function adminRouter(request: Request, env: Env): Promise<Response>
 
     return jsonResponse({ erro: "Not found" }, 404, origin);
   } catch (e) {
-    // Retorne o erro detalhado para debug
-    return jsonResponse({ erro: "Erro interno", detalhe: e instanceof Error ? e.message : String(e) }, 500, origin);
+    return jsonResponse(
+      { erro: "Erro interno", detalhe: e instanceof Error ? e.message : String(e), stack: e instanceof Error ? e.stack : undefined },
+      500,
+      origin
+    );
   }
 }
