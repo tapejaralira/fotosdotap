@@ -1,3 +1,5 @@
+import type { Env } from "./types";
+
 // Funções para acessar clientes no bucket (ajuste para seu storage)
 
 const BUCKET_PREFIX = "bucket/clientes/";
