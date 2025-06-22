@@ -60,7 +60,16 @@ export async function adminRouter(request: Request, env: Env): Promise<Response>
         if (!email) return jsonResponse({ erro: "E-mail obrigatório" }, 200, origin);
         const index = await getClientesIndex(env); // Corrija aqui: passe o env
         if (index[email]) return jsonResponse({ erro: "Cliente já existe" }, 200, origin);
-        const filename = `${Date.now()}_${(nome || email).toLowerCase().replace(/[^a-z0-9]+/g, "-")}.json`;      const cliente = { nome, email, telefone, senha: "", servicos: [] };
+        // Gera nome do arquivo: YYYYMMDDHHMM_nome-cliente.json
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hour = String(now.getHours()).padStart(2, '0');
+        const minute = String(now.getMinutes()).padStart(2, '0');
+        const timestamp = `${year}${month}${day}${hour}${minute}`;
+        const nomeSanitizado = (nome || email.split('@')[0]).toLowerCase().replace(/[^a-z0-9]+/g, "-");
+        const filename = `${timestamp}_${nomeSanitizado}.json`;      const cliente = { nome, email, telefone, senha: "", servicos: [] };
       await saveClienteData(filename, cliente, env);
       index[email] = filename;
       await saveClienteData("clientes_index.json", index, env);

@@ -28,7 +28,14 @@ export async function getClienteData(filename: string, env: Env): Promise<any> {
 // Função para salvar dados de um cliente
 export async function saveClienteData(filename: string, data: any, env: Env): Promise<void> {
   try {
-    const path = filename.startsWith("../") ? filename.replace("../", "") : `clientes/${filename}`;
+    let path: string;
+    if (filename === "clientes_index.json") {
+      // Se for o índice, salva na raiz
+      path = "clientes_index.json";
+    } else {
+      // Se for arquivo de cliente, salva na pasta clientes/
+      path = `clientes/${filename}`;
+    }
     await env.FOTOSDOTAP_BUCKET.put(path, JSON.stringify(data, null, 2));
   } catch (e) {
     throw new Error("Erro ao salvar arquivo do cliente: " + (e instanceof Error ? e.message : String(e)));
