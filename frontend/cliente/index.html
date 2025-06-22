@@ -57,7 +57,20 @@
   <script src="https://static.fotosdotap.com.br/js/menu.js"></script>  <script>
     // --- Painel dinâmico ---
     const email_cliente = localStorage.getItem('fotosdotap_email_cliente');
-    if (!email_cliente) {
+    
+    // Validação apenas para casos claramente inválidos
+    if (!email_cliente || email_cliente === 'null' || email_cliente === 'undefined' || email_cliente.trim() === '') {
+      // Limpa dados inconsistentes
+      localStorage.removeItem('fotosdotap_email_cliente');
+      localStorage.removeItem('fotosdotap_id_cliente');
+      window.location.href = 'login.html';
+      return; // Para de executar o resto
+    }
+
+    // Função para limpar sessão inválida (chamada apenas quando necessário)
+    function limparSessaoInvalida() {
+      localStorage.removeItem('fotosdotap_email_cliente');
+      localStorage.removeItem('fotosdotap_id_cliente');
       window.location.href = 'login.html';
     }
 
@@ -65,29 +78,40 @@
     fetch(`https://api.fotosdotap.com.br/api/cliente?email=${encodeURIComponent(email_cliente)}`)
       .then(res => {
         if (res.status === 401) {
-          localStorage.removeItem('fotosdotap_email_cliente');
-          window.location.href = 'login.html';
+          // Apenas se receber 401 (não autorizado)
+          limparSessaoInvalida();
           return;
+        }
+        if (res.status === 404) {
+          // Cliente não encontrado - pode ser problema no backend, não limpa imediatamente
+          throw new Error('Cliente não encontrado');
         }
         return res.json();
       })
       .then(data => {
         if (data && data.sucesso) {
           document.getElementById('boas-vindas').textContent = `Olá, ${data.cliente.nome || email_cliente.split('@')[0]}! Aqui está seu painel de cliente.`;
+        } else if (data && data.codigo === 'SESSAO_INVALIDA') {
+          // Apenas se o backend disser explicitamente que a sessão é inválida
+          limparSessaoInvalida();
+          return;
         }
         
         // Busca serviços do cliente por email
         return fetch(`https://api.fotosdotap.com.br/api/servicos?email=${encodeURIComponent(email_cliente)}`);
       })
       .then(res => {
+        if (!res) return; // Se já redirecionou para login
+        
         if (res.status === 401) {
-          localStorage.removeItem('fotosdotap_email_cliente');
-          window.location.href = 'login.html';
+          limparSessaoInvalida();
           return;
         }
         return res.json();
       })
       .then(data => {
+        if (!data) return; // Se já redirecionou para login
+        
         if (data && data.sucesso) {
           const lista = document.getElementById('servicos-lista');
           const servicos = data.servicos;
@@ -109,7 +133,8 @@
       })
       .catch(e => {
         console.error('Erro ao carregar dados:', e);
-        document.getElementById('boas-vindas').textContent = 'Erro ao carregar dados. Tente novamente.';
+        document.getElementById('boas-vindas').textContent = 'Erro ao carregar dados. Tente novamente em alguns instantes.';
+        // NÃO limpa dados em caso de erro de rede - pode ser temporário
       });
 
     // Logout limpa localStorage e volta para login
@@ -118,6 +143,7 @@
       localStorage.removeItem('fotosdotap_email');
       localStorage.removeItem('fotosdotap_senha');
       localStorage.removeItem('fotosdotap_email_cliente');
+      localStorage.removeItem('fotosdotap_id_cliente');
       window.location.href = 'login.html';
     };
   </script>
