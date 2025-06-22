@@ -96,6 +96,6 @@ export async function adminRouter(request: Request, env: Env): Promise<Response>
 
     return jsonResponse({ erro: "Not found" }, 404, origin);
   } catch (e) {
-    return jsonResponse({ erro: "Erro interno" }, 500, origin);
+    return jsonResponse({ erro: "Erro interno", detalhe: String(e) }, 500, origin);
   }
 }
