@@ -54,7 +54,16 @@
                 autofocus
               />
             </div>
-            <button type="button" id="btn-verificar-email" class="btn">Avançar</button>
+            <button type="button" id="btn-verificar-email" class="btn">
+              <span class="btn-text">Avançar</span>
+              <span class="spinner escondido" aria-label="Carregando...">
+                <svg width="22" height="22" viewBox="0 0 50 50">
+                  <circle cx="25" cy="25" r="20" fill="none" stroke="#888" stroke-width="5" stroke-linecap="round" stroke-dasharray="31.4 31.4" transform="rotate(-90 25 25)">
+                    <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/>
+                  </circle>
+                </svg>
+              </span>
+            </button>
             <div id="mensagem-erro-email" class="msg-erro escondido"></div>
           </div>
 
@@ -78,7 +87,16 @@
                 </svg>
               </button>
             </div>
-            <button type="submit" id="btn-entrar" class="btn">Entrar</button>
+            <button type="submit" id="btn-entrar" class="btn">
+              <span class="btn-text">Entrar</span>
+              <span class="spinner escondido" aria-label="Carregando...">
+                <svg width="22" height="22" viewBox="0 0 50 50">
+                  <circle cx="25" cy="25" r="20" fill="none" stroke="#888" stroke-width="5" stroke-linecap="round" stroke-dasharray="31.4 31.4" transform="rotate(-90 25 25)">
+                    <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/>
+                  </circle>
+                </svg>
+              </span>
+            </button>
             <div id="mensagem-erro-senha" class="msg-erro escondido"></div>
           </div>
 
@@ -102,7 +120,16 @@
                 </svg>
               </button>
             </div>
-            <button type="submit" id="btn-cadastrar-senha" class="btn">Cadastrar senha</button>
+            <button type="submit" id="btn-cadastrar-senha" class="btn">
+              <span class="btn-text">Cadastrar senha</span>
+              <span class="spinner escondido" aria-label="Carregando...">
+                <svg width="22" height="22" viewBox="0 0 50 50">
+                  <circle cx="25" cy="25" r="20" fill="none" stroke="#888" stroke-width="5" stroke-linecap="round" stroke-dasharray="31.4 31.4" transform="rotate(-90 25 25)">
+                    <animateTransform attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="1s" repeatCount="indefinite"/>
+                  </circle>
+                </svg>
+              </span>
+            </button>
             <div id="mensagem-erro-cadastrar-senha" class="msg-erro escondido"></div>
           </div>
         </form>

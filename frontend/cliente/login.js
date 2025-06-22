@@ -38,16 +38,40 @@ document.addEventListener('DOMContentLoaded', function() {
     if (mensagemErroCadastrarSenha) mensagemErroCadastrarSenha.classList.add('escondido');
   }
 
-  document.getElementById('btn-verificar-email').onclick = async function () {
+  const btnVerificarEmail = document.getElementById('btn-verificar-email');
+  const btnEntrar = document.getElementById('btn-entrar');
+  const btnCadastrarSenha = document.getElementById('btn-cadastrar-senha');
+
+  function mostrarSpinner(btn, mostrar) {
+    if (!btn) return;
+    const text = btn.querySelector('.btn-text');
+    const spinner = btn.querySelector('.spinner');
+    if (mostrar) {
+      if (text) text.classList.add('escondido');
+      if (spinner) spinner.classList.remove('escondido');
+      btn.disabled = true;
+    } else {
+      if (text) text.classList.remove('escondido');
+      if (spinner) spinner.classList.add('escondido');
+      btn.disabled = false;
+    }
+  }
+
+  btnVerificarEmail.onclick = async function () {
     this.blur();
     esconderTodosErros();
+    mostrarSpinner(btnVerificarEmail, true);
     const email = document.getElementById('email').value.trim();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       mostrarErro('Ops! Parece que esse e-mail não está certinho. Dá uma olhadinha 😉', 'email');
+      mostrarSpinner(btnVerificarEmail, false);
       return;
     }
-    if (!email) return;
+    if (!email) {
+      mostrarSpinner(btnVerificarEmail, false);
+      return;
+    }
     try {
       const res = await fetch(`${apiBase}/login?email=${encodeURIComponent(email)}`);
       const data = await res.json();
@@ -71,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } catch (e) {
       mostrarErro('Ih, parece que estamos com um probleminha na conexão. Tenta de novo em instantes!', 'email');
     }
+    mostrarSpinner(btnVerificarEmail, false);
   };
 
   // Login com senha
@@ -78,6 +103,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!etapaSenha.classList.contains('escondido')) {
       e.preventDefault();
       esconderTodosErros();
+      mostrarSpinner(btnEntrar, true);
       const senha = document.getElementById('senha').value;
       try {
         const res = await fetch(`${apiBase}/login`, {
@@ -101,11 +127,13 @@ document.addEventListener('DOMContentLoaded', function() {
       } catch (e) {
         mostrarErro('Ih, parece que estamos com um probleminha na conexão. Tenta de novo em instantes!', 'senha');
       }
+      mostrarSpinner(btnEntrar, false);
     }
     // Cadastro de nova senha
     if (!etapaCadastrarSenha.classList.contains('escondido')) {
       e.preventDefault();
       esconderTodosErros();
+      mostrarSpinner(btnCadastrarSenha, true);
       const novaSenha = document.getElementById('nova-senha').value;
       try {
         const res = await fetch(`${apiBase}/cadastrar-senha`, {
@@ -129,6 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
       } catch (e) {
         mostrarErro('Ih, parece que estamos com um probleminha na conexão. Tenta de novo em instantes!', 'cadastrar-senha');
       }
+      mostrarSpinner(btnCadastrarSenha, false);
     }
   };
 

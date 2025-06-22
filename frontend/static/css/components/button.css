@@ -64,3 +64,14 @@
   background-color: #e5e7eb;
   color: #1e293b;
 }
+
+.spinner {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 0.5rem;
+  width: 1.5em;
+  height: 1.5em;
+}
+.escondido {
+  display: none !important;
+}
