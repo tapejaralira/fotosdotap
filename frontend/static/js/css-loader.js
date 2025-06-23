@@ -13,14 +13,13 @@ window.CSS_CONFIG = {
   files: {
     // Arquivos base
     'variables.css': false,                    // estável - variáveis CSS
-    'style.css': false,                        // estável - CSS principal
-      // Componentes de layout
+    'style.css': false,                        // estável - CSS principal    // Componentes de layout
     'components/header.css': false,            // estável - cabeçalho
     'components/header-animation.css': false,  // estável - animações do header
+    'components/scrollbar-responsive.css': false, // estável - scrollbar responsiva
     'components/footer.css': false,            // estável - rodapé
     'components/button.css': false,            // estável - botões
-    'components/titulo.css': false,            // estável - títulos
-      // Componentes que você mexe mais
+    'components/titulo.css': false,            // estável - títulos// Componentes que você mexe mais
     'components/card.css': true,               // 🎯 mexe sempre - cards
     'components/cliente-area.css': true,       // 🎯 mexe sempre - área do cliente
     

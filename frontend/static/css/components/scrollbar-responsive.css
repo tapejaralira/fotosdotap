@@ -1,0 +1,50 @@
+/* ========================================================================== 
+   SCROLLBAR RESPONSIVA - INVISÍVEL NO MOBILE, FIXA NO DESKTOP
+   ========================================================================== */
+
+/* Mobile: Scrollbar invisível para máximo espaço de conteúdo */
+@media (max-width: 768px) {
+  html {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
+  }
+
+  html::-webkit-scrollbar {
+    display: none; /* Chrome/Safari/Mobile browsers */
+  }
+  
+  body {
+    -webkit-overflow-scrolling: touch; /* Scroll suave no iOS */
+  }
+}
+
+/* Desktop: Scrollbar sempre visível para header estável */
+@media (min-width: 769px) {
+  html {
+    overflow-y: scroll; /* Força scrollbar sempre visível */
+    scrollbar-width: thin; /* Firefox - scrollbar fina */
+  }
+  
+  /* Scrollbar minimalista - só a barra visível */
+  html::-webkit-scrollbar {
+    width: 8px; /* Mais fina */
+  }
+  
+  html::-webkit-scrollbar-track {
+    background: transparent; /* Fundo invisível */
+  }
+  
+  html::-webkit-scrollbar-thumb {
+    background: var(--cor-destaque); /* Só cor primária */
+    border-radius: 4px;
+    border: none;
+  }
+  
+  html::-webkit-scrollbar-thumb:hover {
+    background: var(--cor-primaria); /* Tom mais escuro no hover */
+  }
+  
+  html::-webkit-scrollbar-corner {
+    background: transparent; /* Canto invisível */
+  }
+}

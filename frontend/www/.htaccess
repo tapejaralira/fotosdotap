@@ -1,0 +1,17 @@
+# ========================================================================== 
+# CONFIGURAÇÃO DE SERVIDOR PARA SPA
+# ========================================================================== 
+
+# Para Apache (.htaccess)
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ /index.html [L]
+
+# Para Nginx
+# location / {
+#   try_files $uri $uri/ /index.html;
+# }
+
+# Para desenvolvimento local (Live Server do VS Code)
+# Funciona automaticamente, nenhuma configuração necessária

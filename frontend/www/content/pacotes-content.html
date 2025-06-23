@@ -1,0 +1,104 @@
+<!-- ========================================================================== 
+     CONTEÚDO DOS PACOTES - APENAS <MAIN> EXTRAÍDO
+     ========================================================================== -->
+
+<!-- Main -->
+<main class="main" data-fade>
+  <!-- Título da página fora do container dos pacotes -->
+  <div class="page-header page-header--hero">
+    <h1 class="page-title">Preços e Pacotes</h1>
+    <p class="page-subtitle">Escolha o pacote ideal para o seu momento especial!</p>
+  </div>
+  <section class="pacotes container" aria-label="Preços e Pacotes">
+    <!-- Pacote Completo -->
+    <div class="card">
+      <h2 class="card__titulo">Pacote Completo</h2>
+      <img src="https://static.fotosdotap.com.br/img/pacotes/pacote1.webp" alt="Pacote Completo" class="card__imagem" />
+      <p class="card__descricao">
+        A escolha ideal pra quem quer viver a experiência completa e ter um ensaio inesquecível do início ao fim.<br>
+        Perfeito para casais apaixonados, profissionais que querem se destacar ou quem sonha com um ensaio editorial com estilo e personalidade.
+      </p>
+      <div class="card__divider"></div>
+      <ul class="card__lista">
+        <li>60 fotos escolhidas por você</li>
+        <li>Até 3 horas de sessão</li>
+        <li>Consultoria pré-ensaio</li>
+        <li>Edição profissional em alta qualidade</li>
+        <li>Entrega digital em link exclusivo</li>
+      </ul>
+      <div class="card__divider"></div>
+      <div class="card__preco">R$ 500,00</div>
+    </div>
+
+    <!-- Pacote Flexível -->
+    <div class="card">
+      <h2 class="card__titulo">Pacote Flexível</h2>
+      <img src="https://static.fotosdotap.com.br/img/pacotes/pacote2.webp" alt="Pacote Flexível" class="card__imagem" />
+      <p class="card__descricao">
+        Aqui o controle é seu.<br>
+        Você faz o ensaio, vê as fotos com calma e só escolhe o que realmente quiser levar.<br>
+        Perfeito pra quem busca praticidade, um registro pontual ou quer começar com um investimento menor. Com liberdade total pra adicionar mais fotos depois, pagando só pelo que escolher.
+      </p>
+      <div class="card__divider"></div>
+      <ul class="card__lista">
+        <li>Sessão de 1 hora de duração</li>
+        <li>Você escolhe suas fotos</li>
+        <li>Paga só pelas fotos que escolher</li>
+        <li>Edição profissional em alta qualidade</li>
+        <li>Entrega digital em link exclusivo</li>
+      </ul>
+      <div class="card__divider"></div>
+      <div class="card__preco">R$ 200,00</div>
+    </div>
+
+    <!-- Informações sobre fotos extras -->
+    <article class="card">
+      <h3 class="card__titulo">Se quiser mais?</h3>
+      <p class="card__descricao">
+        Escolha quantas fotos quiser!<br>
+        Quanto mais fotos você escolher, mais barato cada uma fica.
+      </p>
+      <ul class="card__lista">
+        <li>Primeiras 5 fotos extras: R$ 12,00</li>
+        <li>Próximas 10 fotos extras: R$ 10,00</li>
+        <li>Próximas 15 fotos extras: R$ 8,00</li>
+        <li>Acima de 30 fotos extras: R$ 6,00</li>
+        <li>Você monta seu pacote!</li>
+      </ul>
+    </article>
+
+    <!-- Calculadora de Fotos Extras -->
+    <article class="card" aria-label="Calculadora de Fotos Extras">
+      <h3 class="card__titulo">Calculadora de Fotos Extras</h3>
+      <p class="card__descricao">
+        Escolha quantas fotos extras você deseja adicionar ao seu pacote. O valor é calculado automaticamente com descontos progressivos.
+      </p>
+      <div style="margin: 1rem 2rem; text-align: left">
+        <label for="quantidadeFotos">Quantidade de fotos extras:</label>
+        <input
+          id="quantidadeFotos"
+          type="number"
+          min="0"
+          max="100"
+          value="0"
+          style="width: 100%; padding: 0.5rem; font-size: 1rem; margin-top: 0.5rem; border-radius: 0.5rem; border: 1px solid #ccc;"
+        />
+      </div>
+      <ul class="card__lista" id="detalhesPrecos"></ul>
+      <div class="card__divider"></div>
+      <div class="card__preco" id="valorTotal">Total: R$ 0,00</div>
+    </article>
+  </section>
+</main>
+
+<div style="height: var(--espacamento-div);"></div>
+
+<script>
+  // Reexecutar scripts específicos dos pacotes
+  if (window.iniciarCalculadoraFotosExtras) {
+    window.iniciarCalculadoraFotosExtras("quantidadeFotos", "detalhesPrecos", "valorTotal");
+  }
+  if (window.initPageFade) {
+    window.initPageFade();
+  }
+</script>
