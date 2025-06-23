@@ -262,19 +262,19 @@
 
 /* Animação de fechamento (cascata reversa) */
 .header__nav--closing .header__list li:nth-child(1) .header__link {
-    animation: slideOutCascade 0.3s ease-in 0.4s both;
-}
-
-.header__nav--closing .header__list li:nth-child(2) .header__link {
     animation: slideOutCascade 0.3s ease-in 0.3s both;
 }
 
-.header__nav--closing .header__list li:nth-child(3) .header__link {
+.header__nav--closing .header__list li:nth-child(2) .header__link {
     animation: slideOutCascade 0.3s ease-in 0.2s both;
 }
 
-.header__nav--closing .header__list li:nth-child(4) .header__link {
+.header__nav--closing .header__list li:nth-child(3) .header__link {
     animation: slideOutCascade 0.3s ease-in 0.1s both;
+}
+
+.header__nav--closing .header__list li:nth-child(4) .header__link {
+    animation: slideOutCascade 0.3s ease-in 0.01s both;
 }
 
 /* ========================================================================== 

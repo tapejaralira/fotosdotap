@@ -67,12 +67,27 @@ document.addEventListener("DOMContentLoaded", () => {
       closeMenu();
     }
   });
-
   // Fechar menu ao redimensionar tela (voltar para desktop)
   window.addEventListener("resize", () => {
     if (window.innerWidth > 768) {
       closeMenu();
     }
+  });
+
+  // Fechar menu ao fazer scroll
+  let scrollTimeout;
+  window.addEventListener("scroll", () => {
+    // Throttling para performance
+    if (scrollTimeout) return;
+    
+    scrollTimeout = setTimeout(() => {
+      // Se menu está aberto e houve scroll
+      if (menu.classList.contains("header__nav--active") || menu.classList.contains("header__nav--closing")) {
+        console.log('📜 Menu fechado devido ao scroll');
+        closeMenu();
+      }
+      scrollTimeout = null;
+    }, 100);
   });
 
   // Torna função disponível globalmente para SPA usar se necessário
