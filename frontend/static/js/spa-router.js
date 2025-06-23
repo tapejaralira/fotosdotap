@@ -120,13 +120,20 @@
     if (ogTitle) ogTitle.content = page.title;
     if (ogDescription) ogDescription.content = page.description;
   }
-    // Reexecutar scripts específicos da página
+  // Reexecutar scripts específicos da página
   function executePageScripts(container) {
     // Aguarda um momento para o DOM estar pronto
     setTimeout(() => {
+      // Page fade animations PRIMEIRO (no container carregado)
+      if (window.initPageFade) {
+        console.log('🎨 Executando pageFade no container:', container);
+        window.initPageFade(container);
+      }
+      
       // Carrossel da home
       if (container.querySelector('.carrossel-fotos')) {
         if (window.initCarrossel) {
+          console.log('🎠 Executando carrossel');
           window.initCarrossel();
         }
       }
@@ -134,13 +141,9 @@
       // Calculadora de pacotes
       if (container.querySelector('#quantidadeFotos')) {
         if (window.iniciarCalculadoraFotosExtras) {
+          console.log('🧮 Executando calculadora');
           window.iniciarCalculadoraFotosExtras("quantidadeFotos", "detalhesPrecos", "valorTotal");
         }
-      }
-      
-      // Page fade animations
-      if (window.initPageFade) {
-        window.initPageFade();
       }
       
       // Executar scripts inline da página carregada
@@ -154,7 +157,7 @@
           }
         }
       });
-    }, 50);
+    }, 100); // Aumentei para 100ms
   }
   
   // Interceptar cliques em links
