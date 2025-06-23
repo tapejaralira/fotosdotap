@@ -5,12 +5,12 @@
 // Sistema de pré-carregamento para evitar FOUC (Flash of Unstyled Content)
 (function() {
   'use strict';
-    // Configurações
+  // Configurações
   const config = {
-    minLoadingTime: 2000,       // ← TESTE: 2 segundos para ver o spinner
-    maxLoadingTime: 5000,       // ← TESTE: máximo 5 segundos
+    minLoadingTime: 300,        // ← OTIMIZADO: Apenas 300ms mínimo
+    maxLoadingTime: 3000,       // Tempo máximo de loading (ms)
     showSpinner: true,          // Mostrar spinner de carregamento
-    fadeInDuration: 300         // Duração da animação de entrada (ms)
+    fadeInDuration: 200         // ← OTIMIZADO: Animação mais rápida
   };
   
   let startTime = Date.now();
@@ -83,11 +83,13 @@
     
     document.body.appendChild(overlay);
   }
-  
-  // Remove o preloader e mostra o conteúdo
+    // Remove o preloader e mostra o conteúdo
   function showContent() {
     const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(0, config.minLoadingTime - elapsedTime);
+    
+    // 🚀 OTIMIZAÇÃO: Se CSS carregou rápido (< 300ms), mostra imediatamente
+    // Se carregou devagar, respeita o tempo mínimo para evitar flash
+    const remainingTime = elapsedTime < 300 ? 0 : Math.max(0, config.minLoadingTime - elapsedTime);
     
     setTimeout(() => {
       // Remove classe de loading
