@@ -75,7 +75,7 @@
         });
     }
   }
-    // Mostrar conteúdo com animação suave
+  // Mostrar conteúdo com animação suave
   function showContent(html) {
     const content = document.getElementById('spa-content');
     if (!content) {
@@ -91,16 +91,20 @@
     setTimeout(() => {
       content.innerHTML = html;
       
-      // Reexecutar scripts da página (como calculadora)
-      executePageScripts(content);
+      // Aguardar um pouco mais para garantir que DOM está pronto
+      setTimeout(() => {
+        // Reexecutar scripts da página
+        executePageScripts(content);
+        
+        // Fade in
+        content.style.opacity = '1';
+        
+        // Scroll to top
+        window.scrollTo(0, 0);
+        
+        console.log('✅ Conteúdo exibido com sucesso');
+      }, 100);
       
-      // Fade in
-      content.style.opacity = '1';
-      
-      // Scroll to top
-      window.scrollTo(0, 0);
-      
-      console.log('✅ Conteúdo exibido com sucesso');
     }, 150);
   }
   
@@ -119,34 +123,52 @@
     
     if (ogTitle) ogTitle.content = page.title;
     if (ogDescription) ogDescription.content = page.description;
-  }
-  // Reexecutar scripts específicos da página
+  }  // Reexecutar scripts específicos da página
   function executePageScripts(container) {
-    // Aguarda um momento para o DOM estar pronto
+    console.log('🔧 Executando scripts para container:', container);
+    
+    // Aguarda DOM estar completamente estável
     setTimeout(() => {
-      // Page fade animations PRIMEIRO (no container carregado)
+      
+      // 1. Page fade animations PRIMEIRO (no container carregado)
       if (window.initPageFade) {
-        console.log('🎨 Executando pageFade no container:', container);
+        console.log('🎨 Executando pageFade...');
         window.initPageFade(container);
       }
       
-      // Carrossel da home
-      if (container.querySelector('.carrossel-fotos')) {
+      // 2. Carrossel da home (só se tiver carrossel)
+      const carrossel = container.querySelector('.carrossel-fotos');
+      if (carrossel) {
+        console.log('🎠 Carrossel encontrado, inicializando...');
         if (window.initCarrossel) {
-          console.log('🎠 Executando carrossel');
           window.initCarrossel();
+        } else {
+          // Se função não existir, executa código direto
+          const imagens = carrossel.querySelectorAll('.carrossel__imagem');
+          if (imagens.length > 0) {
+            let indiceAtual = 0;
+            
+            function mostrarProximaImagem() {
+              imagens[indiceAtual].classList.remove("active");
+              indiceAtual = (indiceAtual + 1) % imagens.length;
+              imagens[indiceAtual].classList.add("active");
+            }
+            
+            setInterval(mostrarProximaImagem, 3000);
+            console.log('🎠 Carrossel inicializado diretamente');
+          }
         }
       }
       
-      // Calculadora de pacotes
+      // 3. Calculadora de pacotes
       if (container.querySelector('#quantidadeFotos')) {
+        console.log('🧮 Calculadora encontrada, inicializando...');
         if (window.iniciarCalculadoraFotosExtras) {
-          console.log('🧮 Executando calculadora');
           window.iniciarCalculadoraFotosExtras("quantidadeFotos", "detalhesPrecos", "valorTotal");
         }
       }
       
-      // Executar scripts inline da página carregada
+      // 4. Executar scripts inline da página carregada
       const scripts = container.querySelectorAll('script');
       scripts.forEach(script => {
         if (script.textContent) {
@@ -157,10 +179,12 @@
           }
         }
       });
-    }, 100); // Aumentei para 100ms
+      
+      console.log('✅ Scripts executados com sucesso');
+      
+    }, 150); // Timeout maior para garantir estabilidade
   }
-  
-  // Interceptar cliques em links
+    // Interceptar cliques em links
   function handleLinkClick(e) {
     const link = e.target.closest('a[href]');
     if (!link) return;
@@ -170,6 +194,13 @@
     // Só interceptar links internos
     if (href.startsWith('/') && !href.includes('.') && pages[href]) {
       e.preventDefault();
+      
+      // Fechar menu mobile se estiver aberto
+      if (window.closeMenu) {
+        window.closeMenu();
+      }
+      
+      console.log('🔗 Navegando via SPA para:', href);
       loadPage(href);
     }
   }

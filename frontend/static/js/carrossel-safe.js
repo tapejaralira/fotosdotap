@@ -1,17 +1,18 @@
 // =======================================================
-// === CARROSSEL ADAPTADO PARA SPA ===
+// === CARROSSEL SEGURO - SÓ EXECUTA SE ELEMENTOS EXISTIREM ===
 // =======================================================
 
-// Função principal que pode ser chamada externamente
+// Função principal do carrossel
 function initCarrossel() {
+  // Verificar se elementos existem antes de tentar usar
   const imagens = document.querySelectorAll(".carrossel__imagem");
   
   if (!imagens || imagens.length === 0) {
-    console.log('🎠 Nenhuma imagem de carrossel encontrada');
+    console.log('🎠 Carrossel: Nenhuma imagem encontrada, pulando inicialização');
     return;
   }
   
-  console.log('🎠 Inicializando carrossel com', imagens.length, 'imagens');
+  console.log('🎠 Carrossel: Inicializando com', imagens.length, 'imagens');
   
   let indiceAtual = 0;
 
@@ -29,16 +30,13 @@ function initCarrossel() {
   // Trocar imagem a cada 3 segundos
   setInterval(mostrarProximaImagem, 3000);
   
-  console.log('✅ Carrossel configurado com sucesso');
+  console.log('🎠 Carrossel: Configurado com sucesso');
 }
 
-// Execução automática se DOM já estiver carregado (compatibilidade)
+// Execução condicional na primeira carga (se elementos existirem)
 document.addEventListener("DOMContentLoaded", () => {
-  // Só executa se há elementos de carrossel
-  if (document.querySelector('.carrossel-fotos')) {
-    initCarrossel();
-  }
+  initCarrossel();
 });
 
-// Torna função global para uso do SPA
+// Torna função global para SPA usar
 window.initCarrossel = initCarrossel;

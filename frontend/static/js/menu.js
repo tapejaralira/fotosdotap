@@ -1,64 +1,73 @@
 // =======================================================
-// === MENU RESPONSIVO + ESCONDER HEADER AO ROLAR ===
+// === MENU RESPONSIVO PARA SPA ===
 // =======================================================
-document.addEventListener("DOMContentLoaded", function () {
-    const toggle = document.getElementById("menu-toggle");
-    const menu = document.getElementById("menu");
-    const header = document.querySelector(".header");
 
-    // Animação do header (executa se header existir)
-    if (header) {
-      header.style.opacity = '0';
-      header.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-      setTimeout(() => {
-        header.style.opacity = '1';
-      }, 100);
-      header.classList.add("header--show");
+document.addEventListener("DOMContentLoaded", () => {
+  const menuToggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("menu");
+
+  if (!menuToggle || !menu) return;
+
+  // Função para fechar menu
+  function closeMenu() {
+    menu.classList.remove("header__nav--open");
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.classList.remove("header__toggle--active");
+    console.log('🍔 Menu fechado');
+  }
+
+  // Função para abrir menu
+  function openMenu() {
+    menu.classList.add("header__nav--open");
+    menuToggle.setAttribute("aria-expanded", "true");
+    menuToggle.classList.add("header__toggle--active");
+    console.log('🍔 Menu aberto');
+  }
+
+  // Toggle do menu no botão hamburger
+  menuToggle.addEventListener("click", () => {
+    const isOpen = menu.classList.contains("header__nav--open");
+    
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
     }
+  });
 
-    // Só executa a lógica do menu se toggle e menu existirem
-    if (toggle && menu && header) {
-      // === [2] Acessibilidade: define estado inicial do botão ===
-      toggle.setAttribute('aria-expanded', 'false');
-      let menuAberto = false;
-
-      // === [3] Toggle do menu hamburguer ===
-      toggle.addEventListener("click", function () {
-          if (menuAberto) {
-              menu.classList.remove("header__nav--active");
-              setTimeout(() => {
-                  menu.style.opacity = '';
-                  menu.style.visibility = '';
-                  menu.style.pointerEvents = '';
-              }, 500);
-          } else {
-              menu.style.opacity = '1';
-              menu.style.visibility = 'visible';
-              menu.style.pointerEvents = 'auto';
-              menu.classList.add("header__nav--active");
-          }
-          toggle.setAttribute('aria-expanded', String(!menuAberto));
-          menuAberto = !menuAberto;
-      });
-
-      // === [4] Lógica do scroll para esconder o header ===
-      let lastScrollTop = 0;
-      const delta = 50;
-      window.addEventListener("scroll", function () {
-          const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-          if (Math.abs(currentScroll - lastScrollTop) <= delta) {
-              return;
-          }
-          if (currentScroll > lastScrollTop && currentScroll > 50) {
-              header.classList.remove("header--show");
-              header.classList.add("header--hide");
-          } else {
-              header.classList.remove("header--hide");
-              header.classList.add("header--show");
-          }
-          lastScrollTop = currentScroll;
-      });
+  // Detectar cliques em links do menu para fechar automaticamente
+  document.addEventListener("click", (e) => {
+    const link = e.target.closest('a[href]');
+    
+    // Se clicou em um link dentro do menu
+    if (link && menu.contains(link)) {
+      const href = link.getAttribute('href');
+      
+      // Fecha menu para qualquer link (SPA ou externo)
+      // Exceto âncoras (#) que são scroll na mesma página
+      if (href && !href.startsWith('#')) {
+        console.log('🍔 Fechando menu após clique em:', href);
+        closeMenu();
+      }
     }
+  });
+
+  // Fechar menu ao clicar fora dele
+  document.addEventListener("click", (e) => {
+    if (!menu.contains(e.target) && !menuToggle.contains(e.target)) {
+      closeMenu();
+    }
+  });
+
+  // Fechar menu ao redimensionar tela (voltar para desktop)
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) {
+      closeMenu();
+    }
+  });
+
+  // Torna função disponível globalmente para SPA usar se necessário
+  window.closeMenu = closeMenu;
 });
 
 // =======================================================
