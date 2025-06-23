@@ -1,19 +1,51 @@
+/* ========================================================================== 
+   VARIÁVEIS CSS GLOBAIS - DESIGN SYSTEM
+   ========================================================================== */
+
 :root {
-  --cor-primaria: #11131baf;
-  --cor-secundaria: #eeeeee;
-  --cor-destaque: #b6b6bd;
-  --cor-fundo: #ffffff;
+  
+  /* ===== CORES DO TEMA ===== */
+  --cor-primaria: #11131baf;          /* Cor principal (textos, elementos principais) */
+  --cor-secundaria: #eeeeee;          /* Cor secundária (textos sobre fundos escuros) */
+  --cor-destaque: #b6b6bd;            /* Cor de destaque (bordas, elementos neutros) */
+  --cor-fundo: #ffffff;               /* Cor de fundo padrão */
+  --cor-texto: #666666;               /* Cor padrão para textos comuns */
+  
+  /* ===== CORES DE ESTADO ===== */
+  --cor-erro: #cc0000;                /* Cor para mensagens de erro */
+  --cor-erro-fundo: #ffeaea;          /* Fundo para áreas de erro */
+  --cor-erro-borda: #f5bcbc;          /* Borda para elementos de erro */
 
-  --fonte-principal: 'Open Sans', sans-serif;
-  --espacamento: 0.4rem;
+  /* ===== TIPOGRAFIA ===== */
+  --fonte-principal: 'Open Sans', sans-serif;  /* Fonte principal do site */
+  
+  /* Tamanhos de fonte específicos */
+  --fonte-titulo-card: 1.8rem;        /* Títulos de cards */
+  --fonte-preco-card: 2rem;           /* Preços em destaque */
+  --fonte-texto: 1.1rem;              /* Texto padrão (inputs, labels) */
 
-  --header-height: 60px; /* Variável para a altura do header */
-  --largura-maxima: 1200px; /* Largura máxima do layout */
+  /* ===== ESPAÇAMENTOS ===== */
+  --espacamento: 0.4rem;              /* Espaçamento base do sistema */
+  --espacamento-card: 1rem;           /* Espaçamento interno dos cards */
+  --espacamento-div: 4rem;            /* Espaçamento entre seções */
+  
+  /* Espaçamentos específicos */
+  --padding-input: 0.7rem 1rem;       /* Padding interno dos inputs */
 
-  --espacamento-div: 4rem;
+  /* ===== DIMENSÕES ESTRUTURAIS ===== */
+  --header-height: 60px;              /* Altura fixa do header */
+  --largura-maxima: 1200px;           /* Largura máxima do layout */
 
-  /* --- EFEITOS REUTILIZÁVEL --- */
-  --efeito-blur: blur(3px);                  /* Intensidade do desfoque */
-  --sombra: 0 4px 8px #0a0a0a71;           /* Sombra padrão */
-  --borda-arredondada: 30px;                    /* Raio da borda */
+  /* ===== BORDER RADIUS ===== */
+  --border-radius-input: 0.7rem;      /* Bordas dos campos de formulário */
+  --border-radius-card: 1rem;         /* Bordas dos cards */
+  --border-radius-pequeno: 0.5rem;    /* Bordas menores (alerts, botões pequenos) */
+  --borda-arredondada: 30px;          /* Bordas muito arredondadas (elementos especiais) */
+
+  /* ===== TRANSIÇÕES E ANIMAÇÕES ===== */
+  --transicao-rapida: 0.2s;           /* Transição rápida (hover, focus) */
+
+  /* ===== EFEITOS VISUAIS ===== */
+  --efeito-blur: blur(3px);           /* Intensidade do desfoque (glass effect) */
+  --sombra: 0 4px 8px #0a0a0a71;      /* Sombra padrão para elevação */
 }

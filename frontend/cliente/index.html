@@ -4,12 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Painel do Cliente | Fotos do Tap.</title>
-  <link rel="icon" href="https://static.fotosdotap.com.br/assets/logo.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/style.css" />
+  <link rel="icon" href="https://static.fotosdotap.com.br/assets/logo.svg" type="image/svg+xml">  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/style.css" />
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/header.css" />
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/button.css" />
   <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/body-title.css" />
-  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/titulo.css" />
+  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/titulo.css" />  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/card.css" />
+  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/cliente-area.css" />
 </head>
 <body>
   <header class="header">
@@ -34,7 +34,7 @@
     <div class="page-header page-header--hero">
       <h1 class="page-title">Painel do Cliente</h1>
       <p class="page-subtitle" id="boas-vindas">Carregando seus dados...</p>
-    </div>    <section class="container" style="text-align: center; max-width: 100vw;">
+    </div>    <section class="container">
       <div id="servicos-lista"></div>
     </section>
   </main>
@@ -124,10 +124,9 @@
             const servicos = data.servicos;
             if (servicos.length === 0) {
               lista.innerHTML = '<p>Nenhum serviço encontrado.</p>';
-            } else {
-              // Renderização com dados detalhados dos serviços
+            } else {              // Renderização com dados detalhados dos serviços
               lista.innerHTML = servicos.map(servico => `
-                <div class="card" style="margin-bottom: 20px; padding: 20px; border: 1px solid #ddd; border-radius: 8px;">
+                <div class="card">
                   <h3>${servico.nome_servico || 'Serviço'}</h3>
                   <p><b>Data:</b> ${servico.data_servico || 'N/A'}</p>
                   <p><b>Pacote:</b> ${servico.pacote || 'N/A'}</p>

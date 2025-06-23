@@ -1,0 +1,52 @@
+/* ========================================================================== 
+   Área do Cliente - Apenas estilos específicos não existentes
+   ========================================================================== */
+
+/* Lista de serviços do cliente */
+#servicos-lista {
+  text-align: left;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Estilo para quando não há serviços */
+#servicos-lista > p {
+  text-align: center;
+  color: var(--cor-texto, #666);
+  font-size: 1.1rem;
+  padding: 2rem;
+  background: var(--cor-fundo, #f9f9f9);
+  border-radius: 1rem;
+  margin: 2rem auto;
+}
+
+/* Ajustes específicos para cards de serviços */
+#servicos-lista .card {
+  margin: 1rem auto;
+  width: 100%;
+  max-width: 600px;
+}
+
+#servicos-lista .card h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.3rem;
+  color: var(--cor-primaria);
+}
+
+#servicos-lista .card p {
+  margin: 0.5rem 0;
+  color: var(--cor-texto, #666);
+  line-height: 1.5;
+}
+
+#servicos-lista .card p b {
+  color: var(--cor-primaria);
+  font-weight: 600;
+}
+
+/* Responsividade apenas para elementos específicos */
+@media (max-width: 768px) {
+  #servicos-lista {
+    max-width: 100%;
+  }
+}

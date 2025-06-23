@@ -1,32 +1,106 @@
-/* --- Card base --- */
+/* ========================================================================== 
+   COMPONENTE CARD - SISTEMA DE CARDS REUTILIZÁVEIS
+   ========================================================================== */
+
+/* ===== ESTRUTURA BASE DO CARD ===== */
 .card {
-  background: var(--cor-fundo);
-  border-radius: 1rem;
-  box-shadow: var(--sombra);
-  padding: 1rem;
-  margin: 1rem;
-  max-width: 37rem;
-  width: 95%;
-  text-align: left;
-  position: relative;
-  transition: box-shadow 0.2s;
-  display: block;
+    background: var(--cor-fundo);
+    border-radius: var(--border-radius-card);
+    box-shadow: var(--sombra);
+    padding: var(--espacamento-card) 0; /* Apenas padding vertical */
+    margin: var(--espacamento-card);
+    max-width: 37rem;
+    width: 95%;
+    text-align: left;
+    position: relative;
+    transition: box-shadow var(--transicao-rapida);
+    display: block;
 }
+
+/* Estados interativos do card */
 .card:focus-within,
 .card:hover {
   box-shadow: var(--sombra);
 }
 
-/* --- Título do card --- */
+/* ===== ELEMENTOS DE CONTEÚDO DO CARD ===== */
+
+/* Título principal do card */
 .card__titulo {
-  font-size: 1.8rem;
+  font-size: var(--fonte-titulo-card);
   font-weight: bold;
-  padding: 0 0 1rem 0;
+  padding: 0 var(--espacamento-card) var(--espacamento-card) var(--espacamento-card);
   color: var(--cor-primaria);
   text-align: left;
+  margin: 0; /* Evita margin collapse */
 }
 
-/* --- Campo de formulário e container flexível --- */
+/* Imagem destacada do card (ocupa 100% da largura) */
+.card__imagem {
+  width: 100%;
+  height: auto;
+  border-radius: 0; /* Vai até as bordas do card */
+  margin: 0;
+  object-fit: cover;
+  display: block;
+}
+
+/* Texto descritivo do card */
+.card__descricao {
+  color: var(--cor-texto);
+  line-height: 1.6;
+  padding: var(--espacamento-card);
+  margin: 0; /* Evita margin collapse */
+}
+
+/* ===== ELEMENTOS DE LISTA ===== */
+
+/* Container da lista de itens */
+.card__lista {
+  list-style: none;
+  padding: 0 var(--espacamento-card) var(--espacamento-card) var(--espacamento-card);
+  margin: 0; /* Evita margin collapse */
+}
+
+/* Itens individuais da lista */
+.card__lista li {
+  padding: 0.3rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  color: var(--cor-texto);
+}
+
+/* Ícone de check para cada item da lista */
+.card__lista li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--cor-primaria);
+  font-weight: bold;
+}
+
+/* ===== ELEMENTOS DE DIVISÃO E PREÇO ===== */
+
+/* Linha divisória entre seções */
+.card__divider {
+  height: 1px;
+  background: var(--cor-destaque);
+  margin: var(--espacamento-card);
+}
+
+/* Preço em destaque */
+.card__preco {
+  font-size: var(--fonte-preco-card);
+  font-weight: bold;
+  color: var(--cor-primaria);
+  text-align: center;
+  padding: var(--espacamento-card);
+  margin: 0; /* Evita margin collapse */
+}
+
+/* ===== ELEMENTOS DE FORMULÁRIO ===== */
+
+/* Container para campos de formulário */
 .campo-formulario {
   width: 100%;
   max-width: 400px;
@@ -38,23 +112,25 @@
   box-sizing: border-box;
 }
 
-/* Input de formulário */
+/* Campos de entrada (inputs) */
 input.campo-formulario {
-  padding: 0.7rem 1rem;
-  border: 1px solid var(--cor-destaque, #ccc);
-  border-radius: 0.7rem;
-  font-size: 1.1rem;
+  padding: var(--padding-input);
+  border: 1px solid var(--cor-destaque);
+  border-radius: var(--border-radius-input);
+  font-size: var(--fonte-texto);
   font-family: var(--fonte-principal);
   background: #fafbfc;
-  color: var(--cor-primaria, #222);
-  transition: border-color 0.2s;
+  color: var(--cor-primaria);
+  transition: border-color var(--transicao-rapida);
   box-sizing: border-box;
   width: 100%;
   margin: 0;
   flex: 1 1 auto;
 }
 
-/* --- Botão do olho e ícone --- */
+/* ===== ELEMENTOS INTERATIVOS ===== */
+
+/* Botões com ícones (ex: mostrar/ocultar senha) */
 .icone-btn {
   background: none;
   border: none;
@@ -63,26 +139,32 @@ input.campo-formulario {
   display: flex;
   align-items: center;
 }
+
+/* Ícones dentro dos botões */
 .icone {
   width: 1.5rem;
   height: 1.5rem;
   color: var(--cor-primaria);
 }
 
-/* --- Mensagem de erro --- */
+/* ===== ESTADOS E FEEDBACK ===== */
+
+/* Mensagens de erro */
 .msg-erro {
-  background: #ffeaea;
-  color: #c00;
-  border: 1px solid #f5bcbc;
-  border-radius: 0.5rem;
+  background: var(--cor-erro-fundo);
+  color: var(--cor-erro);
+  border: 1px solid var(--cor-erro-borda);
+  border-radius: var(--border-radius-pequeno);
   padding: 0.5rem;
-  margin: 1rem auto 0 auto;
-  font-size: 1.05rem;
+  margin: var(--espacamento-card) auto 0 auto;
+  font-size: var(--fonte-texto);
   text-align: center;
   font-family: var(--fonte-principal);
   max-width: 400px;
 }
 
-/* --- Esconde/mostra etapas do formulário --- */
+/* ===== UTILITÁRIOS DE VISIBILIDADE ===== */
+
+/* Classes para controlar visibilidade de elementos */
 .escondido { display: none !important; }
 .visivel { display: block !important; }
