@@ -6,12 +6,21 @@
   <title>Login do Cliente | Fotos do Tap.</title>
   <link rel="icon" href="https://static.fotosdotap.com.br/assets/logo.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/style.css" />
-  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/card.css" />
-  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/button.css" />
-  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/titulo.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
+  
+  <!-- CSS Loader Centralizado -->
+  <script src="https://static.fotosdotap.com.br/js/css-loader.js"></script>
+  <script>
+    loadCSS([
+      'variables.css',
+      'style.css',
+      'components/header.css',
+      'components/footer.css',
+      'components/card.css',
+      'components/button.css',
+      'components/titulo.css'
+    ]);
+  </script>
   <meta name="description" content="Área de acesso para clientes Fotos do Tap. Use seu e-mail para acessar suas fotos." />
   <meta property="og:title" content="Login do Cliente | Fotos do Tap." />
   <meta property="og:description" content="Área de acesso para clientes Fotos do Tap. Use seu e-mail para acessar suas fotos." />

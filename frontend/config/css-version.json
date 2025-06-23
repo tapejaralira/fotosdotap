@@ -1,0 +1,44 @@
+{
+  "_comment": "MUDE APENAS 'globalVersion' PARA FORÇAR CACHE BUSTING EM TODOS OS ARQUIVOS MARCADOS",
+  
+  "globalVersion": "20250122v1",
+  "baseUrl": "https://static.fotosdotap.com.br/css/",
+  
+  "files": {
+    "variables": {
+      "path": "variables.css",
+      "useVersion": false,
+      "comment": "Arquivo estável, raramente muda"
+    },
+    "style": {
+      "path": "style.css", 
+      "useVersion": false,
+      "comment": "CSS principal, estável"
+    },
+    "header": {
+      "path": "components/header.css",
+      "useVersion": false,
+      "comment": "Header fixo, não mexe muito"
+    },
+    "footer": {
+      "path": "components/footer.css",
+      "useVersion": false,
+      "comment": "Footer fixo, não mexe muito"
+    },
+    "card": {
+      "path": "components/card.css",
+      "useVersion": true,
+      "comment": "Arquivo que você mexe frequentemente"
+    },
+    "titulo": {
+      "path": "components/titulo.css",
+      "useVersion": true,
+      "comment": "Títulos, pode mexer"
+    },
+    "clienteArea": {
+      "path": "components/cliente-area.css",
+      "useVersion": true,
+      "comment": "Área do cliente, desenvolvimento ativo"
+    }
+  }
+}

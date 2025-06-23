@@ -3,13 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Painel do Cliente | Fotos do Tap.</title>
-  <link rel="icon" href="https://static.fotosdotap.com.br/assets/logo.svg" type="image/svg+xml">  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/style.css" />
-  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/header.css" />
-  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/button.css" />
-  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/body-title.css" />
-  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/titulo.css" />  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/card.css" />
-  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/cliente-area.css" />
+  <title>Painel do Cliente | Fotos do Tap.</title>  <link rel="icon" href="https://static.fotosdotap.com.br/assets/logo.svg" type="image/svg+xml">
+  
+  <!-- CSS Loader Centralizado -->
+  <script src="https://static.fotosdotap.com.br/js/css-loader.js"></script>
+  <script>
+    loadCSS([
+      'variables.css',
+      'style.css',
+      'components/header.css',
+      'components/footer.css',
+      'components/button.css',
+      'components/titulo.css',
+      'components/card.css',
+      'components/cliente-area.css'
+    ]);
+  </script>
 </head>
 <body>
   <header class="header">

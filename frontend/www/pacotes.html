@@ -9,12 +9,19 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
-
-  <!-- Styles -->
-  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/style.css" />
-  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/card.css" />
-  <link rel="stylesheet" href="https://static.fotosdotap.com.br/css/components/titulo.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />  <!-- CSS Loader Centralizado -->
+  <script src="https://static.fotosdotap.com.br/js/css-loader.js"></script>
+  <script>
+    // Lista dos CSS necessários para esta página
+    loadCSS([
+      'variables.css',
+      'style.css', 
+      'components/header.css',
+      'components/footer.css',
+      'components/card.css',
+      'components/titulo.css'
+    ]);
+  </script>
 
   <!-- Meta description e Open Graph -->
   <meta name="description" content="Confira os pacotes de fotografia profissional oferecidos por Fotos do Tap. Qualidade e preço justo para eternizar seus momentos." />
