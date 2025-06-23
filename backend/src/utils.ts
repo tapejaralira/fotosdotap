@@ -6,6 +6,8 @@ const ALLOWED_ORIGINS = [
   "https://admin-evv.pages.dev",          // Pages de teste (REMOVER em produção)
   "http://localhost:5500",                // dev local (REMOVER em produção)
   "http://127.0.0.1:5500",                // dev local (REMOVER em produção)
+  "http://127.0.0.1:3001",                // Live Preview VS Code (REMOVER em produção)
+  "http://localhost:3001",                // Live Preview VS Code (REMOVER em produção)
   "http://192.168.1.7:5500"               // dev local (REMOVER em produção)
 ];
 
