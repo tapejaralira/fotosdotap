@@ -14,12 +14,12 @@ window.CSS_CONFIG = {
     // Arquivos base
     'variables.css': false,                    // estável - variáveis CSS
     'style.css': false,                        // estável - CSS principal
-    
-    // Componentes de layout
+      // Componentes de layout
     'components/header.css': false,            // estável - cabeçalho
     'components/footer.css': false,            // estável - rodapé
     'components/button.css': false,            // estável - botões
     'components/titulo.css': false,            // estável - títulos
+    'components/preloader.css': false,         // estável - sistema de carregamento
       // Componentes que você mexe mais
     'components/card.css': true,               // 🎯 mexe sempre - cards
     'components/cliente-area.css': true,       // 🎯 mexe sempre - área do cliente
