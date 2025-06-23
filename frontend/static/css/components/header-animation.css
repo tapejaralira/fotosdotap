@@ -1,0 +1,22 @@
+/* ========================================================================== 
+   HEADER ANIMATIONS - ENTRADA SUAVE APENAS NA PRIMEIRA VISITA
+   ========================================================================== */
+
+/* Estado inicial - header escondido para animação */
+.header--entrando {
+    opacity: 0;
+    transform: translateY(-30px);
+}
+
+/* Estado final - header visível */
+.header--show {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Garante que header sem animação apareça normalmente */
+.header:not(.header--entrando):not(.header--show) {
+    opacity: 1;
+    transform: translateY(0);
+}
