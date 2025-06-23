@@ -23,10 +23,12 @@
 
 <script>
   // Reexecutar scripts específicos da home
-  if (window.initCarrossel) {
-    window.initCarrossel();
-  }
-  if (window.initPageFade) {
-    window.initPageFade();
-  }
+  setTimeout(() => {
+    if (window.initCarrossel) {
+      window.initCarrossel();
+    }
+    if (window.initPageFade) {
+      window.initPageFade();
+    }
+  }, 100);
 </script>

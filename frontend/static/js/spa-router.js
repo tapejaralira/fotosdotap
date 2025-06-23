@@ -120,17 +120,41 @@
     if (ogTitle) ogTitle.content = page.title;
     if (ogDescription) ogDescription.content = page.description;
   }
-  
-  // Reexecutar scripts específicos da página
+    // Reexecutar scripts específicos da página
   function executePageScripts(container) {
-    // Calculadora de pacotes
-    if (container.querySelector('#quantidadeFotos')) {
-      if (window.iniciarCalculadoraFotosExtras) {
-        window.iniciarCalculadoraFotosExtras("quantidadeFotos", "detalhesPrecos", "valorTotal");
+    // Aguarda um momento para o DOM estar pronto
+    setTimeout(() => {
+      // Carrossel da home
+      if (container.querySelector('.carrossel-fotos')) {
+        if (window.initCarrossel) {
+          window.initCarrossel();
+        }
       }
-    }
-    
-    // Outros scripts específicos podem ser adicionados aqui
+      
+      // Calculadora de pacotes
+      if (container.querySelector('#quantidadeFotos')) {
+        if (window.iniciarCalculadoraFotosExtras) {
+          window.iniciarCalculadoraFotosExtras("quantidadeFotos", "detalhesPrecos", "valorTotal");
+        }
+      }
+      
+      // Page fade animations
+      if (window.initPageFade) {
+        window.initPageFade();
+      }
+      
+      // Executar scripts inline da página carregada
+      const scripts = container.querySelectorAll('script');
+      scripts.forEach(script => {
+        if (script.textContent) {
+          try {
+            eval(script.textContent);
+          } catch (e) {
+            console.warn('Script error:', e);
+          }
+        }
+      });
+    }, 50);
   }
   
   // Interceptar cliques em links
