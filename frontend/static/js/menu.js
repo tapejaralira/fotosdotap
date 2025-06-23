@@ -6,27 +6,36 @@ document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.getElementById("menu-toggle");
   const menu = document.getElementById("menu");
 
-  if (!menuToggle || !menu) return;
-
-  // Função para fechar menu
+  if (!menuToggle || !menu) return;  // Função para fechar menu com animação reversa
   function closeMenu() {
-    menu.classList.remove("header__nav--open");
-    menuToggle.setAttribute("aria-expanded", "false");
-    menuToggle.classList.remove("header__toggle--active");
-    console.log('🍔 Menu fechado');
+    // Se menu está ativo, faz animação de fechamento
+    if (menu.classList.contains("header__nav--active")) {
+      menu.classList.remove("header__nav--active");
+      menu.classList.add("header__nav--closing");
+      
+      // Após animação completa, esconde menu
+      setTimeout(() => {
+        menu.classList.remove("header__nav--closing");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.classList.remove("header__toggle--active");
+      }, 700); // 0.4s delay + 0.3s animation
+    }
+    console.log('🍔 Menu fechando com cascata reversa');
   }
 
   // Função para abrir menu
   function openMenu() {
-    menu.classList.add("header__nav--open");
+    // Remove classe de fechamento se existir
+    menu.classList.remove("header__nav--closing");
+    menu.classList.add("header__nav--active");
     menuToggle.setAttribute("aria-expanded", "true");
     menuToggle.classList.add("header__toggle--active");
-    console.log('🍔 Menu aberto');
+    console.log('🍔 Menu abrindo com cascata');
   }
 
   // Toggle do menu no botão hamburger
   menuToggle.addEventListener("click", () => {
-    const isOpen = menu.classList.contains("header__nav--open");
+    const isOpen = menu.classList.contains("header__nav--active");
     
     if (isOpen) {
       closeMenu();

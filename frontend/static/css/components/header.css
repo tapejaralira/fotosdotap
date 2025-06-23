@@ -91,7 +91,10 @@
     top: 100%;
     width: 70%;
     z-index: 999;
-    transition: none;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
 .header__list {
@@ -155,7 +158,7 @@
     transform: translateY(8px);
 }
 
-/* 3. Estados e Animações */
+/* Estados e Animações */
 .header__link:hover {
     background-color: var(--cor-destaque);
     color: var(--cor-primaria);
@@ -165,6 +168,12 @@
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
+}
+
+.header__nav--closing {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: none;
 }
 
 .header__nav--active .header__link {
@@ -184,6 +193,18 @@
     transform: rotate(-45deg);
 }
 
+.header__toggle--active .hamburger {
+    background-color: transparent;
+}
+
+.header__toggle--active .hamburger::before {
+    transform: rotate(45deg);
+}
+
+.header__toggle--active .hamburger::after {
+    transform: rotate(-45deg);
+}
+
 .header__link.ativo {
     background-color: var(--cor-secundaria);
     box-shadow: inset var(--sombra);
@@ -193,18 +214,68 @@
 }
 
 /* ========================================================== 
+   ANIMAÇÕES KEYFRAMES PARA CASCATA 
+   ========================================================== */
+
+@keyframes slideInCascade {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideOutCascade {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+/* ========================================================== 
    LÓGICA FINAL E COMPLETA DA ANIMAÇÃO EM CASCATA 
    ========================================================== */
 
-.header__list li:nth-child(1) .header__link { transition: all 0.3s ease-in-out 0.3s; }
-.header__list li:nth-child(2) .header__link { transition: all 0.3s ease-in-out 0.2s; }
-.header__list li:nth-child(3) .header__link { transition: all 0.3s ease-in-out 0.1s; }
-.header__list li:nth-child(4) .header__link { transition: all 0.3s ease-in-out 0s; }
+/* Estados da animação em cascata */
+.header__nav--active .header__list li:nth-child(1) .header__link {
+    animation: slideInCascade 0.3s ease-out 0.1s both;
+}
 
-.header__nav--active .header__list li:nth-child(1) .header__link { transition: all 0.3s ease-in-out 0.1s; }
-.header__nav--active .header__list li:nth-child(2) .header__link { transition: all 0.3s ease-in-out 0.2s; }
-.header__nav--active .header__list li:nth-child(3) .header__link { transition: all 0.3s ease-in-out 0.3s; }
-.header__nav--active .header__list li:nth-child(4) .header__link { transition: all 0.3s ease-in-out 0.4s; }
+.header__nav--active .header__list li:nth-child(2) .header__link {
+    animation: slideInCascade 0.3s ease-out 0.2s both;
+}
+
+.header__nav--active .header__list li:nth-child(3) .header__link {
+    animation: slideInCascade 0.3s ease-out 0.3s both;
+}
+
+.header__nav--active .header__list li:nth-child(4) .header__link {
+    animation: slideInCascade 0.3s ease-out 0.4s both;
+}
+
+/* Animação de fechamento (cascata reversa) */
+.header__nav--closing .header__list li:nth-child(1) .header__link {
+    animation: slideOutCascade 0.3s ease-in 0.4s both;
+}
+
+.header__nav--closing .header__list li:nth-child(2) .header__link {
+    animation: slideOutCascade 0.3s ease-in 0.3s both;
+}
+
+.header__nav--closing .header__list li:nth-child(3) .header__link {
+    animation: slideOutCascade 0.3s ease-in 0.2s both;
+}
+
+.header__nav--closing .header__list li:nth-child(4) .header__link {
+    animation: slideOutCascade 0.3s ease-in 0.1s both;
+}
 
 /* ========================================================================== 
    Responsividade 
@@ -212,9 +283,7 @@
 @media (min-width: 768px) {
     .header__toggle {
         display: none;
-    }
-
-    .header__nav {
+    }    .header__nav {
         display: flex;
         position: static;
         flex-direction: row;
@@ -222,6 +291,9 @@
         background: none;
         box-shadow: none;
         width: auto;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
     }
 
     .header__list {
