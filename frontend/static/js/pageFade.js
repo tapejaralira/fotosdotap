@@ -11,7 +11,12 @@ function initPageFade(container = document) {
     // Remove classe anterior se existir
     el.classList.remove("apareceu");
     
+    // Garante que elemento comece invisível
+    el.style.opacity = '0';
+    
     setTimeout(() => {
+      el.style.opacity = '1';
+      el.style.transition = 'opacity 0.6s ease';
       el.classList.add("apareceu"); // Essa classe deve estar no seu CSS
     }, 200 + i * 150); // Cada elemento aparece depois do anterior
   });
