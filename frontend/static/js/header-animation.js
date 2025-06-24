@@ -1,45 +1,33 @@
 /* ========================================================================== 
-   HEADER ANIMATION - ENTRADA APENAS NA PRIMEIRA VISITA
+   HEADER ANIMATION - ADAPTADO PARA TRABALHAR COM CSS INLINE
    ========================================================================== */
 
-// Sistema de animação do header que só roda na primeira página visitada
-(function() {
-  'use strict';
+document.addEventListener("DOMContentLoaded", () => {
+  const header = document.querySelector(".header");
   
-  const HEADER_ANIMATION_KEY = 'fotosdotap_header_animated';
-  const ANIMATION_DELAY = 300; // ms
-  
-  function initHeaderAnimation() {
-    const header = document.querySelector('.header');
-    if (!header) return;
-    
-    // Verifica se já fez a animação nesta sessão
-    const hasAnimated = sessionStorage.getItem(HEADER_ANIMATION_KEY);
-    
-    if (!hasAnimated) {
-      // Primeira visita - faz animação
-      header.classList.add('header--entrando');
-      
-      // Após um pequeno delay, mostra o header
-      setTimeout(() => {
-        header.classList.remove('header--entrando');
-        header.classList.add('header--show');
-        
-        // Marca que já foi animado nesta sessão
-        sessionStorage.setItem(HEADER_ANIMATION_KEY, 'true');
-      }, ANIMATION_DELAY);
-      
-    } else {
-      // Já visitou outras páginas - header aparece direto
-      header.classList.add('header--show');
-    }
+  if (!header) {
+    console.warn('⚠️ Header não encontrado para animações');
+    return;
   }
+
+  console.log('🎬 Inicializando animações do header...');
+
+  // Garantir que header comece invisível (CSS inline já define isso)
+  // Mas garantimos aqui também para compatibilidade
+  header.style.opacity = '0';
   
-  // Inicializa quando DOM estiver pronto
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initHeaderAnimation);
-  } else {
-    initHeaderAnimation();
-  }
-  
-})();
+  // Adicionar classe de entrada após breve delay
+  setTimeout(() => {
+    header.classList.add("header--entrando");
+    console.log('🎭 Header: Classe "entrando" adicionada');
+  }, 100);
+
+  // Mostrar header com animação após CSS carregar
+  setTimeout(() => {
+    header.classList.remove("header--entrando");
+    header.classList.add("header--show");
+    header.style.opacity = '1';
+    console.log('✨ Header: Animação de entrada executada');
+  }, 300);
+
+});
