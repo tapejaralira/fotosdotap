@@ -2,13 +2,23 @@
    VERSIONAMENTO CSS GLOBAL - CONTROLE CENTRALIZADO
    ========================================================================== */
 
+// 🎯 DETECÇÃO AUTOMÁTICA DE AMBIENTE
+const isLocalDev = window.location.hostname === '127.0.0.1' || 
+                   window.location.hostname === 'localhost' ||
+                   window.location.port === '3000';
+
+if (isLocalDev) {
+  console.log('🔧 Modo desenvolvimento detectado:', window.location.hostname + ':' + window.location.port);
+  console.log('📂 CSS será carregado de: ../static/css/');
+}
+
 // 🎯 CONTROLE GERAL - MUDE APENAS ESTAS LINHAS
 window.CSS_VERSION = 'v5.3';  // Versão do CSS - MUDE AQUI quando atualizar os arquivos
 window.DEVELOPMENT_MODE = true;  // false = desliga cache busting em tudo
 
 // Configuração dos arquivos CSS
 window.CSS_CONFIG = {
-  baseUrl: 'https://static.fotosdotap.com.br/css/',
+  baseUrl: isLocalDev ? '../static/css/' : 'https://static.fotosdotap.com.br/css/',
     // Arquivos que você quer controlar a versão (true = usa versão)
   files: {
     // Arquivos base

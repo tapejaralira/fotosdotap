@@ -48,9 +48,19 @@
     .header { opacity: 0; }
     .footer { opacity: 0; }
   </style>
-  
   <!-- CSS Loader Centralizado -->
-  <script src="https://static.fotosdotap.com.br/js/css-loader.js"></script>  <script>    // Lista dos CSS necessários para o SPA
+  <script>
+    // Detecção global de ambiente
+    window.isLocalDev = window.location.hostname === '127.0.0.1' || 
+                        window.location.hostname === 'localhost' ||
+                        window.location.port === '3000';
+    
+    const cssLoaderSrc = window.isLocalDev ? 
+      '../static/js/css-loader.js' : 
+      'https://static.fotosdotap.com.br/js/css-loader.js';
+    
+    document.write('<script src="' + cssLoaderSrc + '"><\/script>');
+  </script><script>    // Lista dos CSS necessários para o SPA
     loadCSS([
       'variables.css',
       'style.css',
@@ -99,11 +109,28 @@
     </nav>
     <p class="footer__text">&copy; 2025 • Fotos do Tap. Todos os direitos reservados</p>
   </footer>  <!-- ===== SCRIPTS ===== -->
-  <script src="https://static.fotosdotap.com.br/js/header-animation.js"></script>
-  <script src="https://static.fotosdotap.com.br/js/menu.js"></script>
-  <script src="https://static.fotosdotap.com.br/js/pageFade.js"></script>
-  <script src="https://static.fotosdotap.com.br/js/calculadoraExtras.js"></script>
-  <script src="https://static.fotosdotap.com.br/js/carrossel.js"></script>
-  <script src="https://static.fotosdotap.com.br/js/spa-router.js"></script>
+  <script>
+    // Usar detecção global de ambiente
+    const jsBaseUrl = window.isLocalDev ? '../static/js/' : 'https://static.fotosdotap.com.br/js/';
+    
+    if (window.isLocalDev) {
+      console.log('📂 JS será carregado de: ../static/js/');
+    }
+    
+    // Lista de scripts necessários
+    const scripts = [
+      'header-animation.js',
+      'menu.js', 
+      'pageFade.js',
+      'calculadoraExtras.js',
+      'carrossel.js',
+      'spa-router.js'
+    ];
+    
+    // Carregar scripts dinamicamente
+    scripts.forEach(script => {
+      document.write('<script src="' + jsBaseUrl + script + '"><\/script>');
+    });
+  </script>
 </body>
 </html>
