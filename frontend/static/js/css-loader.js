@@ -17,6 +17,7 @@ window.CSS_CONFIG = {
     'components/header.css': false,            // estável - cabeçalho
     'components/header-animation.css': false,  // estável - animações do header
     'components/scrollbar-responsive.css': false, // estável - scrollbar responsiva
+    'components/container.css': false,         // estável - sistema de containers
     'components/footer.css': false,            // estável - rodapé
     'components/button.css': false,            // estável - botões
     'components/titulo.css': false,            // estável - títulos// Componentes que você mexe mais

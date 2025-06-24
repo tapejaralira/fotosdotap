@@ -1,0 +1,44 @@
+<!-- ========================================================================== 
+     EXEMPLO DE USO DO GRID UNIVERSAL PARA CARDS
+     ========================================================================== -->
+<!--
+Para usar o grid responsivo universal em qualquer página:
+
+1. MÉTODO SIMPLES - Adicione a classe "cards-grid":
+<section class="cards-grid">
+  <div class="card">...</div>
+  <div class="card">...</div>
+  <div class="card">...</div>
+</section>
+
+2. MÉTODO CUSTOMIZADO - Use suas próprias classes:
+<section class="minha-secao-cards">
+  <div class="card">...</div>
+  <div class="card">...</div>
+</section>
+
+E no CSS adicione:
+.minha-secao-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  justify-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--espacamento);
+}
+
+@media (min-width: 768px) {
+  .minha-secao-cards {
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    padding: 0 calc(var(--espacamento) * 2);
+  }
+}
+
+EXEMPLOS DE USO:
+- Seção de serviços
+- Galeria de depoimentos  
+- Cards de projetos
+- Qualquer layout de cards responsivo
+-->

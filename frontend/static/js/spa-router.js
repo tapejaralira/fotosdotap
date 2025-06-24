@@ -41,8 +41,7 @@
         history.pushState({ path }, page.title, path);
       }
       currentPath = path;
-    } else {
-      // Baixar novo
+    } else {      // Baixar novo
       console.log('🔄 Carregando:', `/content/${page.content}`);
       fetch(`/content/${page.content}`)
         .then(response => {
@@ -251,9 +250,7 @@
     } else {
       console.warn('⚠️ Página não encontrada, carregando home');
       loadPage('/', false);
-    }
-    
-    // Preload página mais importante após 2s
+    }    // Preload página mais importante após 2s
     setTimeout(() => {
       if (normalizedPath === '/') {
         fetch('/content/pacotes-content.html').then(r => r.text()).then(html => {

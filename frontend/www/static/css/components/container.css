@@ -1,0 +1,44 @@
+/* ========================================================================== 
+   SISTEMA DE CONTAINER RESPONSIVO - VERSÃO DO CDN
+   ========================================================================== */
+
+/* Container principal com largura máxima */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--espacamento);
+}
+
+/* Container para conteúdo fluido (sem padding lateral) */
+.container--fluid {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Container para texto/conteúdo mais estreito */
+.container--narrow {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 var(--espacamento);
+}
+
+/* Responsividade do container */
+@media (min-width: 768px) {
+  .container {
+    padding: 0 calc(var(--espacamento) * 2);
+  }
+  
+  .container--narrow {
+    padding: 0 calc(var(--espacamento) * 2);
+  }
+}
+
+@media (min-width: 1240px) {
+  .container,
+  .container--narrow {
+    padding: 0 var(--espacamento);
+  }
+}
