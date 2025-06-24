@@ -122,8 +122,8 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 72px;
-    height: 72px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
     padding: 8px;
     font-size: 10px;
@@ -138,8 +138,6 @@
     
     /* Efeito vidro com cor secundária e opacidade menor */
     background-color: rgba(var(--cor-secundaria-rgb), 0.3);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
     box-shadow: var(--sombra);
     border: none;
     
@@ -152,6 +150,7 @@
     width: 24px;
     height: 24px;
     margin-bottom: 2px;
+    
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
