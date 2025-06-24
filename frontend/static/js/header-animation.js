@@ -56,10 +56,45 @@ document.addEventListener("DOMContentLoaded", () => {
     // 5. Marcar header como totalmente carregado
     setTimeout(() => {
       header.classList.add("header--loaded");
-      console.log('🎯 Header: Animação cascata completa');
-    }, 600);
+      console.log('🎯 Header: Animação cascata completa');    }, 600);
+      }, 500); // Aguarda CSS e fontes carregarem  // Efeito de click rápido no logo - EM QUALQUER CLIQUE/TOQUE
+  setTimeout(() => {
+    const logoImg = header.querySelector('.header__logo-img');
     
-  }, 500); // Aguarda CSS e fontes carregarem
+    console.log('🔍 Debug - Logo img encontrado:', !!logoImg);
+    
+    if (logoImg) {
+      console.log('🎯 Logo encontrado, adicionando evento de clique global');
+      
+      // Evento global - qualquer clique na página ativa o flash do logo
+      document.addEventListener('click', () => {
+        console.log('⚡ Clique detectado! Flash no logo...');
+        
+        // Flash rápido para logo-click
+        logoImg.src = 'https://static.fotosdotap.com.br/assets/logo-click.svg';
+        
+        // Volta ao normal em 100ms
+        setTimeout(() => {
+          logoImg.src = 'https://static.fotosdotap.com.br/assets/logo.svg';
+          console.log('✨ Logo voltou ao normal');
+        }, 100);
+      });
+      
+      // Evento global para touch também (mobile)
+      document.addEventListener('touchstart', () => {
+        console.log('📱 Toque detectado! Flash no logo...');
+        
+        logoImg.src = 'https://static.fotosdotap.com.br/assets/logo-click.svg';
+        
+        setTimeout(() => {
+          logoImg.src = 'https://static.fotosdotap.com.br/assets/logo.svg';
+          console.log('✨ Logo voltou ao normal (touch)');
+        }, 100);
+      });
+        } else {
+      console.warn('⚠️ Logo não encontrado para evento click global');
+    }
+  }, 1000); // Aguarda header totalmente carregado
 
   // Scroll hiding behavior - só após primeira animação
   let lastScrollTop = 0;

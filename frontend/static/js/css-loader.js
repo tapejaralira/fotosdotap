@@ -13,7 +13,7 @@ if (isLocalDev) {
 }
 
 // 🎯 CONTROLE GERAL - MUDE APENAS ESTAS LINHAS
-window.CSS_VERSION = 'v5.3';  // Versão do CSS - MUDE AQUI quando atualizar os arquivos
+window.CSS_VERSION = 'v5.4';  // Versão do CSS - MUDE AQUI quando atualizar os arquivos
 window.DEVELOPMENT_MODE = true;  // false = desliga cache busting em tudo
 
 // Configuração dos arquivos CSS

@@ -50,11 +50,17 @@
         // Atualizar estados ativos no menu e footer
       if (window.updateActiveStates) {
         window.updateActiveStates(path);
-      }
-    } else {
-      // Baixar novo
-      console.log('🔄 Carregando:', `/content/${page.content}`);
-      fetch(`/content/${page.content}`)
+      }    } else {
+      // Baixar novo      const isLocalDev = window.location.hostname === '127.0.0.1' || 
+                         window.location.hostname === 'localhost' ||
+                         window.location.port === '3000';
+      
+      const contentPath = isLocalDev ? 
+        `./content/${page.content}` : 
+        `/content/${page.content}`;
+      
+      console.log('🔄 Carregando:', contentPath);
+      fetch(contentPath)
         .then(response => {
           console.log('📡 Response status:', response.status);
           if (!response.ok) {

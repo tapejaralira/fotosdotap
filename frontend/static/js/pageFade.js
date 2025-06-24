@@ -36,13 +36,29 @@ document.addEventListener("DOMContentLoaded", () => {
         footer.style.opacity = '1';
         footer.style.transition = 'opacity 0.6s ease';
         footer.classList.add('apareceu');
-        console.log('✨ Footer: Fade concluído');
+        
+        // Garantir que links do footer fiquem visíveis no mobile
+        const footerLinks = footer.querySelectorAll('.footer__link');
+        footerLinks.forEach(link => {
+          link.style.opacity = '1';
+          link.style.visibility = 'visible';
+        });
+        
+        console.log('✨ Footer: Fade concluído + links visíveis');
       }, 200);
     } else if (footer) {
       // Se footer não tem data-fade, aplica classe show
       footer.classList.add('footer--show');
       footer.style.opacity = '1';
-      console.log('🦶 Footer: Mostrado sem fade');
+      
+      // Garantir que links do footer fiquem visíveis
+      const footerLinks = footer.querySelectorAll('.footer__link');
+      footerLinks.forEach(link => {
+        link.style.opacity = '1';
+        link.style.visibility = 'visible';
+      });
+      
+      console.log('🦶 Footer: Mostrado sem fade + links visíveis');
     }
     
     console.log('🎬 pageFade: Footer processado');

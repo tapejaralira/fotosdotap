@@ -108,13 +108,20 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('.footer__nav .footer__link').forEach(link => {
       link.classList.remove('ativo');
     });
-    
-    // Adiciona classe ativa baseado na URL atual
+      // Adiciona classe ativa baseado na URL atual
     const headerActiveLink = document.querySelector(`.header__nav .header__link[href="${currentPath}"]`);
     const footerActiveLink = document.querySelector(`.footer__nav .footer__link[href="${currentPath}"]`);
     
-    if (headerActiveLink) headerActiveLink.classList.add('ativo');
-    if (footerActiveLink) footerActiveLink.classList.add('ativo');
+    // Tratamento especial para home page
+    if (currentPath === '/') {
+      const headerHomeLink = document.querySelector(`.header__nav .header__link[href="/"]`);
+      const footerHomeLink = document.querySelector(`.footer__nav .footer__link[href="/"]`);
+      if (headerHomeLink) headerHomeLink.classList.add('ativo');
+      if (footerHomeLink) footerHomeLink.classList.add('ativo');
+    } else {
+      if (headerActiveLink) headerActiveLink.classList.add('ativo');
+      if (footerActiveLink) footerActiveLink.classList.add('ativo');
+    }
   }
   
   // Torna função global para SPA usar

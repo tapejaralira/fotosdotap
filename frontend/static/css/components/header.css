@@ -71,8 +71,36 @@
 }
 
 .header__logo-img {
-    width: 2.3rem;
-    height: 2.3rem;
+    cursor: pointer !important;
+    /* Remove qualquer transition anterior */
+    transition: none !important;
+    transform: none !important;
+}
+
+/* Remove efeitos de hover/active se existirem */
+.header__logo-img:hover,
+.header__logo-img:active {
+    transform: none !important;
+    scale: none !important;
+}
+
+/* ========================================================================== 
+   CORREÇÃO: LOGO TAMANHO E CLICK
+   ========================================================================== */
+
+.header__logo {
+    pointer-events: auto !important;
+    z-index: 9999 !important;
+}
+
+.header__logo-img {
+    cursor: pointer !important;
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+    max-width: 2.5rem !important;
+    max-height: 2.5rem !important;
+    pointer-events: auto !important;
+    z-index: 9999 !important;
 }
 
 .header__logo span {

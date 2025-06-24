@@ -48,8 +48,15 @@
     .header__logo,
     .header__nav,
     .header__toggle { opacity: 0; transform: translateY(-20px); }
-    .footer,
+    .footer { opacity: 0; }
     .footer * { opacity: 0; }
+    
+    /* Exceção: footer links no mobile devem aparecer */
+    @media (max-width: 768px) {
+      .footer__link {
+        opacity: 1 !important;
+      }
+    }
   </style>
   <!-- CSS Loader Centralizado -->
   <script>
@@ -83,8 +90,9 @@
     <div class="header__container">      <a href="/" class="header__logo" aria-label="Ir para o início">
         <img class="header__logo-img" src="https://static.fotosdotap.com.br/assets/logo.svg" alt="Logo Fotos do Tap - Fotógrafo Profissional em Manaus" />
         <span>Fotos do Tap.</span>
-      </a><nav id="menu" class="header__nav" aria-label="Menu principal">
+      </a>      <nav id="menu" class="header__nav" aria-label="Menu principal">
         <ul class="header__list">
+          <li class="header__item"><a href="/" class="header__link">Início</a></li>
           <li class="header__item"><a href="https://cliente.fotosdotap.com.br/login.html" class="header__link">Área do cliente</a></li>
           <li class="header__item"><a href="/pacotes" class="header__link">Pacotes</a></li>
           <li class="header__item"><a href="#portfolio" class="header__link">Portfólio</a></li>
@@ -101,13 +109,13 @@
     <!-- Conteúdo das páginas será carregado aqui dinamicamente -->
   </div>
 
-  <!-- ===== RODAPÉ ===== -->  <footer class="footer" data-fade>
-    <nav class="footer__nav" aria-label="Menu do rodapé">
+  <!-- ===== RODAPÉ ===== -->  <footer class="footer" data-fade>    <nav class="footer__nav" aria-label="Menu do rodapé">
       <ul class="footer__list">
-        <li class="footer__item"><a href="https://cliente.fotosdotap.com.br/login.html" class="footer__link">Área do cliente</a></li>
+        <li class="footer__item"><a href="/" class="footer__link">Início</a></li>
         <li class="footer__item"><a href="/pacotes" class="footer__link">Pacotes</a></li>
         <li class="footer__item"><a href="#portfolio" class="footer__link">Portfólio</a></li>
         <li class="footer__item"><a href="#contato" class="footer__link">Contato</a></li>
+        <li class="footer__item"><a href="https://cliente.fotosdotap.com.br/login.html" class="footer__link">Cliente</a></li>
       </ul>
     </nav>
     <p class="footer__text">&copy; 2025 • Fotos do Tap. Todos os direitos reservados</p>
