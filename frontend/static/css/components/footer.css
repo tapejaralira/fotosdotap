@@ -83,3 +83,86 @@
     box-shadow: inset var(--sombra);
     cursor: default;
 }
+
+/* ========================================================================== 
+   BOTTOM NAVIGATION MOBILE - CONVERSÃO DO FOOTER
+   ========================================================================== */
+
+/* Mobile: Transforma footer em bottom navigation */
+@media (max-width: 768px) {
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    padding: 8px 0;
+    background-color: var(--cor-primaria);
+    backdrop-filter: var(--efeito-blur);
+    -webkit-backdrop-filter: var(--efeito-blur);
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 0;
+  }
+
+  .footer__nav {
+    margin-bottom: 0;
+  }
+
+  .footer__list {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    gap: 0;
+  }
+
+  .footer__item {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+  }
+
+  .footer__link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 4px;
+    font-size: 0.75rem;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+
+  .footer__link::before {
+    content: "";
+    display: block;
+    width: 20px;
+    height: 20px;
+    margin-bottom: 2px;
+    font-size: 16px;
+    line-height: 1;
+    text-align: center;
+  }
+
+  /* Ícones para cada seção */
+  .footer__link[href*="cliente"]::before { content: "👤"; }
+  .footer__link[href="/pacotes"]::before { content: "📦"; }
+  .footer__link[href*="portfolio"]::before { content: "📸"; }
+  .footer__link[href*="contato"]::before { content: "📞"; }
+
+  .footer__link:hover,
+  .footer__link.ativo {
+    color: var(--cor-destaque);
+  }
+
+  .footer__text {
+    display: none; /* Esconde copyright no mobile */
+  }
+
+  /* Adiciona espaço no main para não cobrir conteúdo */
+  .main {
+    padding-bottom: 80px;
+  }
+}

@@ -43,12 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
       openMenu();
     }
   });
-
   // Detectar cliques em links do menu para fechar automaticamente
   document.addEventListener("click", (e) => {
     const link = e.target.closest('a[href]');
     
-    // Se clicou em um link dentro do menu
+    // Se clicou em um link dentro do menu principal
     if (link && menu.contains(link)) {
       const href = link.getAttribute('href');
       
@@ -58,6 +57,13 @@ document.addEventListener("DOMContentLoaded", () => {
         console.log('🍔 Fechando menu após clique em:', href);
         closeMenu();
       }
+    }
+    
+    // Se clicou em um link do footer (bottom nav), também fecha menu se aberto
+    const footerLink = e.target.closest('.footer__link[href]');
+    if (footerLink && menu.classList.contains("header__nav--active")) {
+      console.log('📱 Fechando menu após clique no bottom nav');
+      closeMenu();
     }
   });
 
@@ -89,9 +95,35 @@ document.addEventListener("DOMContentLoaded", () => {
       scrollTimeout = null;
     }, 100);
   });
-
   // Torna função disponível globalmente para SPA usar se necessário
   window.closeMenu = closeMenu;
+
+  // Função para sincronizar estados ativos entre header e footer
+  function updateActiveStates(currentPath) {
+    // Remove classes ativas do header
+    document.querySelectorAll('.header__nav .header__link').forEach(link => {
+      link.classList.remove('ativo');
+    });
+    
+    // Remove classes ativas do footer
+    document.querySelectorAll('.footer__nav .footer__link').forEach(link => {
+      link.classList.remove('ativo');
+    });
+    
+    // Adiciona classe ativa baseado na URL atual
+    const headerActiveLink = document.querySelector(`.header__nav .header__link[href="${currentPath}"]`);
+    const footerActiveLink = document.querySelector(`.footer__nav .footer__link[href="${currentPath}"]`);
+    
+    if (headerActiveLink) headerActiveLink.classList.add('ativo');
+    if (footerActiveLink) footerActiveLink.classList.add('ativo');
+  }
+  
+  // Torna função global para SPA usar
+  window.updateActiveStates = updateActiveStates;
+  
+  // Inicializa estados ativos na primeira carga
+  const currentPath = window.location.pathname;
+  updateActiveStates(currentPath);
 });
 
 // =======================================================

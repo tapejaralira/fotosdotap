@@ -33,15 +33,19 @@
     // Atualizar meta tags
     updateMetaTags(page);
     
-  // Carregar conteúdo
-    if (cache.has(path)) {
+  // Carregar conteúdo    if (cache.has(path)) {
       // Do cache
       showContent(cache.get(path));
       if (addToHistory) {
         history.pushState({ path }, page.title, path);
       }
       currentPath = path;
-    } else {      // Baixar novo
+      
+      // Atualizar estados ativos no menu e footer
+      if (window.updateActiveStates) {
+        window.updateActiveStates(path);      }
+    } else {
+      // Baixar novo
       console.log('🔄 Carregando:', `/content/${page.content}`);
       fetch(`/content/${page.content}`)
         .then(response => {
@@ -50,8 +54,7 @@
             throw new Error(`HTTP ${response.status}`);
           }
           return response.text();
-        })
-        .then(html => {
+        })        .then(html => {
           console.log('✅ Conteúdo carregado:', html.length, 'caracteres');
           cache.set(path, html);
           showContent(html);
@@ -59,6 +62,11 @@
             history.pushState({ path }, page.title, path);
           }
           currentPath = path;
+          
+          // Atualizar estados ativos no menu e footer
+          if (window.updateActiveStates) {
+            window.updateActiveStates(path);
+          }
         })
         .catch(error => {
           console.error('❌ Erro ao carregar:', error);

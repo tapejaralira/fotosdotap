@@ -3,7 +3,7 @@
    ========================================================================== */
 
 // 🎯 CONTROLE GERAL - MUDE APENAS ESTAS LINHAS
-window.CSS_VERSION = 'v4';
+window.CSS_VERSION = 'v5';
 window.DEVELOPMENT_MODE = true;  // false = desliga cache busting em tudo
 
 // Configuração dos arquivos CSS
