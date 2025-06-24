@@ -120,10 +120,16 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Torna função global para SPA usar
   window.updateActiveStates = updateActiveStates;
-  
-  // Inicializa estados ativos na primeira carga
+    // Inicializa estados ativos na primeira carga
   const currentPath = window.location.pathname;
   updateActiveStates(currentPath);
+
+  // Vibração simples para botões
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('.btn')) {
+      navigator.vibrate(50);
+    }
+  });
 });
 
 // =======================================================

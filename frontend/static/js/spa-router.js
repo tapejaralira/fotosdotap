@@ -21,29 +21,36 @@
   // Cache de conteúdos
   const cache = new Map();
   let currentPath = null;
-  
-  // Função para carregar página
+    // Função para carregar página
   function loadPage(path, addToHistory = true) {
     const page = pages[path];
-    if (!page) return;
+    if (!page) {
+      console.error('❌ Página não encontrada:', path);
+      return;
+    }
+    
+    console.log('🔄 Iniciando carregamento da página:', path);
     
     // Não recarregar se já está na mesma página
-    if (currentPath === path) return;
-    
-    // Atualizar meta tags
+    if (currentPath === path) {
+      console.log('⚠️ Já está na página:', path);
+      return;
+    }
+      // Atualizar meta tags
     updateMetaTags(page);
     
-  // Carregar conteúdo    if (cache.has(path)) {
+    // Carregar conteúdo
+    if (cache.has(path)) {
       // Do cache
       showContent(cache.get(path));
       if (addToHistory) {
         history.pushState({ path }, page.title, path);
       }
       currentPath = path;
-      
-      // Atualizar estados ativos no menu e footer
+        // Atualizar estados ativos no menu e footer
       if (window.updateActiveStates) {
-        window.updateActiveStates(path);      }
+        window.updateActiveStates(path);
+      }
     } else {
       // Baixar novo
       console.log('🔄 Carregando:', `/content/${page.content}`);
@@ -56,6 +63,8 @@
           return response.text();
         })        .then(html => {
           console.log('✅ Conteúdo carregado:', html.length, 'caracteres');
+          console.log('📄 Preview do conteúdo:', html.substring(0, 200) + '...');
+          
           cache.set(path, html);
           showContent(html);
           if (addToHistory) {
@@ -78,10 +87,10 @@
                 <p class="page-subtitle">Tente recarregar a página (F5)</p>
               </div>
             </main>
-          `);
-        });
+          `);        });
     }
   }
+
   // Mostrar conteúdo com animação suave
   function showContent(html) {
     const content = document.getElementById('spa-content');
@@ -91,20 +100,24 @@
     }
     
     console.log('🎯 Mostrando conteúdo no elemento:', content);
+    console.log('📦 Conteúdo a ser inserido:', html.length, 'caracteres');
     
     // Fade out
     content.style.opacity = '0';
     
     setTimeout(() => {
       content.innerHTML = html;
+      console.log('✅ HTML inserido no DOM');
       
       // Aguardar um pouco mais para garantir que DOM está pronto
       setTimeout(() => {
+        console.log('🔧 Executando scripts da página...');
         // Reexecutar scripts da página
         executePageScripts(content);
         
         // Fade in
         content.style.opacity = '1';
+        console.log('✨ Fade in aplicado');
         
         // Scroll to top
         window.scrollTo(0, 0);
@@ -127,10 +140,11 @@
     // Open Graph
     const ogTitle = document.querySelector('meta[property="og:title"]');
     const ogDescription = document.querySelector('meta[property="og:description"]');
-    
-    if (ogTitle) ogTitle.content = page.title;
+      if (ogTitle) ogTitle.content = page.title;
     if (ogDescription) ogDescription.content = page.description;
-  }  // Reexecutar scripts específicos da página
+  }
+
+  // Reexecutar scripts específicos da página
   function executePageScripts(container) {
     console.log('🔧 Executando scripts para container:', container);
     
@@ -240,8 +254,7 @@
     // Event listeners
     document.addEventListener('click', handleLinkClick);
     window.addEventListener('popstate', handlePopState);
-    
-    // Carregar página inicial
+      // Carregar página inicial
     const currentPath = window.location.pathname;
     console.log('📍 URL atual:', currentPath);
     
@@ -252,13 +265,17 @@
     }
     
     console.log('📍 Path normalizado:', normalizedPath);
+    console.log('📋 Páginas disponíveis:', Object.keys(pages));
     
     if (pages[normalizedPath]) {
+      console.log('✅ Página encontrada, carregando:', normalizedPath);
       loadPage(normalizedPath, false);
     } else {
-      console.warn('⚠️ Página não encontrada, carregando home');
+      console.warn('⚠️ Página não encontrada, carregando home. Path:', normalizedPath);
       loadPage('/', false);
-    }    // Preload página mais importante após 2s
+    }
+
+    // Preload página mais importante após 2s
     setTimeout(() => {
       if (normalizedPath === '/') {
         fetch('/content/pacotes-content.html').then(r => r.text()).then(html => {
