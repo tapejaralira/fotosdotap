@@ -166,3 +166,19 @@
     padding-bottom: 80px;
   }
 }
+
+/* ========================================================================== 
+   ESTADOS DE VISIBILIDADE PARA SUBELEMENTOS
+   ========================================================================== */
+
+/* Quando footer tem data-fade e aparece */
+.footer[data-fade].apareceu * {
+  opacity: 1 !important;
+  transition: opacity 0.6s ease;
+}
+
+/* Garantia para footer mostrado via JS */
+.footer.footer--show * {
+  opacity: 1 !important;
+  transition: opacity 0.6s ease;
+}

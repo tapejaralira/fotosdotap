@@ -25,28 +25,28 @@ function initPageFade(container = document) {
   });
 }
 
-// Execução inicial para elementos fixos (footer)
+// Execução inicial para elementos fixos (apenas footer)
 document.addEventListener("DOMContentLoaded", () => {
-  // Aguarda um pouco para garantir que CSS carregou
-  setTimeout(() => {
-    // Fade do footer que tem data-fade
+  // Aguarda header fazer sua animação primeiro
+  setTimeout(() => {    // Fade do footer que tem data-fade
     const footer = document.querySelector('.footer');
     if (footer && footer.hasAttribute('data-fade')) {
       console.log('🦶 Footer: Executando fade inicial');
-      footer.style.opacity = '0';
       setTimeout(() => {
         footer.style.opacity = '1';
         footer.style.transition = 'opacity 0.6s ease';
+        footer.classList.add('apareceu');
         console.log('✨ Footer: Fade concluído');
-      }, 500); // Após header aparecer
+      }, 200);
     } else if (footer) {
-      // Se footer não tem data-fade, só mostra
+      // Se footer não tem data-fade, aplica classe show
+      footer.classList.add('footer--show');
       footer.style.opacity = '1';
       console.log('🦶 Footer: Mostrado sem fade');
     }
     
-    console.log('🎬 pageFade: Inicialização completa para elementos fixos');
-  }, 400); // Aguarda header aparecer primeiro
+    console.log('🎬 pageFade: Footer processado');
+  }, 800); // Aguarda header completar animação
 });
 
 // Executa na primeira carga

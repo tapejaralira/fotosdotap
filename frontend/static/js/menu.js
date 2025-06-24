@@ -79,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
       closeMenu();
     }
   });
-
   // Fechar menu ao fazer scroll
   let scrollTimeout;
   window.addEventListener("scroll", () => {

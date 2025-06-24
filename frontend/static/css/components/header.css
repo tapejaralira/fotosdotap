@@ -15,27 +15,26 @@
     margin: 0 auto;    
     max-width: var(--largura-maxima);
 
-    /* === ESTADO INICIAL: animação de entrada */
-    opacity: 0;
-    transform: translateY(-30px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    /* === ESTADO INICIAL: invisível via CSS inline */
+    /* CSS inline define: opacity: 0; transform: translateY(-30px); */
 }
 
-.header.header--entrando {
-    opacity: 0;
-    transform: translateY(-30px);
-}
-
-.header.header--show {
-    opacity: 1;
-    transform: translateY(0);
+.header--loaded {
+    /* Header totalmente carregado - ready para scroll behavior */
+    pointer-events: auto;
     transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .header.header--hide {
-    opacity: 0;
-    transform: translateY(-110%);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0 !important;
+    transform: translateY(-110%) !important;
+    transition: opacity 0.3s ease, transform 0.3s ease !important;
+}
+
+/* Garantir que header volta ao estado normal quando não está hidden */
+.header:not(.header--hide) {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .header::before {
@@ -239,42 +238,42 @@
     }
 }
 
-/* ========================================================== 
-   LÓGICA FINAL E COMPLETA DA ANIMAÇÃO EM CASCATA 
-   ========================================================== */
+/* ========================================================================== 
+   ANIMAÇÕES CASCATA PARA MENU MOBILE (RESTAURADAS)
+   ========================================================================== */
 
-/* Estados da animação em cascata */
+/* Estados da animação em cascata de abertura */
 .header__nav--active .header__list li:nth-child(1) .header__link {
-    animation: slideInCascade 0.3s ease-out 0.1s both;
+    animation: slideInCascade 0.2s ease-out 0.05s both;
 }
 
 .header__nav--active .header__list li:nth-child(2) .header__link {
-    animation: slideInCascade 0.3s ease-out 0.2s both;
+    animation: slideInCascade 0.2s ease-out 0.1s both;
 }
 
 .header__nav--active .header__list li:nth-child(3) .header__link {
-    animation: slideInCascade 0.3s ease-out 0.3s both;
+    animation: slideInCascade 0.2s ease-out 0.15s both;
 }
 
 .header__nav--active .header__list li:nth-child(4) .header__link {
-    animation: slideInCascade 0.3s ease-out 0.4s both;
+    animation: slideInCascade 0.2s ease-out 0.2s both;
 }
 
 /* Animação de fechamento (cascata reversa) */
 .header__nav--closing .header__list li:nth-child(1) .header__link {
-    animation: slideOutCascade 0.3s ease-in 0.3s both;
+    animation: slideOutCascade 0.2s ease-in 0.2s both;
 }
 
 .header__nav--closing .header__list li:nth-child(2) .header__link {
-    animation: slideOutCascade 0.3s ease-in 0.2s both;
+    animation: slideOutCascade 0.2s ease-in 0.15s both;
 }
 
 .header__nav--closing .header__list li:nth-child(3) .header__link {
-    animation: slideOutCascade 0.3s ease-in 0.1s both;
+    animation: slideOutCascade 0.2s ease-in 0.1s both;
 }
 
 .header__nav--closing .header__list li:nth-child(4) .header__link {
-    animation: slideOutCascade 0.3s ease-in 0.01s both;
+    animation: slideOutCascade 0.2s ease-in 0.05s both;
 }
 
 /* ========================================================================== 
