@@ -4,29 +4,46 @@
 
 ---
 
+### **Princípios Orientadores da Migração**
+
+- **1. Arquitetura de Componentes Reutilizáveis:** Todo o desenvolvimento será orientado a componentes. Em vez de construir páginas, construiremos uma biblioteca de componentes (`Button`, `Card`, `Input`, `Modal`) que serão usados em toda a aplicação. Isso reduzirá a duplicação de código e estilos, garantindo consistência e facilitando a manutenção.
+- **2. Abordagem Mobile-First:** O design e a implementação de todos os componentes e páginas começarão pela experiência em dispositivos móveis. Os estilos para telas maiores (tablets, desktops) serão adicionados de forma incremental usando as funcionalidades responsivas do Tailwind CSS.
+
+---
+
 ### **Fase 0: Fundação e Configuração do Novo Projeto**
 
-_O objetivo desta fase é criar a estrutura do novo projeto, sem tocar no código antigo. Teremos um ambiente limpo e pronto para receber a migração._
+_O objetivo desta fase é criar uma estrutura de projeto limpa (monorepo) e configurar a base da nova aplicação Next.js._
 
-1.  **Inicializar o Projeto Next.js:**
+1.  **Reorganizar a Estrutura de Pastas (Monorepo):**
 
-    - Dentro da sua pasta `fotosdotap`, criaremos um novo projeto Next.js com TypeScript e Tailwind CSS integrados. O Next.js App Router será a escolha padrão e recomendada.
-    - Comando: `npx create-next-app@latest` (e seguiremos as opções para TypeScript, Tailwind, etc.).
+    - Na raiz do projeto (`fotosdotap`), criar uma nova pasta chamada `apps`.
+    - Mover a pasta `backend` existente para dentro de `apps`.
+    - A pasta `frontend` antiga permanecerá na raiz temporariamente para consulta durante a migração.
 
-2.  **Instalar Dependências Essenciais:**
+2.  **Inicializar o Projeto Next.js:**
 
-    - Adicionaremos as bibliotecas que definimos para o nosso stack moderno:
+    - Dentro da pasta `apps`, executaremos o comando para criar o projeto Next.js em uma subpasta chamada `web`.
+    - Comando: `npx create-next-app@latest web` (e seguiremos as opções para TypeScript, Tailwind, etc.).
+
+3.  **Instalar Dependências Essenciais:**
+
+    - Navegaremos para a pasta `apps/web` e adicionaremos as bibliotecas que definimos:
       - `TanStack Query` (para comunicação com a API)
       - `Zustand` (para estado global)
       - `React Hook Form` e `Zod` (para formulários)
       - `Shadcn/ui` (para componentes de UI)
 
-3.  **Configurar o Tema Base no Tailwind:**
+4.  **Configurar o Tema Base no Tailwind:**
 
-    - Migraremos as variáveis de cor, fontes e outras definições do seu CSS (`--cor-primaria`, `--fonte-principal`, etc.) para o arquivo `tailwind.config.ts`. Isso garantirá consistência visual desde o início.
+    - Migraremos as variáveis de cor, fontes e outras definições do seu CSS antigo para o arquivo `apps/web/tailwind.config.ts`.
 
-4.  **Criar o Layout Principal (Root Layout):**
-    - Configuraremos o arquivo `layout.tsx` principal do Next.js para definir a estrutura base da página (a tag `<html>`, `<body>`, importação de fontes, etc.), que será compartilhada por toda a aplicação.
+5.  **Criar o Layout Principal (Root Layout):**
+
+    - Configuraremos o arquivo `apps/web/src/app/layout.tsx` para definir a estrutura base da página (a tag `<html>`, `<body>`, etc.), que será compartilhada por toda a aplicação.
+
+6.  **Configurar Variáveis de Ambiente:**
+    - Criar o arquivo `.env.local` na raiz do projeto `apps/web` para armazenar chaves de API e outras informações sensíveis que não devem ir para o repositório Git.
 
 ---
 
@@ -72,6 +89,7 @@ _Nesta fase, conectaremos o frontend ao backend e recriaremos as funcionalidades
 3.  **Desenvolver a Área do Cliente:**
     - A página principal da área do cliente (`frontend/cliente/index.html`) será transformada em uma rota protegida em Next.js.
     - A lógica para buscar e exibir os dados do cliente (contratos, fotos, etc.) será implementada usando TanStack Query.
+    - Implementar o download seguro de arquivos do R2, utilizando a estratégia de URLs pré-assinadas geradas pelo backend.
 
 ---
 
@@ -96,3 +114,26 @@ _Esta é a fase mais complexa, pois envolve a manipulação de dados. A robustez
 
 4.  **Limpeza Final:**
     - Após a migração completa da área de admin, todas as pastas e arquivos restantes do `frontend` antigo serão removidos. O projeto agora conterá apenas a estrutura do Next.js e a pasta `backend` dos Workers.
+
+---
+
+### **Fase 4: Deploy e Lançamento**
+
+_O objetivo desta fase é colocar a nova aplicação no ar, configurar o domínio e garantir que tudo funcione perfeitamente em um ambiente de produção._
+
+1.  **Configurar a Plataforma de Hospedagem:**
+
+    - Criar uma conta na Vercel (ou Cloudflare Pages).
+    - Conectar o repositório do GitHub à plataforma escolhida.
+
+2.  **Configurar o Domínio:**
+
+    - Apontar o seu domínio (`fotosdotap.com.br` ou similar) para o novo site hospedado na Vercel.
+    - Configurar os redirecionamentos necessários, se houver.
+
+3.  **Testes Finais em Produção:**
+
+    - Realizar um teste completo de todas as funcionalidades no ambiente de produção para garantir que não há problemas relacionados à configuração do servidor.
+
+4.  **Lançamento Oficial:**
+    - Anunciar e direcionar todo o tráfego para o novo site.
