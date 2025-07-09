@@ -63,14 +63,15 @@ _O foco aqui é recriar a parte "visível" e não interativa do site, garantindo
 
     - Instalamos e configuramos o Storybook no projeto `apps/web`. Isso nos deu um ambiente de desenvolvimento isolado para criar e testar visualmente nossos componentes React.
 
-2.  **Componentizar o Header e Footer:**
+2.  **Componentizar o Header e Footer (CONCLUÍDA):**
 
-    - Analisaremos seu `header.css` e o HTML correspondente para criar um componente `Header.tsx` reutilizável em React, desenvolvendo-o dentro do Storybook. Faremos o mesmo para o footer.
-    - A lógica de esconder o header ao rolar a página será recriada usando hooks do React (`useState`, `useEffect`).
+    - **Header:** O componente `Header.tsx` foi criado, estilizado com Tailwind e a lógica de ocultar ao rolar a página foi implementada com o hook `useScrollDirection`.
+    - **Footer:** O componente `Footer.tsx` foi criado, com uma abordagem mobile-first que o transforma de uma barra de navegação inferior para um rodapé tradicional em telas maiores.
+    - Ambos os componentes foram integrados ao layout principal da aplicação (`layout.tsx`).
 
-3.  **Migrar a Página Home (`www/index.html`):**
+3.  **Migrar a Página Home:**
 
-    - Criaremos a rota principal (`/`) no Next.js.
+    - Criaremos a nova página `apps/web/src/app/page.tsx`.
     - O conteúdo de `home-content.html` será convertido em componentes React com JSX e estilizado com Tailwind CSS.
     - Os componentes visuais como os cards e o carrossel serão recriados como componentes React individuais no Storybook antes de serem integrados na página.
 
