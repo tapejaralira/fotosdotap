@@ -72,7 +72,8 @@ const config = {
         arredondada: "30px",
       },
       fontFamily: {
-        sans: ['Open Sans', 'sans-serif'],
+        sans: ['var(--font-sans)', 'Open Sans', 'sans-serif'],
+        serif: ['var(--font-serif)', 'DM Serif Text', 'serif'],
       },
       spacing: {
         'espacamento': '0.4rem',

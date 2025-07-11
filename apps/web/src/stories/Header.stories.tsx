@@ -1,5 +1,5 @@
-import type { Meta, StoryObj } from '@storybook/react';
-import { Header } from '@/components/layout/Header';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { Header } from '../components/layout/Header';
 
 /**
  * Meta configuração para o componente Header no Storybook.

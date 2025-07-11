@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Open_Sans } from "next/font/google";
+import { Open_Sans, DM_Serif_Text } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Header } from "@/components/layout/Header";
@@ -8,6 +8,12 @@ import { Footer } from "@/components/layout/Footer";
 const openSans = Open_Sans({
   subsets: ["latin"],
   variable: "--font-sans",
+});
+
+const dmSerifText = DM_Serif_Text({
+  subsets: ["latin"],
+  weight: ["400"],
+  variable: "--font-serif",
 });
 
 export const metadata: Metadata = {
@@ -25,7 +31,8 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
-          openSans.variable
+          openSans.variable,
+          dmSerifText.variable
         )}
       >
         <Header />
