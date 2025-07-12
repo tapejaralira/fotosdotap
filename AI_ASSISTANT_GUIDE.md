@@ -4,7 +4,10 @@
 
 **Domínio:** Fotografia de eventos (casamentos, aniversários, formaturas)  
 **Arquitetura:** Monorepo Next.js + TypeScript + Tailwind + Storybook  
-**Estado Atual:** Migração da V1 (frontend legado) para V2 (Next.js moderno)
+**Estado Atual:** Migração da V1 (frontend legado) para V2 (Next.js moderno)  
+**Localização:** `c:\Meu Drive\FotosdoTap\site\fotosdotap`  
+**Fotógrafo:** Tapajara Lira (Manaus, Amazonas, Brasil)  
+**Domínio:** fotosdotap.com.br
 
 ---
 
@@ -31,6 +34,12 @@ Core Schema: /apps/web/src/lib/schemas.ts (FONTE DA VERDADE)
 Layout: /apps/web/src/app/layout.tsx
 Config: /apps/web/tailwind.config.ts
 Roadmap: /ROADMAP.md (estado e prioridades)
+Context: /apps/web/src/lib/project-context.ts (informações completas)
+Business: /apps/web/src/lib/business-dictionary.ts (glossário do domínio)
+Examples: /apps/web/src/lib/examples.ts (dados de exemplo)
+Metadata: /apps/web/src/lib/component-metadata.ts (metadados de componentes)
+Performance: /apps/web/src/lib/performance-monitoring.ts (métricas)
+Alerts: /apps/web/src/lib/ai-assistance-alerts.ts (verificações automáticas)
 ```
 
 ### 3. **Padrões de Request Eficientes**
@@ -49,13 +58,17 @@ Roadmap: /ROADMAP.md (estado e prioridades)
 
 ### 4. **Terminologia Padronizada**
 
-| Termo            | Significado                     | Exemplo                            |
-| ---------------- | ------------------------------- | ---------------------------------- |
-| **Pacote**       | Serviço fotográfico completo    | Casamento Gold, Aniversário Silver |
-| **Fotos Extras** | Fotos além do pacote contratado | +50 fotos por R$ 150               |
-| **Evento**       | Ocasião fotografada             | Casamento, formatura, aniversário  |
-| **Cliente**      | Pessoa que contrata o serviço   | Noiva, aniversariante, formando    |
-| **Portfolio**    | Galeria de trabalhos realizados | Seção "Nossos Trabalhos"           |
+| Termo              | Significado                     | Exemplo                            |
+| ------------------ | ------------------------------- | ---------------------------------- |
+| **Pacote**         | Serviço fotográfico completo    | Casamento Gold, Aniversário Silver |
+| **Fotos Extras**   | Fotos além do pacote contratado | +50 fotos por R$ 150               |
+| **Evento**         | Ocasião fotografada             | Casamento, formatura, aniversário  |
+| **Cliente**        | Pessoa que contrata o serviço   | Noiva, aniversariante, formando    |
+| **Portfolio**      | Galeria de trabalhos realizados | Seção "Nossos Trabalhos"           |
+| **Cobertura**      | Duração do serviço em horas     | 8h de cobertura completa           |
+| **Pós-produção**   | Edição e tratamento das fotos   | Seleção + tratamento + entrega     |
+| **Galeria Online** | Acesso digital às fotos         | Portal protegido por senha         |
+| **Sinal**          | Pagamento antecipado            | 50% para confirmar agendamento     |
 
 ---
 
@@ -94,6 +107,10 @@ export const componentSchema = z.object({
 });
 
 export type ComponentProps = z.infer<typeof componentSchema>;
+
+// ⚠️ NUNCA definir tipos manualmente
+// ❌ interface ComponentProps { ... }
+// ❌ type ComponentProps = { ... }
 ```
 
 ### **2. Component Pattern**
@@ -119,7 +136,34 @@ export default function Component({ data }: Props) {
 }
 ```
 
-### **3. Story Pattern**
+### **3. JSDoc Completo (OBRIGATÓRIO)**
+
+````typescript
+/**
+ * Componente Hero para seções principais de destaque.
+ * Apresenta um título principal e subtítulo com design responsivo mobile-first.
+ *
+ * Características:
+ * - Design responsivo com fontes que escalam conforme o tamanho da tela
+ * - Tipografia diferenciada: título com fonte serif, subtítulo com sans-serif
+ * - Espaçamento otimizado para diferentes breakpoints
+ * - Suporte a conteúdo adicional via children
+ *
+ * @component
+ * @param {HeroProps} props - As propriedades do componente
+ * @returns {React.ReactElement} O elemento hero renderizado
+ *
+ * @example
+ * ```tsx
+ * <Hero
+ *   title="Capturando Emoções, Eternizando Memórias!"
+ *   subtitle="Fotografia profissional para eternizar os momentos mais importantes da sua vida."
+ * />
+ * ```
+ */
+````
+
+### **4. Story Pattern**
 
 ```typescript
 import type { Meta, StoryObj } from "@storybook/react";
@@ -173,6 +217,16 @@ git commit -m "docs(schema): adicionar comentários JSDoc em packageSchema"
 git commit -m "refactor(home): migrar dados para schema centralizado"
 ```
 
+**Convenções de Commit (ver COMMIT_CONVENTIONS.md):**
+
+- `feat(scope):` - Novas funcionalidades
+- `fix(scope):` - Correções de bugs
+- `docs(scope):` - Documentação
+- `style(scope):` - Formatação
+- `refactor(scope):` - Refatoração
+- `test(scope):` - Testes
+- `chore(scope):` - Manutenção
+
 ---
 
 ## 🧪 Estratégias de Debugging
@@ -210,13 +264,16 @@ git commit -m "refactor(home): migrar dados para schema centralizado"
 
 ### **Checklist de Componente**
 
-- [ ] Schema Zod definido
+- [ ] Schema Zod definido em `/lib/schemas.ts`
 - [ ] Tipos inferidos (não manuais)
-- [ ] JSDoc completo
-- [ ] Story no Storybook
-- [ ] Mobile-first responsivo
+- [ ] JSDoc completo com @param e @returns
+- [ ] Story no Storybook com dados de exemplo
+- [ ] Mobile-first responsivo (Tailwind)
+- [ ] Validação de props com schema.parse()
 - [ ] Teste visual funcionando
 - [ ] Integrado na página
+- [ ] Adicionado ao component-metadata.ts
+- [ ] Performance otimizada (lazy loading se necessário)
 
 ### **Checklist de Página**
 
@@ -225,6 +282,9 @@ git commit -m "refactor(home): migrar dados para schema centralizado"
 - [ ] Dados vindo de schemas.ts
 - [ ] Responsividade testada
 - [ ] SEO básico (title, meta)
+- [ ] Performance otimizada (Core Web Vitals)
+- [ ] Acessibilidade implementada
+- [ ] Meta tags dinâmicas configuradas
 
 ---
 
@@ -265,6 +325,10 @@ xl: 1280px  # Desktop grande
 - Componentes: Hero, Carrossel, PackageCard, CalculadoraExtras
 - Páginas: Home, Pacotes migradas
 - Storybook configurado e funcionando
+- Sistema de alertas AI-friendly implementado
+- Monitoramento de performance configurado
+- Documentação completa (JSDoc, metadados, exemplos)
+- Convenções de commit semânticas estabelecidas
 
 ### **🎯 Prioridade Atual:**
 
@@ -277,6 +341,10 @@ xl: 1280px  # Desktop grande
 - Migração de tema base do Tailwind
 - Configuração de variáveis de ambiente
 - Início da Fase 2 (backend Cloudflare D1)
+- Deploy no Vercel
+- Configuração de domínio fotosdotap.com.br
+- Implementação de formulário de contato
+- Integração com Google Analytics
 
 ---
 
@@ -309,8 +377,17 @@ Quando pedir ajuda, inclua:
 - "Documentar no Storybook com tags autodocs"
 - "Criar variantes Default e WithData"
 
+### **5. Consulte Arquivos de Contexto**
+
+- "Verificar business-dictionary.ts para terminologia"
+- "Consultar project-context.ts para informações do projeto"
+- "Usar examples.ts para dados de exemplo"
+- "Verificar performance-monitoring.ts para métricas"
+- "Consultar ai-assistance-alerts.ts para verificações"
+
 ---
 
-**📝 Última Atualização:** [Data atual]  
+**📝 Última Atualização:** Janeiro 2025  
 **🎯 Versão:** 2.0 (Migração Next.js)  
-**👥 Contribuidores:** Equipe de desenvolvimento + AI Assistant
+**👥 Contribuidores:** Equipe de desenvolvimento + AI Assistant  
+**🏆 Status:** 100% Aderência aos Princípios de Máxima Assistência de IA

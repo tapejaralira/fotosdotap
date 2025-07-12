@@ -142,230 +142,33 @@ O projeto agora implementa **completamente** todos os princípios orientadores:
 
 ---
 
-### **Fase 1.5: Refinamentos Pré-Deploy (EM ANDAMENTO)**
+### **Próximos Passos Imediatos**
 
-_Esta fase garante que o projeto esteja 100% otimizado e pronto para produção, implementando todas as melhorias de performance, SEO e qualidade._
+Com a fundação sólida estabelecida e todas as práticas avançadas para IA implementadas, os próximos passos focam em:
 
-#### **1. Otimizações de Performance (Prioridade ALTA)**
+#### **1. Refinamentos e Otimizações (Prioridade ALTA)**
 
-- **Lazy Loading Inteligente:**
+- **Ajustes Visuais:** Comparar design atual com site original e ajustar cores, espaçamentos e tipografia
+- **Otimização de Performance:** Implementar lazy loading, otimizar imagens, minificar CSS/JS
+- **Testes Automatizados:** Expandir cobertura de testes para garantir robustez
+- **Stories Storybook:** Completar stories para todos os componentes visuais
 
-  ```typescript
-  // Implementar lazy loading para carrossel
-  const LazyCarousel = dynamic(() => import("./Carrossel"), {
-    loading: () => <CarouselSkeleton />,
-    ssr: false,
-  });
-  ```
+#### **2. Deploy e Produção (Prioridade ALTA)**
 
-- **Otimização de Imagens Avançada:**
+- **Configuração Vercel:** Setup do pipeline de deployment automático
+- **Variáveis de Ambiente:** Configurar secrets de produção (analytics, etc.)
+- **Domínio:** Apontar `fotosdotap.com.br` para nova aplicação
+- **Monitoramento:** Configurar alertas de performance e uptime
 
-  ```typescript
-  // Otimizar imagens com Next.js Image + priorização
-  <Image
-    src={image.src}
-    alt={image.alt}
-    fill
-    priority={index === 0}
-    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-  />
-  ```
+#### **3. Funcionalidades Básicas (Prioridade MÉDIA)**
 
-- **Micro-interações com Framer Motion:**
-
-  ```typescript
-  // Adicionar transições suaves para UX premium
-  const MotionCard = motion.div;
-
-  <MotionCard
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, delay: index * 0.1 }}
-  >
-    <PackageCard package={pkg} />
-  </MotionCard>;
-  ```
-
-#### **2. SEO Avançado e Structured Data (Prioridade ALTA)**
-
-- **Schema.org Implementation:**
-
-  ```typescript
-  // Structured data para Google
-  const organizationLD = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: "Fotos do Tap",
-    description: "Fotografia profissional em Manaus",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Manaus",
-      addressRegion: "AM",
-    },
-  };
-  ```
-
-- **Meta Tags Otimizadas:** Implementar meta tags dinâmicas para todas as páginas
-- **Sitemap Automático:** Configurar geração automática de sitemap.xml
-- **Open Graph Completo:** Tags otimizadas para redes sociais
-
-#### **3. Testes de Integração Avançados (Prioridade ALTA)**
-
-- **Testes de Componentes Críticos:**
-
-  ```typescript
-  // /src/__tests__/integration/home.test.tsx
-  describe("Home Page Integration", () => {
-    test("carousel autoplay works correctly", async () => {
-      render(<HomePage />);
-      const firstImage = screen.getByAltText(/foto 1/i);
-      expect(firstImage).toBeVisible();
-
-      await waitFor(
-        () => {
-          const secondImage = screen.getByAltText(/foto 2/i);
-          expect(secondImage).toBeVisible();
-        },
-        { timeout: 6000 }
-      );
-    });
-  });
-  ```
-
-- **Testes de Acessibilidade:** Implementar testes automatizados de WCAG
-- **Testes de Performance:** Lighthouse CI automático
-
-#### **4. Acessibilidade Avançada (Prioridade MÉDIA)**
-
-- **Navegação por Teclado:**
-
-  ```typescript
-  // Hook para navegação por teclado no carrossel
-  export const useKeyboardNavigation = (
-    onNext: () => void,
-    onPrev: () => void
-  ) => {
-    useEffect(() => {
-      const handleKeyPress = (e: KeyboardEvent) => {
-        if (e.key === "ArrowRight") onNext();
-        if (e.key === "ArrowLeft") onPrev();
-      };
-      window.addEventListener("keydown", handleKeyPress);
-      return () => window.removeEventListener("keydown", handleKeyPress);
-    }, [onNext, onPrev]);
-  };
-  ```
-
-- **ARIA Labels Completos:** Implementar labels apropriados para screen readers
-- **Focus Management:** Garantir ordem lógica de navegação
-
-#### **5. Finalização dos Stories Storybook (Prioridade MÉDIA)**
-
-- **Stories Completas:** Finalizar stories para todos os componentes visuais
-- **Documentação Interativa:** Adicionar controles interativos para todas as props
-- **Casos Edge:** Stories para cenários limites e estados de erro
+- **Formulário de Contato:** Implementar formulário funcional com validação
+- **SEO Avançado:** Structured data, sitemap, meta tags otimizadas
+- **Analytics:** Integração com Google Analytics e Search Console
 
 ---
 
-### **Fase 2: Deploy e Produção (PRÓXIMA PRIORIDADE)**
-
-_Colocar o projeto em produção com monitoramento avançado e otimizações específicas para ambiente de produção._
-
-#### **1. Pipeline de Deploy Automatizado (Prioridade ALTA)**
-
-- **Configuração Vercel:**
-
-  - Setup do pipeline de deployment automático
-  - Configurar preview deployments para branches
-  - Configurar variáveis de ambiente de produção
-
-- **Monitoramento de Produção:**
-
-  ```typescript
-  // /src/lib/analytics.ts
-  export const trackEvent = (action: string, category: string) => {
-    if (typeof window !== "undefined") {
-      gtag("event", action, { event_category: category });
-    }
-  };
-
-  // Error boundary com tracking
-  export const withErrorTracking = (Component: React.ComponentType) => {
-    // ... implementação
-  };
-  ```
-
-- **Cache Strategy Avançado:**
-  ```typescript
-  // /src/lib/cache.ts
-  export const getCachedData = <T>(key: string, fetcher: () => Promise<T>) => {
-    return useQuery({
-      queryKey: [key],
-      queryFn: fetcher,
-      staleTime: 5 * 60 * 1000, // 5 minutos
-      cacheTime: 30 * 60 * 1000, // 30 minutos
-    });
-  };
-  ```
-
-#### **2. Domínio e Infraestrutura (Prioridade ALTA)**
-
-- **Configuração de Domínio:** Apontar `fotosdotap.com.br` para nova aplicação
-- **SSL e Segurança:** Configurar HTTPS e headers de segurança
-- **CDN Global:** Otimizar distribuição de conteúdo
-
-#### **3. Analytics e Business Intelligence (Prioridade ALTA)**
-
-- **Google Analytics 4:** Implementação completa com eventos customizados
-- **Search Console:** Configurar para monitoramento de SEO
-- **Business Metrics Tracking:**
-  ```typescript
-  // /src/lib/business-metrics.ts
-  export const trackBusinessMetrics = {
-    packageViewed: (packageName: string) =>
-      trackEvent("package_viewed", "business", { package: packageName }),
-
-    calculatorUsed: (extraPhotos: number) =>
-      trackEvent("calculator_used", "engagement", {
-        extra_photos: extraPhotos,
-      }),
-
-    contactFormStarted: () => trackEvent("contact_form_started", "conversion"),
-  };
-  ```
-
-#### **4. Funcionalidades Essenciais (Prioridade MÉDIA)**
-
-- **Formulário de Contato Funcional:**
-
-  - Implementar com React Hook Form + Zod
-  - Integração com serviço de email (Resend/SendGrid)
-  - Validação robusta e feedback visual
-
-- **Progressive Web App:**
-
-  ```typescript
-  // next.config.ts
-  const withPWA = require("next-pwa")({
-    dest: "public",
-    disable: process.env.NODE_ENV === "development",
-  });
-
-  module.exports = withPWA({
-    // ... sua configuração
-  });
-  ```
-
-#### **5. Core Web Vitals e Performance (Prioridade ALTA)**
-
-- **Otimização de Bundle:** Code splitting automático
-- **Image Optimization:** WebP/AVIF automático
-- **Preload Critical Resources:** Fontes e assets críticos
-- **Service Worker:** Cache inteligente para recursos estáticos
-
----
-
-### **Fase 2.5: Migração para Backend Moderno (Planejada)**
+### **Fase 2: Migração para Backend Moderno (Planejada)**
 
 _**Importante:** Com a base sólida estabelecida, a migração do backend será mais eficiente e segura._
 
@@ -386,43 +189,7 @@ _**Importante:** Com a base sólida estabelecida, a migração do backend será 
 
 ---
 
-### **Fase 3: Funcionalidades Avançadas e UX Premium (3-6 meses)**
-
-_Implementar funcionalidades avançadas que diferenciam o projeto e aumentam conversões._
-
-#### **1. A/B Testing e Otimização de Conversão (Prioridade ALTA)**
-
-- **Testes de Variantes:** Diferentes versões do Hero para otimizar conversões
-- **Heatmaps:** Implementar tracking de comportamento do usuário
-- **Conversion Funnels:** Análise detalhada da jornada do cliente
-
-#### **2. Sistema de Reviews e Portfólio (Prioridade ALTA)**
-
-- **Galeria de Trabalhos:** Seção showcase com trabalhos realizados
-- **Sistema de Testimonials:** Depoimentos de clientes com validação
-- **Case Studies:** Histórias detalhadas de projetos especiais
-
-#### **3. Integrações de Comunicação (Prioridade MÉDIA)**
-
-- **WhatsApp Business API:** Bot automatizado para orçamentos iniciais
-- **Calendly Integration:** Agendamento automático de consultas
-- **CRM Simple:** Gestão básica de leads e follow-ups
-
-#### **4. Experiência Mobile Avançada (Prioridade MÉDIA)**
-
-- **App-like Experience:** Navegação fluida estilo app nativo
-- **Gestures:** Swipe no carrossel, pull-to-refresh
-- **Push Notifications:** Notificações para clientes interessados
-
-#### **5. SEO e Content Marketing (Prioridade BAIXA)**
-
-- **Blog Integrado:** Sistema de blog com MDX para casos de sucesso
-- **Local SEO:** Otimização para "fotógrafo Manaus"
-- **Rich Snippets:** Implementar todos os tipos de schema relevantes
-
----
-
-### **Fase 4: Migração da Lógica do Backend e Área do Cliente (6+ meses)**
+### **Fase 3: Migração da Lógica do Backend e Área do Cliente**
 
 _Nesta fase, com o banco de dados D1 já implementado, conectaremos o frontend ao backend e recriaremos as funcionalidades dinâmicas de forma segura e eficiente._
 
@@ -443,7 +210,7 @@ _Nesta fase, com o banco de dados D1 já implementado, conectaremos o frontend a
 
 ---
 
-### **Fase 5: Migração da Área Administrativa (6+ meses)**
+### **Fase 4: Migração da Área Administrativa**
 
 _Com o D1, esta fase se torna muito mais poderosa. As operações de gerenciamento de dados serão robustas e instantaneamente consistentes._
 
@@ -466,7 +233,7 @@ _Com o D1, esta fase se torna muito mais poderosa. As operações de gerenciamen
 
 ---
 
-### **Fase 6: Deploy Final e Lançamento (Final)**
+### **Fase 5: Deploy e Lançamento**
 
 _O objetivo desta fase é colocar a nova aplicação no ar, configurar o domínio e garantir que tudo funcione perfeitamente em um ambiente de produção._
 
@@ -531,62 +298,36 @@ _O objetivo desta fase é colocar a nova aplicação no ar, configurar o domíni
 - **Arquitetura AI-Friendly:** Código otimizado para assistência de IA
 - **Mobile-First Design:** Responsividade implementada em todos os componentes
 
-#### **🎯 Próximos Passos (Por Prioridade - Atualizado):**
+#### **🎯 Próximos Passos (Por Prioridade):**
 
-**PRIORIDADE CRÍTICA - Pré-Deploy (1-2 semanas):**
+**PRIORIDADE ALTA - Produção:**
 
-1. **Otimizações de Performance:** Lazy loading, Framer Motion, otimização de imagens
-2. **SEO Avançado:** Structured data, meta tags dinâmicas, sitemap automático
-3. **Testes de Integração:** Coverage completa dos componentes críticos
-4. **Acessibilidade:** Navegação por teclado, ARIA labels, focus management
+1. **Deploy no Vercel:** Configurar pipeline de deployment automático
+2. **Domínio:** Apontar `fotosdotap.com.br` para nova aplicação
+3. **Performance:** Otimizar Core Web Vitals e implementar lazy loading
+4. **SEO:** Meta tags otimizadas, structured data, sitemap
 
-**PRIORIDADE ALTA - Deploy e Produção (2-4 semanas):**
+**PRIORIDADE MÉDIA - Funcionalidades:**
 
-1. **Pipeline Vercel:** Deploy automático com monitoramento avançado
-2. **Analytics Completo:** GA4, Search Console, business metrics tracking
-3. **Cache Strategy:** Implementar caching inteligente para performance
-4. **PWA:** Service workers e experiência app-like
-5. **Formulário de Contato:** Implementação funcional completa
+1. **Formulário de Contato:** Implementar form funcional com validação Zod
+2. **Analytics:** Google Analytics e Search Console
+3. **Testes Expandidos:** Cobertura de testes para componentes críticos
+4. **Stories Completas:** Storybook stories para todos os componentes
 
-**PRIORIDADE MÉDIA - Funcionalidades Premium (1-3 meses):**
+**PRIORIDADE BAIXA - Futuro:**
 
-1. **A/B Testing:** Otimização de conversão baseada em dados
-2. **Portfolio/Reviews:** Sistema de showcases e testimonials
-3. **WhatsApp Integration:** Bot automatizado para orçamentos
-4. **Mobile UX Avançado:** Gestures e experiência nativa
+1. **Backend Moderno:** Migração para Cloudflare D1 + Workers
+2. **Área do Cliente:** Portal de acesso para clientes
 
-**PRIORIDADE BAIXA - Expansão (3-6 meses):**
+#### **🚀 Projeto Pronto para Produção**
 
-1. **Backend D1:** Migração para infraestrutura moderna
-2. **Área do Cliente:** Portal completo de acesso
-3. **Admin Dashboard:** Interface administrativa completa
-4. **Blog/SEO:** Content marketing e otimização local
-
-#### **🚀 Projeto Pronto para Deploy com Roadmap Avançado**
-
-O projeto Fotos do Tap está agora **completamente alinhado** com todos os princípios estabelecidos e pronto para deploy. O roadmap atualizado garante evolução contínua com:
-
-**Fundação Sólida:**
+O projeto Fotos do Tap está agora **completamente alinhado** com todos os princípios estabelecidos e pronto para deploy. A arquitetura implementada garante:
 
 - **Máxima Assistência de IA:** Código estruturado para desenvolvimento assistido
 - **Manutenibilidade:** Schemas centralizados, documentação completa
 - **Performance:** Mobile-first, TypeScript strict, validação robusta
 - **Escalabilidade:** Arquitetura de componentes reutilizáveis
 - **Qualidade:** Testes automatizados, tipagem 100% segura
-
-**Roadmap Evolutivo:**
-
-- **Fase 1.5:** Otimizações pré-deploy (performance, SEO, testes)
-- **Fase 2:** Deploy profissional com monitoramento avançado
-- **Fase 3:** Funcionalidades premium e diferenciação competitiva
-- **Fase 4-6:** Migração backend e funcionalidades avançadas
-
-**Diferenciação Competitiva:**
-
-- **Time-to-Market:** Deploy imediato com base sólida
-- **Otimização Contínua:** A/B testing e analytics avançados
-- **UX Premium:** Micro-interações e experiência app-like
-- **SEO Dominante:** Structured data e local SEO otimizado
 
 ---
 
