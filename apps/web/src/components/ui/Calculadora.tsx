@@ -139,11 +139,11 @@ export const Calculadora: React.FC<CalculadoraProps> = ({ className }) => {
           value={quantidade}
           onChange={handleQuantidadeChange}
           className={cn(
-            "w-full px-4 py-2 text-lg",
-            "border border-input rounded-md",
+            "w-full px-espacamento py-espacamento-pequeno text-lg",
+            "border border-input rounded-input",
             "bg-background text-foreground",
             "focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary",
-            "transition-colors duration-200"
+            "transition-colors duration-rapida font-principal"
           )}
           placeholder="Digite a quantidade..."
         />

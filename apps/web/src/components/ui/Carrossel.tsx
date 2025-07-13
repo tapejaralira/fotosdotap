@@ -1,8 +1,15 @@
 /**
  * @file Componente Carrossel para exibição rotativa de imagens.
  * @author Fotos do Tap
- * @see /frontend/static/js/carrossel.js
- * @see /frontend/static/css/components/hero.css
+ * @see /frontend/static/js/carros            <Image
+              src={image.src}
+              alt={image.alt}
+              fill
+              className="object-contain"
+              sizes="(max-width: 768px) 100vw, 768px"
+              priority={index === 0}
+              quality={90}
+            /> @see /frontend/static/css/components/hero.css
  */
 
 "use client";
@@ -114,76 +121,57 @@ export const Carrossel: React.FC<CarrosselProps> = ({
 
   return (
     <div className={cn(
-      // Container principal
-      "relative w-full max-w-2xl mx-auto overflow-hidden",
-      
-      // Aspect ratio 2:3 como no CSS original
-      "aspect-[2/3]",
-      
-      // Sombra e bordas arredondadas
-      "rounded-lg shadow-sombra",
-      
-      // Espaçamento mobile-first
-      "my-6",
-      
-      // Espaçamento responsivo para telas maiores  
-      "md:-mt-8 md:my-8",
-      
+      "relative w-full max-w-2xl mx-auto",
+      "aspect-[2/3]",  // Proporção 2:3 (mais alto que largo)
+      "my-espacamento-card",
       className
     )}>
-      {/* Container das imagens */}
-      <div className="relative w-full h-full">
-        {images.map((image, index) => (
-          <div
-            key={`${image.src}-${index}`}
-            className={cn(
-              // Posicionamento absoluto para sobreposição
-              "absolute top-0 left-0 w-full h-full",
-              
-              // Transição de opacidade
-              "transition-opacity duration-1000 ease-in-out",
-              
-              // Z-index baseado no estado
-              index === currentIndex ? "opacity-100 z-20" : "opacity-0 z-10"
-            )}
-          >
-            <Image
-              src={image.src}
-              alt={image.alt}
-              fill
-              className="object-contain"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              priority={index === 0} // Prioridade para a primeira imagem
-              quality={90}
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Indicadores de navegação (opcional) */}
+      {/* Imagens do carrossel */}
+      {images.map((image, index) => (
+        <div
+          key={`${image.src}-${index}`}
+          className={cn(
+            "absolute inset-0 transition-opacity duration-1000 ease-in-out",
+            index === currentIndex ? "opacity-100 z-20" : "opacity-0 z-10"
+          )}
+        >
+          <Image
+            src={image.src}
+            alt={image.alt}
+            fill
+            className="object-contain"
+            sizes="(max-width: 768px) 100vw, 768px"
+            priority={index === 0}
+            quality={90}
+          />
+        </div>
+      ))}
+      
+      
+      {/* Indicadores */}
       {showIndicators && images.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 z-30">
           {images.map((_, index) => (
             <button
               key={index}
               onClick={() => goToImage(index)}
               disabled={isTransitioning}
               className={cn(
-                "w-3 h-3 rounded-full transition-all duration-200",
+                "w-2 h-2 rounded-full transition-all duration-300",
                 "focus:outline-none focus:ring-2 focus:ring-white/50",
                 index === currentIndex
-                  ? "bg-white shadow-lg scale-110"
-                  : "bg-white/50 hover:bg-white/75"
+                  ? "bg-white scale-125"
+                  : "bg-white/60 hover:bg-white/80"
               )}
               aria-label={`Ir para imagem ${index + 1}`}
             />
           ))}
         </div>
       )}
-
-      {/* Overlay gradiente para melhor legibilidade dos indicadores */}
+      
+      {/* Gradient overlay para melhor visibilidade dos indicadores */}
       {showIndicators && (
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/40 to-transparent pointer-events-none z-20" />
       )}
     </div>
   );

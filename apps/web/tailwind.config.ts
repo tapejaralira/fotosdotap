@@ -1,5 +1,6 @@
 import type { Config } from "tailwindcss"
 import tailwindcssAnimate from "tailwindcss-animate"
+import { DESIGN_SYSTEM } from './src/lib/schemas'
 
 const config = {
   darkMode: "class",
@@ -20,14 +21,19 @@ const config = {
     },
     extend: {
       colors: {
-        'primaria': '#11131baf',
-        'secundaria': '#eeeeee',
-        'destaque': '#b6b6bd',
-        'fundo': '#ffffff',
-        'texto': '#666666',
-        'erro': '#cc0000',
-        'erro-fundo': '#ffeaea',
-        'erro-borda': '#f5bcbc',
+        // === CORES DA FONTE ÚNICA DA VERDADE (Schema Zod) ===
+        'cor-primaria': DESIGN_SYSTEM.colors.primaria,
+        'cor-secundaria': DESIGN_SYSTEM.colors.secundaria, 
+        'cor-texto': DESIGN_SYSTEM.colors.texto,
+        'cor-destaque': DESIGN_SYSTEM.colors.destaque,
+        
+        // Aliases para compatibilidade com código existente
+        'brand': DESIGN_SYSTEM.colors.primaria,
+        'neutral': DESIGN_SYSTEM.colors.texto, 
+        'highlight': DESIGN_SYSTEM.colors.destaque,
+        'page-bg': DESIGN_SYSTEM.colors.secundaria,
+        
+        // Cores shadcn/ui
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -62,39 +68,61 @@ const config = {
           foreground: "hsl(var(--card-foreground))",
         },
       },
+      
+      // === ESPAÇAMENTOS DA FONTE ÚNICA DA VERDADE (Schema Zod) ===
+      spacing: {
+        'espacamento': DESIGN_SYSTEM.spacing.espacamento,
+        'espacamento-card': DESIGN_SYSTEM.spacing.espacamentoCard, 
+        'espacamento-div': DESIGN_SYSTEM.spacing.espacamentoDiv,
+        'espacamento-pequeno': DESIGN_SYSTEM.spacing.espacamentoPequeno,
+      },
+      
+      // Border radius
       borderRadius: {
         lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
+        md: "calc(var(--radius) - 2px)", 
         sm: "calc(var(--radius) - 4px)",
-        input: "0.7rem",
-        card: "1rem",
-        pequeno: "0.5rem",
-        arredondada: "30px",
+        'input': '0.7rem',
+        'card': '1rem',
+        'pequeno': '0.5rem',
+        'arredondada': '30px',
+        'borda-arredondada': '30px',
       },
+      
+      // === FONTES DA FONTE ÚNICA DA VERDADE (Schema Zod) ===
       fontFamily: {
-        sans: ['var(--font-sans)', 'Open Sans', 'sans-serif'],
-        serif: ['var(--font-serif)', 'DM Serif Text', 'serif'],
+        'principal': [DESIGN_SYSTEM.typography.principal],
+        'titulo': [DESIGN_SYSTEM.typography.titulo],
+        sans: [DESIGN_SYSTEM.typography.principal],
+        serif: [DESIGN_SYSTEM.typography.titulo],
       },
-      spacing: {
-        'espacamento': '0.4rem',
-        'espacamento-card': '1rem',
-        'espacamento-div': '4rem',
-      },
+      
+      // Alturas
       height: {
-        'header': '60px',
+        'header': '80px',
       },
+      
+      // Larguras máximas  
       maxWidth: {
+        'largura-maxima': '1200px',
         'container': '1200px',
       },
+      
+      // Sombras
+      boxShadow: {
+        'sombra': '0 4px 8px rgba(10, 10, 10, 0.44)',
+      },
+      
+      // Transições
       transitionDuration: {
         'rapida': '0.2s',
       },
+      
+      // Blur
       blur: {
         'efeito': '3px',
       },
-      boxShadow: {
-        'sombra': '0 4px 8px #0a0a0a71',
-      },
+      
       keyframes: {
         "accordion-down": {
           from: { height: "0" },

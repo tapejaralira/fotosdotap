@@ -80,11 +80,11 @@ export const ComBotoes: Story = {
     title: "Capturando Emoções, Eternizando Memórias!",
     subtitle: "Fotografia profissional para eternizar os momentos mais importantes da sua vida.",
     children: (
-      <div className="flex flex-col sm:flex-row gap-4 justify-center">
-        <button className="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors">
+      <div className="flex flex-col sm:flex-row gap-espacamento justify-center">
+        <button className="bg-primary text-primary-foreground px-espacamento-card py-espacamento rounded-card font-medium hover:bg-primary/90 transition-colors duration-rapida">
           Ver Pacotes
         </button>
-        <button className="border border-primary text-primary px-6 py-3 rounded-lg font-medium hover:bg-primary/10 transition-colors">
+        <button className="border border-primary text-primary px-espacamento-card py-espacamento rounded-card font-medium hover:bg-primary/10 transition-colors duration-rapida">
           Meu Portfólio
         </button>
       </div>

@@ -56,63 +56,39 @@ export const Hero: React.FC<HeroProps> = ({
       className={cn(
         // Layout base
         "flex items-center justify-center text-center",
-        
         // Espaçamento mobile-first
-        "mt-2 px-4 py-8",
-        
+        "mt-espacamento-pequeno px-espacamento py-espacamento-card",
         // Espaçamento responsivo para telas maiores
-        "md:mt-4 md:px-6 md:py-12",
-        
-        // Cor de fundo de destaque
-        "bg-primary/5",
-        
+        "md:mt-espacamento md:px-espacamento-card md:py-espacamento-div",
+        // Altura mínima para destaque
+        "min-h-[40vh]",
         className
       )}
     >
-      <div className="w-full max-w-4xl">
+      <div className="w-full max-w-largura-maxima">
         {/* Título principal */}
         <h1 className={cn(
-          // Fonte serif para elegância
-          "font-serif font-bold leading-tight",
-          
-          // Tamanhos responsivos
+          "font-titulo font-bold leading-tight",
           "text-3xl sm:text-4xl md:text-5xl lg:text-6xl",
-          
-          // Cor e espaçamento
-          "text-primary mb-4",
-          
-          // Melhor legibilidade
+          "text-cor-primaria mb-espacamento",
           "tracking-wide"
         )}>
           {title}
         </h1>
-
         {/* Subtítulo */}
         <p className={cn(
-          // Fonte sans-serif para legibilidade
-          "font-sans",
-          
-          // Tamanhos responsivos
+          "font-principal",
           "text-lg sm:text-xl md:text-2xl",
-          
-          // Cor mais suave e espaçamento
-          "text-muted-foreground opacity-90",
-          
-          // Largura máxima para melhor leitura
+          "text-cor-texto opacity-90",
           "max-w-3xl mx-auto",
-          
-          // Altura da linha para melhor legibilidade
           "leading-relaxed",
-          
-          // Espaçamento inferior condicional
-          children ? "mb-8" : "mb-0"
+          children ? "mb-espacamento-div" : "mb-0"
         )}>
           {subtitle}
         </p>
-
         {/* Conteúdo adicional (opcional) */}
         {children && (
-          <div className="mt-8">
+          <div className="mt-espacamento-div">
             {children}
           </div>
         )}

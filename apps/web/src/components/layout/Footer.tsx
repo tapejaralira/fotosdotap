@@ -41,36 +41,25 @@ export const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="
-      /* --- Estilos Mobile (Padrão) --- */
-      /* Barra de navegação fixa com efeito de vidro */
-      fixed bottom-4 left-4 right-4 z-50 h-footer
-      bg-background/80 backdrop-blur-sm 
-      rounded-lg border border-white/10 shadow-lg
-      
-      /* --- Estilos Desktop (md:) --- */
-      /* Volta a ser um footer estático */
+    <footer className="glass-effect-footer fixed bottom-espacamento left-espacamento right-espacamento z-50 h-header
       md:relative md:bottom-0 md:left-0 md:right-0
-      md:h-auto md:bg-transparent md:backdrop-blur-none
-      md:border-none md:shadow-none md:rounded-none
-      md:mt-16 md:pb-8 
-    ">
-      <div className="container mx-auto flex h-full flex-col items-center justify-center gap-4">
+      md:h-auto md:mt-espacamento-div md:pb-espacamento-div">
+      <div className="container mx-auto flex h-full flex-col items-center justify-center gap-espacamento">
         {/* Navegação */}
         <nav aria-label="Menu do rodapé">
           <ul className="
             /* --- Estilos Mobile (Padrão) --- */
-            flex items-center justify-around w-full gap-2
+            flex items-center justify-around w-full gap-espacamento-pequeno
             
             /* --- Estilos Desktop (md:) --- */
-            md:gap-8
+            md:gap-espacamento-div
           ">
             {footerLinks.map((link) => (
               <li key={link.href}>
                 <Link 
                   href={link.href} 
                   className="
-                    text-sm font-medium text-foreground/80 hover:text-foreground transition-colors
+                    text-sm font-medium text-cor-texto hover:text-cor-primaria transition-colors font-principal
                     md:text-base
                   "
                 >
@@ -82,7 +71,7 @@ export const Footer = () => {
         </nav>
 
         {/* Copyright - visível apenas no desktop */}
-        <p className="hidden md:block text-xs text-foreground/60">
+        <p className="hidden md:block text-xs text-cor-texto/70 font-principal">
           © {currentYear} Fotos do Tap. Todos os direitos reservados.
         </p>
       </div>

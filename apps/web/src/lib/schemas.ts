@@ -9,6 +9,99 @@
 import { z } from 'zod';
 
 /**
+ * Schema Zod para cores do sistema de design.
+ * Esta é a fonte única da verdade para todas as cores do projeto.
+ * 
+ * @example
+ * ```typescript
+ * const cores = DesignSystemColorsSchema.parse({
+ *   primaria: '#11131b',
+ *   secundaria: '#f8f9fa',
+ *   texto: '#666666',
+ *   destaque: '#b6b6bd'
+ * });
+ * ```
+ */
+export const DesignSystemColorsSchema = z.object({
+  /** Cor principal da marca - textos importantes, elementos principais */
+  primaria: z.literal('#11131b'),
+  /** Cor de fundo da página - background principal */
+  secundaria: z.literal('#f8f9fa'),
+  /** Cor para textos secundários - descrições, labels */
+  texto: z.literal('#666666'),
+  /** Cor de destaque - elementos especiais, bordas */
+  destaque: z.literal('#b6b6bd'),
+});
+
+/**
+ * Schema Zod para espaçamentos do sistema de design.
+ * Define todos os valores de espaçamento padronizados.
+ */
+export const DesignSystemSpacingSchema = z.object({
+  /** Espaçamento base padrão (1rem = 16px) */
+  espacamento: z.literal('1rem'),
+  /** Espaçamento interno de cards (1.5rem = 24px) */
+  espacamentoCard: z.literal('1.5rem'),
+  /** Espaçamento entre divisões grandes (4rem = 64px) */
+  espacamentoDiv: z.literal('4rem'),
+  /** Espaçamento pequeno para elementos menores (0.5rem = 8px) */
+  espacamentoPequeno: z.literal('0.5rem'),
+});
+
+/**
+ * Schema Zod para tipografia do sistema de design.
+ * Define as fontes padronizadas do projeto.
+ */
+export const DesignSystemTypographySchema = z.object({
+  /** Fonte principal para textos gerais */
+  principal: z.literal('Open Sans, sans-serif'),
+  /** Fonte para títulos e headings */
+  titulo: z.literal('DM Serif Text, serif'),
+});
+
+/**
+ * Schema Zod completo do sistema de design.
+ * Combina cores, espaçamentos e tipografia em uma fonte única da verdade.
+ */
+export const DesignSystemSchema = z.object({
+  colors: DesignSystemColorsSchema,
+  spacing: DesignSystemSpacingSchema,
+  typography: DesignSystemTypographySchema,
+});
+
+/**
+ * Tipos TypeScript inferidos automaticamente dos schemas.
+ * NUNCA definir tipos manualmente - sempre usar z.infer<>
+ */
+export type DesignSystemColors = z.infer<typeof DesignSystemColorsSchema>;
+export type DesignSystemSpacing = z.infer<typeof DesignSystemSpacingSchema>;
+export type DesignSystemTypography = z.infer<typeof DesignSystemTypographySchema>;
+export type DesignSystem = z.infer<typeof DesignSystemSchema>;
+
+/**
+ * Instância validada do sistema de design.
+ * Esta é a fonte única da verdade para todos os valores de design.
+ */
+export const DESIGN_SYSTEM = DesignSystemSchema.parse({
+  colors: {
+    primaria: '#11131b',
+    secundaria: '#f8f9fa', 
+    texto: '#666666',
+    destaque: '#b6b6bd',
+  },
+  spacing: {
+    espacamento: '1rem',
+    espacamentoCard: '1.5rem',
+    espacamentoDiv: '4rem',
+    espacamentoPequeno: '0.5rem',
+  },
+  typography: {
+    principal: 'Open Sans, sans-serif',
+    titulo: 'DM Serif Text, serif',
+  },
+});
+
+/**
  * Schema Zod para um pacote de fotos.
  * Esta é a fonte única da verdade para a estrutura de dados de pacotes.
  * 
@@ -99,7 +192,7 @@ export const CarouselSchema = z.object({
   /** Lista de imagens do carrossel */
   images: z.array(z.object({
     /** URL da imagem */
-    src: z.string().url(),
+    src: z.string().min(1),
     /** Texto alternativo para acessibilidade */
     alt: z.string().min(1),
     /** Índice da imagem (para ordenação) */
@@ -229,28 +322,28 @@ export const PACKAGES: Package[] = [
 export const HOME_CAROUSEL: Carousel = CarouselSchema.parse({
   images: [
     {
-      src: "https://static.fotosdotap.com.br/img/home/foto1.webp",
-      alt: "Ensaio fotográfico em Manaus - Foto 1",
+      src: "/img/home/foto1.webp",
+      alt: "Fotografia de casamento - Momento especial do casal durante a cerimônia",
       index: 0,
     },
     {
-      src: "https://static.fotosdotap.com.br/img/home/foto2.webp", 
-      alt: "Casamento em Manaus - Foto 2",
+      src: "/img/home/foto2.webp", 
+      alt: "Ensaio fotográfico - Retrato profissional em ambiente natural",
       index: 1,
     },
     {
-      src: "https://static.fotosdotap.com.br/img/home/foto3.webp",
-      alt: "Evento especial em Manaus - Foto 3", 
+      src: "/img/home/foto3.webp",
+      alt: "Fotografia de eventos - Celebração e momentos únicos", 
       index: 2,
     },
     {
-      src: "https://static.fotosdotap.com.br/img/home/foto4.webp",
-      alt: "Momentos únicos - Foto 4",
+      src: "/img/home/foto4.webp",
+      alt: "Sessão de fotos - Captura de emoções genuínas",
       index: 3,
     },
     {
-      src: "https://static.fotosdotap.com.br/img/home/foto5.webp",
-      alt: "Fotógrafo Tapejara Lira - Foto 5",
+      src: "/img/home/foto5.webp",
+      alt: "Portfolio Fotos do Tap - Trabalhos realizados com excelência",
       index: 4,
     },
   ],
